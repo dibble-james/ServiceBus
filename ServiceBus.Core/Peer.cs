@@ -15,8 +15,7 @@
         }
 
         public Uri PeerAddress { get; private set; }
-
-
+        
         public IEnumerable<IEndpoint> Endpoints
         {
             get { return this._endpoints; }

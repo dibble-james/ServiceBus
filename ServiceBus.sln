@@ -10,6 +10,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".nuget", ".nuget", "{42F619
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ServiceBus.Core", "ServiceBus.Core\ServiceBus.Core.csproj", "{2DF282BD-1565-4D4E-9F73-972AAF9B98E4}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ServiceBus.Web.Mvc", "ServiceBus.Web.Mvc\ServiceBus.Web.Mvc.csproj", "{2A267688-0909-420B-825F-1468EE68BA22}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -20,6 +22,10 @@ Global
 		{2DF282BD-1565-4D4E-9F73-972AAF9B98E4}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{2DF282BD-1565-4D4E-9F73-972AAF9B98E4}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{2DF282BD-1565-4D4E-9F73-972AAF9B98E4}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2A267688-0909-420B-825F-1468EE68BA22}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2A267688-0909-420B-825F-1468EE68BA22}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2A267688-0909-420B-825F-1468EE68BA22}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2A267688-0909-420B-825F-1468EE68BA22}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
