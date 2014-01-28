@@ -18,7 +18,7 @@
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
-    <OutputPath>bin\Debug\</OutputPath>
+    <OutputPath>..\Debug\</OutputPath>
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
@@ -26,7 +26,7 @@
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
     <Optimize>true</Optimize>
-    <OutputPath>bin\Release\</OutputPath>
+    <OutputPath>..\Release\</OutputPath>
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
@@ -42,10 +42,13 @@
     <Compile Include="IEndpoint.cs" />
     <Compile Include="IPeer.cs" />
     <Compile Include="IServiceBus.cs" />
+    <Compile Include="Messaging\AvailableEndpointsMessage.cs" />
+    <Compile Include="Messaging\IMessage.cs" />
     <Compile Include="Peer.cs" />
     <Compile Include="PeerBuilder.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ServiceBus.cs" />
+    <Compile Include="Transport\ITransporter.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

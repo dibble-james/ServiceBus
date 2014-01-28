@@ -8,7 +8,5 @@
         Uri PeerAddress { get; }
 
         IEnumerable<IEndpoint> Endpoints { get; }
-
-        void DiscoverRemoteEndpoints();
     }
 }

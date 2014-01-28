@@ -9,6 +9,6 @@
 
         IEnumerable<IPeer> Peers { get; }
 
-        void RegisterPeer(IPeer peer);
+        IEnumerable<IEndpoint> LocalEndpoints { get; }
     }
 }

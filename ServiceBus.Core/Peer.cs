@@ -20,10 +20,5 @@
         {
             get { return this._endpoints; }
         }
-
-        public void DiscoverRemoteEndpoints()
-        {
-            throw new NotImplementedException();
-        }
     }
 }

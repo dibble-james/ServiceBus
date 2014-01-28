@@ -1,11 +1,9 @@
 ﻿namespace ServiceBus
 {
-    public class PeerBuilder
+    internal class PeerBuilder
     {
-        public void BuildAndRegister(IPeer peer, IServiceBus bus)
+        public void BuildAndRegister(IPeer peer, ServiceBus bus)
         {
-            peer.DiscoverRemoteEndpoints();
-
             bus.RegisterPeer(peer);
         }
     }

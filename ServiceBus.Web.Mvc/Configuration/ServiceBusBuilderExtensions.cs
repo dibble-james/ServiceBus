@@ -1,13 +1,20 @@
 ﻿namespace ServiceBus.Web.Mvc.Configuration
 {
     using System.Web.Mvc;
+    using System.Web.Routing;
     using global::ServiceBus.Configuration;
 
     public static class ServiceBusBuilderExtensions
     {
-        public static IServiceBusBuilder AsMvcServiceBus(this IServiceBusBuilder builder)
+        private static readonly string[] _namespaces = new[] { "ServiceBus.Web.Mvc" };
+
+        public static IServiceBusBuilder AsMvcServiceBus(this IServiceBusBuilder builder, RouteCollection routes)
         {
-            GlobalFilters.Filters.Add(new InterceptServiceBusRequestAttribute(builder.Build()));
+            routes.MapRoute(
+                "Endpoints",
+                "service-bus/peer/endpoints",
+                new { controller = "Peer", action = "Endpoints" },
+                ServiceBusBuilderExtensions._namespaces);
 
             return builder;
         }
