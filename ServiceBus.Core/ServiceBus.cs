@@ -3,6 +3,8 @@
     using System;
     using System.Collections.Generic;
     using System.Collections.ObjectModel;
+    using System.Threading.Tasks;
+
     using Transport;
 
     public sealed class ServiceBus : IServiceBus
@@ -36,8 +38,12 @@
             }
         }
         
-        internal void RegisterPeer(IPeer peer)
+        internal async Task RegisterPeer(IPeer peer)
         {
+            var endpointsMessage = await this._transport.RequestEnpoints(peer);
+            
+            peer.RegisterEnpoints(null); // TODO: Get actual endpoints.
+
             lock (this._peersLock)
             {
                 this._peers.Add(peer);

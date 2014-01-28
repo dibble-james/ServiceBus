@@ -1,10 +1,11 @@
 ﻿namespace ServiceBus.Transport
 {
-    using Messaging;
-    using System.Collections.Generic;
+    using System.Threading.Tasks;
 
+    using Messages;
+    
     public interface ITransporter
     {
-        AvailableEndpointsMessage RequestEnpoints(IPeer peer);
+        Task<AvailableEndpointsMessage> RequestEnpoints(IPeer peer);
     }
 }

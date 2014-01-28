@@ -8,5 +8,7 @@
         Uri PeerAddress { get; }
 
         IEnumerable<IEndpoint> Endpoints { get; }
+
+        void RegisterEnpoints(IEnumerable<IEndpoint> endpoints);
     }
 }

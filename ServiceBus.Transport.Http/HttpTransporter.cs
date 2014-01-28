@@ -1,15 +1,14 @@
 ﻿namespace ServiceBus.Transport.Http
 {
-    using System.Net.Http;
-    using System.Collections.Generic;
-
+    using Messages;
     using Messaging;
-    using System.IO;
     using System;
-    using System.Threading.Tasks;
+    using System.IO;
     using System.Net;
-    using System.Text;
+    using System.Net.Http;
     using System.Runtime.Serialization.Json;
+    using System.Text;
+    using System.Threading.Tasks;
 
     public class HttpTransporter : ITransporter
     {
@@ -33,6 +32,29 @@
             return message;
         }
 
+        public async Task SendMessageAsync<TMessage>(IPeer peerToRecieve, TMessage message) where TMessage : class, IMessage
+        {
+            const string action = "message/recieve";
+
+            var fullActionPath = Path.Combine(peerToRecieve.PeerAddress.AbsolutePath, HttpTransporter.actionBase, action);
+
+            var response = await this.ExuecutePostRequestAsync<TMessage, ResponseMessage>(peerToRecieve.PeerAddress, message);
+        }
+
+        private async Task<TMessageBack> ExuecutePostRequestAsync<TMessageOut, TMessageBack>(Uri address, TMessageOut messageToPost) 
+            where TMessageOut : class, IMessage
+            where TMessageBack : class, IMessage
+        {
+            var response = await this._client.GetAsync(address);
+
+            if (response.StatusCode != HttpStatusCode.OK)
+            {
+                return null;
+            }
+
+            return this.DeserialiseMessage<TMessageBack>(await response.Content.ReadAsStringAsync());
+        }
+
         private async Task<TMessage> ExuecuteGetRequestAsync<TMessage>(Uri address) where TMessage : class, IMessage
         {
             var response = await this._client.GetAsync(address);
@@ -47,7 +69,7 @@
 
         private TMessage DeserialiseMessage<TMessage>(string messageContent) where TMessage : class, IMessage
         {
-            using (MemoryStream ms = new MemoryStream(Encoding.Unicode.GetBytes(messageContent)))
+            using (var ms = new MemoryStream(Encoding.Unicode.GetBytes(messageContent)))
             {
                 var serialiser = new DataContractJsonSerializer(typeof(TMessage));
 
