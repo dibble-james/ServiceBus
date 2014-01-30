@@ -1,20 +1,16 @@
-﻿namespace ServiceBus.Transport.Http.Configuration
+﻿namespace ServiceBus.Desktop
 {
-    using global::ServiceBus.Configuration;
     using System.Net.Http;
+    using global::ServiceBus.Configuration;
+    using Microsoft.Owin.Hosting;
 
     public static class ServiceBusBuilderExtensions
     {
-        public static IServiceBusBuilder WithHttpTransport(this IServiceBusBuilder builder)
+        public static IHostApplicationConfiguration AsDesktopApplication(this ITransportConfiguration transportConfiguration)
         {
-            return builder.WithHttpTransport(new HttpClient());
-        }
+            WebApp.Start<HttpServiceBusServer>(transportConfiguration.HostAddressConfiguration.HostAddress.AbsoluteUri);
 
-        public static IServiceBusBuilder WithHttpTransport(this IServiceBusBuilder builder, HttpClient client)
-        {
-            builder.WithTransport(new HttpTransporter(client));
-
-            return builder;
+            return new HostApplicationConfiguration(transportConfiguration);
         }
     }
 }

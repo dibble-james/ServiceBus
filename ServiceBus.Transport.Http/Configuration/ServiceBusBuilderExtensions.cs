@@ -5,16 +5,16 @@
 
     public static class ServiceBusBuilderExtensions
     {
-        public static IServiceBusBuilder WithHttpTransport(this IServiceBusBuilder builder)
+        public static ITransportConfiguration WithHttpTransport(this IHostAddressConfiguration hostAddressConfiguration)
         {
-            return builder.WithHttpTransport(new HttpClient());
+            return hostAddressConfiguration.WithHttpTransport(new HttpClient());
         }
 
-        public static IServiceBusBuilder WithHttpTransport(this IServiceBusBuilder builder, HttpClient client)
+        public static ITransportConfiguration WithHttpTransport(this IHostAddressConfiguration hostAddressConfiguration, HttpClient client)
         {
-            builder.WithTransport(new HttpTransporter(client));
+            var transporter = new HttpTransporter(client);
 
-            return builder;
+            return new TransportConfiguration(hostAddressConfiguration, transporter);
         }
     }
 }
