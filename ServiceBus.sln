@@ -21,6 +21,10 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 		.gitignore = .gitignore
 	EndProjectSection
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "TestHarness", "TestHarness", "{246176ED-8F5B-4F89-89D2-91572A8B804D}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestConsole", "TestHarness\TestConsole\TestConsole.csproj", "{09F62C7D-EC40-4AA7-8A2D-15618BE0BD44}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -39,8 +43,15 @@ Global
 		{BFD0910F-4720-45CE-BCDD-960440EF0ADC}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{BFD0910F-4720-45CE-BCDD-960440EF0ADC}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{BFD0910F-4720-45CE-BCDD-960440EF0ADC}.Release|Any CPU.Build.0 = Release|Any CPU
+		{09F62C7D-EC40-4AA7-8A2D-15618BE0BD44}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{09F62C7D-EC40-4AA7-8A2D-15618BE0BD44}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{09F62C7D-EC40-4AA7-8A2D-15618BE0BD44}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{09F62C7D-EC40-4AA7-8A2D-15618BE0BD44}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{09F62C7D-EC40-4AA7-8A2D-15618BE0BD44} = {246176ED-8F5B-4F89-89D2-91572A8B804D}
 	EndGlobalSection
 EndGlobal
