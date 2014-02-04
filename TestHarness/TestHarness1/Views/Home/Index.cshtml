@@ -1,0 +1,13 @@
+﻿@model ServiceBus.IServiceBus
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Endpoints</h2>
+<ul>
+    @foreach (var endpoint in this.Model.Peers.SelectMany(p => p.Endpoints))
+    {
+        <li>@endpoint.EndpointAddress</li>
+    }
+</ul>

@@ -1,0 +1,75 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<package xmlns:dm0="http://schemas.microsoft.com/VisualStudio/2008/DslTools/Core" xmlns:dm1="http://schemas.microsoft.com/dsltools/Kernel" xmlns:dm2="http://schemas.microsoft.com/dsltools/Component" xmlns:dm3="http://schemas.microsoft.com/dsltools/UseCase" xmlns:dm4="http://schemas.microsoft.com/dsltools/Activity" xmlns:dm5="http://schemas.microsoft.com/dsltools/Interaction" xmlns:dm6="http://schemas.microsoft.com/dsltools/UmlModelLibrary" xmlns:dm7="http://schemas.microsoft.com/dsltools/UmlDiagrams" xmlns:dm8="http://schemas.microsoft.com/dsltools/LogicalClassDesigner"
+  dslVersion="1.0.0.0"
+  Id="a145234d-24b3-4f0b-9e98-15127af7b2f7"
+  name="Messaging"
+  visibility="Private" xmlns="http://schemas.microsoft.com/dsltools/ModelStore">
+  <referencesInternal>
+    <reference
+      Id="3302d0b1-89f1-49e6-87f7-292970ee59ea"
+      handle="viewcode://./CodeSchema_Namespace?Namespace%3DServiceBus.Messaging"
+      tag="ViewCode" />
+  </referencesInternal>
+  <packagedElements>
+    <packageHasNamedElement>
+      <Interface
+        Id="fbc7f493-cbf3-4cb4-896e-2726702ccf13"
+        name="IMessage"
+        isAbstract="false"
+        isLeaf="false">
+        <referencesInternal>
+          <reference
+            Id="c4a51c07-900a-4537-8c3e-3c543c9319ec"
+            handle="viewcode://./CodeSchema_Interface?Assembly%3D&quot;file:%2F%2F%2FC:%2FGIT%2FService Bus%2FDebug%2FServiceBus.Core.dll&quot; Namespace%3DServiceBus.Messaging Type%3DIMessage"
+            tag="ViewCode" />
+        </referencesInternal>
+        <appliedStereotypesInternal>
+          <stereotypeInstance
+            Id="16364cfb-fc0f-4402-8957-be2ad63630c3"
+            name="interface"
+            profile="CSharpProfile">
+            <propertyInstances>
+              <stereotypeInstanceHasPropertyInstances
+                Id="f98a896c-ca90-4c4a-86b7-55d1e55feeaf">
+                <propertyInstance
+                  Id="c0e9ea75-14f4-43b7-9533-2b34bd9b75e6"
+                  name="ClrAttributes" />
+              </stereotypeInstanceHasPropertyInstances>
+              <stereotypeInstanceHasPropertyInstances
+                Id="ac5fd50c-235a-4597-bea4-38783edd53aa">
+                <propertyInstance
+                  Id="0445d072-0986-4e08-a6ce-f000550c95a0"
+                  name="IsPartial"
+                  value="false" />
+              </stereotypeInstanceHasPropertyInstances>
+              <stereotypeInstanceHasPropertyInstances
+                Id="8bd1abd8-ae01-4963-89ea-58a34e7b1d6c">
+                <propertyInstance
+                  Id="acecf046-ae1c-4d2c-818b-7d5e903eae2d"
+                  name="IsUnsafe"
+                  value="false" />
+              </stereotypeInstanceHasPropertyInstances>
+              <stereotypeInstanceHasPropertyInstances
+                Id="9267a7de-2efa-42ff-9d75-662a914c9fa2">
+                <propertyInstance
+                  Id="9a0e7d6c-bf2e-41cd-9276-b3f4742cf338"
+                  name="PackageVisibility"
+                  value="internal" />
+              </stereotypeInstanceHasPropertyInstances>
+            </propertyInstances>
+          </stereotypeInstance>
+        </appliedStereotypesInternal>
+        <generalsInternal>
+          <generalization
+            Id="2bb6f436-a533-4fc1-b646-731d996bf076"
+            isSubstitutable="false">
+            <interfaceMoniker
+              Id="8fff1a9f-933b-4c3c-816a-9b8f993b254a"
+              LastKnownName="ISerializable"
+              LastKnownLocation="Package2_1219.uml" />
+          </generalization>
+        </generalsInternal>
+      </Interface>
+    </packageHasNamedElement>
+  </packagedElements>
+</package>

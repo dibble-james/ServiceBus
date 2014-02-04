@@ -9,23 +9,34 @@
 
     public sealed class ServiceBus : IServiceBus
     {
-        private readonly ICollection<IPeer> _peers;
+        private readonly IEnumerable<IPeer> _peers;
         private readonly object _peersLock;
-        private readonly IDictionary<Type, IEndpoint> _endpoints;
+        private readonly IEnumerable<IEndpoint> _endpoints;
         private readonly object _endpointsLock;
         private ITransporter _transport;
 
-        public ServiceBus()
+        public ServiceBus(Uri hostAddress, ITransporter transporter, IEnumerable<IEndpoint> endpoints, IEnumerable<IPeer> peers)
         {
-            this._peers = new Collection<IPeer>();
             this._peersLock = new object();
-            this._endpoints = new Dictionary<Type, IEndpoint>();
             this._endpointsLock = new object();
+
+            this.HostAddress = hostAddress;
+            this._endpoints = endpoints;
+            this._peers = peers;
         }
 
-        public Uri HostAddress { get; internal set; }
+        public Uri HostAddress { get; private set; }
 
-        public IEnumerable<IEndpoint> LocalEndpoints { get; internal set; }
+        public IEnumerable<IEndpoint> LocalEndpoints
+        {
+            get
+            {
+                lock (this._endpointsLock)
+                {
+                    return this._endpoints;
+                }
+            }
+        }
 
         public IEnumerable<IPeer> Peers
         {
@@ -36,31 +47,6 @@
                     return this._peers;
                 }
             }
-        }
-        
-        internal async Task RegisterPeer(IPeer peer)
-        {
-            var endpointsMessage = await this._transport.RequestEnpoints(peer);
-            
-            peer.RegisterEnpoints(null); // TODO: Get actual endpoints.
-
-            lock (this._peersLock)
-            {
-                this._peers.Add(peer);
-            }
-        }
-
-        internal void RegisterLocalEndpoint<TEndpoint>(TEndpoint endpoint) where TEndpoint : IEndpoint
-        {
-            lock (this._endpointsLock)
-            {
-                this._endpoints.Add(typeof(TEndpoint), endpoint);
-            }
-        }
-
-        internal void RegisterTransportation(ITransporter transporter)
-        {
-            this._transport = transporter;
         }
     }
 }

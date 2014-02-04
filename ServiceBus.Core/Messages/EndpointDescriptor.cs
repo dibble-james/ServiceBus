@@ -1,9 +1,12 @@
 ﻿namespace ServiceBus.Messages
 {
+    using System;
     using System.Runtime.Serialization;
 
     public class EndpointDescriptor : ISerializable
     {
+        public Uri EndpointAddress { get; set; }
+
         /// <summary>
         /// Populates a <see cref="T:System.Runtime.Serialization.SerializationInfo"/> with the data needed to serialize the target object.
         /// </summary>

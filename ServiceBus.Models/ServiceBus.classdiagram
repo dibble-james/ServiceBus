@@ -1,0 +1,26 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<logicalClassDesignerModel xmlns:dm0="http://schemas.microsoft.com/VisualStudio/2008/DslTools/Core" xmlns:dm1="http://schemas.microsoft.com/dsltools/Kernel" xmlns:dm2="http://schemas.microsoft.com/dsltools/Component" xmlns:dm3="http://schemas.microsoft.com/dsltools/UseCase" xmlns:dm4="http://schemas.microsoft.com/dsltools/Activity" xmlns:dm5="http://schemas.microsoft.com/dsltools/Interaction" xmlns:dm6="http://schemas.microsoft.com/dsltools/UmlModelLibrary" xmlns:dm7="http://schemas.microsoft.com/dsltools/UmlDiagrams" xmlns:dm8="http://schemas.microsoft.com/dsltools/ModelStore" dslVersion="1.0.0.0" Id="cc98c335-e911-4ecf-b4d3-99c4c079e781" name="ServiceBus" linkedPackageId="6aee9714-f902-45f8-b587-e36d7f256d46" xmlns="http://schemas.microsoft.com/dsltools/LogicalClassDesigner">
+  <profileInstances>
+    <packageHasProfileInstances Id="c3e3607e-6e8b-4f61-9362-d19d996fd5b2">
+      <profileInstance Id="f3801f4f-8cd7-40de-920e-070832d0c518" name="StandardProfileL2">
+        <elementDefinition Id="e34d544e-0fea-4ed6-ac5e-1b74119ac791" />
+      </profileInstance>
+      <elementDefinition Id="0caec977-1f8c-4ba3-a7db-8cc9ad9cc73b" />
+    </packageHasProfileInstances>
+    <packageHasProfileInstances Id="a0bb00ef-d1b8-4f4c-b468-c6f8cade3e11">
+      <profileInstance Id="ebbb99ab-d352-43eb-a228-57159cc96eff" name="StandardProfileL3">
+        <elementDefinition Id="532ea607-fb19-44b8-8502-3351b05452be" />
+      </profileInstance>
+      <elementDefinition Id="29349502-908c-4fda-9054-c48619c59ed0" />
+    </packageHasProfileInstances>
+    <packageHasProfileInstances Id="a79b6e49-e393-4798-8543-d7bd80bfe28d">
+      <profileInstance Id="df26ae83-ce0a-4e3c-8d2b-a2f390eb9c31" name="CSharpProfile">
+        <elementDefinition Id="73bc5cf3-1b23-47df-8d61-c380266b48bd" />
+      </profileInstance>
+      <elementDefinition Id="a5a864b1-1fff-4b03-8fd0-2593b849c684" />
+    </packageHasProfileInstances>
+  </profileInstances>
+  <package Id="6aee9714-f902-45f8-b587-e36d7f256d46" name="ServiceBus.Models">
+    <elementDefinition Id="d47fcfef-2d49-409f-9dbd-19b1f5f09f36" />
+  </package>
+</logicalClassDesignerModel>

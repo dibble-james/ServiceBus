@@ -4,11 +4,9 @@
     using Messaging;
     using System;
     using System.IO;
-    using System.Net;
     using System.Net.Http;
     using System.Runtime.Serialization.Json;
     using System.Text;
-    using System.Threading.Tasks;
 
     public class HttpTransporter : ITransporter
     {
@@ -21,50 +19,49 @@
             this._client = client;
         }
 
-        public async Task<AvailableEndpointsMessage> RequestEnpoints(IPeer peer)
+        public void RequestEnpoints(IPeer peer)
         {
             const string action = "peer/endpoints";
 
-            var fullActionPath = Path.Combine(peer.PeerAddress.AbsolutePath, HttpTransporter.actionBase, action);
+            var fullActionPath = Path.Combine(peer.PeerAddress.AbsoluteUri, HttpTransporter.actionBase, action);
 
-            var message = await this.ExuecuteGetRequestAsync<AvailableEndpointsMessage>(new Uri(fullActionPath));
+            var message = this.ExuecuteGetRequestAsync<AvailableEndpointsMessage>(new Uri(fullActionPath));
 
-            return message;
         }
 
-        public async Task SendMessageAsync<TMessage>(IPeer peerToRecieve, TMessage message) where TMessage : class, IMessage
+        public void SendMessage<TMessage>(IPeer peerToRecieve, TMessage message) where TMessage : class, IMessage
         {
             const string action = "message/recieve";
 
             var fullActionPath = Path.Combine(peerToRecieve.PeerAddress.AbsolutePath, HttpTransporter.actionBase, action);
 
-            var response = await this.ExuecutePostRequestAsync<TMessage, ResponseMessage>(peerToRecieve.PeerAddress, message);
+            this.ExuecutePostRequestAsync<TMessage, ResponseMessage>(peerToRecieve.PeerAddress, message);
         }
 
-        private async Task<TMessageBack> ExuecutePostRequestAsync<TMessageOut, TMessageBack>(Uri address, TMessageOut messageToPost) 
+        private TMessageBack ExuecutePostRequestAsync<TMessageOut, TMessageBack>(Uri address, TMessageOut messageToPost) 
             where TMessageOut : class, IMessage
             where TMessageBack : class, IMessage
         {
-            var response = await this._client.GetAsync(address);
+            var response = this._client.GetAsync(address);
 
-            if (response.StatusCode != HttpStatusCode.OK)
+            if (!response.Result.IsSuccessStatusCode)
             {
                 return null;
             }
 
-            return this.DeserialiseMessage<TMessageBack>(await response.Content.ReadAsStringAsync());
+            return this.DeserialiseMessage<TMessageBack>(response.Result.Content.ReadAsStringAsync().Result);
         }
 
-        private async Task<TMessage> ExuecuteGetRequestAsync<TMessage>(Uri address) where TMessage : class, IMessage
+        private TMessage ExuecuteGetRequestAsync<TMessage>(Uri address) where TMessage : class, IMessage
         {
-            var response = await this._client.GetAsync(address);
+            var response = this._client.GetAsync(address);
 
-            if (response.StatusCode != HttpStatusCode.OK)
+            if (!response.Result.IsSuccessStatusCode)
             {
                 return null;
             }
 
-            return this.DeserialiseMessage<TMessage>(await response.Content.ReadAsStringAsync());
+            return this.DeserialiseMessage<TMessage>(response.Result.Content.ReadAsStringAsync().Result);
         }
 
         private TMessage DeserialiseMessage<TMessage>(string messageContent) where TMessage : class, IMessage

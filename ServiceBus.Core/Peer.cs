@@ -20,7 +20,7 @@
         {
             get { return this._endpoints; }
         }
-
+        
         public void RegisterEnpoints(IEnumerable<IEndpoint> endpoints)
         {
             foreach (var endpoint in endpoints)

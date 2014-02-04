@@ -33,7 +33,6 @@
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Web" />
-    <Reference Include="System.Web.Http, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
     <Reference Include="System.Web.Mvc, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
     </Reference>
@@ -41,13 +40,16 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Configuration\ServiceBusBuilderExtensions.cs" />
-    <Compile Include="PeerController.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\ServiceBus.Core\ServiceBus.Core.csproj">
       <Project>{2df282bd-1565-4d4e-9f73-972aaf9b98e4}</Project>
       <Name>ServiceBus.Core</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\ServiceBus.Transport.Http\ServiceBus.Transport.Http.csproj">
+      <Project>{bfd0910f-4720-45ce-bcdd-960440ef0adc}</Project>
+      <Name>ServiceBus.Transport.Http</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

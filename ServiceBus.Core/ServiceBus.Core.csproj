@@ -36,8 +36,14 @@
     <Reference Include="System.Core" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Configuration\HostAddressConfiguration.cs" />
+    <Compile Include="Configuration\HostApplicationConfiguration.cs" />
+    <Compile Include="Configuration\IHostAddressConfiguration.cs" />
+    <Compile Include="Configuration\IHostApplicationConfiguration.cs" />
     <Compile Include="Configuration\IServiceBusBuilder.cs" />
+    <Compile Include="Configuration\ITransportConfiguration.cs" />
     <Compile Include="Configuration\ServiceBusBuilder.cs" />
+    <Compile Include="Configuration\TransportConfiguration.cs" />
     <Compile Include="Endpoint.cs" />
     <Compile Include="IEndpoint.cs" />
     <Compile Include="IPeer.cs" />
