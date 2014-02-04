@@ -1,8 +1,14 @@
 ﻿namespace ServiceBus.Transport.Http.Controllers
 {
     using System.Collections.Generic;
+    using System.Linq;
+    using System.Text;
     using System.Web.Http;
     using System.Web.Mvc;
+
+    using global::ServiceBus.Messages;
+
+    using Newtonsoft.Json;
 
     public class PeerController : Controller
     {
@@ -15,7 +21,22 @@
 
         public ActionResult Endpoints()
         {
-            return this.Json(this._bus.LocalEndpoints, JsonRequestBehavior.AllowGet);
+            var endpointsMessage = new AvailableEndpointsMessage
+                                   {
+                                       Endpoints =
+                                           this._bus.LocalEndpoints.Select(
+                                               endpoint =>
+                                           new EndpointDescriptor
+                                           {
+                                               EndpointAddress =
+                                                   endpoint
+                                                   .EndpointAddress
+                                           }).ToList()
+                                   };
+
+            var json = JsonConvert.SerializeObject(endpointsMessage);
+
+            return this.Content(json, "application/json", Encoding.UTF8);
         }
     }
 }
