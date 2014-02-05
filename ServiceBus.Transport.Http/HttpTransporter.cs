@@ -1,7 +1,5 @@
 ﻿namespace ServiceBus.Transport.Http
 {
-    using System.Linq;
-
     using Messages;
     using Messaging;
     using System;
@@ -22,45 +20,37 @@
             this._client = client;
         }
 
-        public void RequestEnpoints(IPeer peer)
+        public AvailableEndpointsMessage RequestEnpoints(IPeer peer)
         {
             const string action = "peer/endpoints";
 
             var fullActionPath = Path.Combine(peer.PeerAddress.AbsoluteUri, HttpTransporter.actionBase, action);
 
-            var message = this.ExecuteGetRequestAsync<AvailableEndpointsMessage>(new Uri(fullActionPath));
+            var message = this.ExecuteGetRequest<AvailableEndpointsMessage>(new Uri(fullActionPath));
 
-            peer.RegisterEnpoints(message.Endpoints.Select(endpoint => new Endpoint(endpoint.EndpointAddress)));
+            return message;
         }
 
         public void SendMessage<TMessage>(IPeer peerToRecieve, TMessage message) where TMessage : class, IMessage
         {
-            const string action = "message/recieve";
+            const string action = "message";
 
             var fullActionPath = Path.Combine(peerToRecieve.PeerAddress.AbsolutePath, HttpTransporter.actionBase, action);
 
-            this.ExecutePostRequestAsync<TMessage, ResponseMessage>(peerToRecieve.PeerAddress, message);
+            this.ExecutePostRequest(new Uri(fullActionPath), message);
         }
 
-        private TMessageBack ExecutePostRequestAsync<TMessageOut, TMessageBack>(Uri address, TMessageOut messageToPost) 
+        private void ExecutePostRequest<TMessageOut>(Uri address, TMessageOut messageToPost) 
             where TMessageOut : class, IMessage
-            where TMessageBack : class, IMessage
         {
             var messageAsJson = JsonConvert.SerializeObject(messageToPost);
 
             var content = new StringContent(messageAsJson, Encoding.UTF8, "application/json");
 
-            var response = this._client.PostAsync(address, content);
-
-            if (!response.Result.IsSuccessStatusCode)
-            {
-                return null;
-            }
-
-            return DeserialiseMessage<TMessageBack>(response.Result.Content.ReadAsStringAsync().Result);
+            this._client.PostAsync(address, content);
         }
 
-        private TMessage ExecuteGetRequestAsync<TMessage>(Uri address) where TMessage : class, IMessage
+        private TMessage ExecuteGetRequest<TMessage>(Uri address) where TMessage : class, IMessage
         {
             var response = this._client.GetAsync(address);
 

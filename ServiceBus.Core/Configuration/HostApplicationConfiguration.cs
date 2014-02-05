@@ -3,6 +3,7 @@
     using System;
     using System.Collections.Generic;
     using System.Collections.ObjectModel;
+    using System.Threading.Tasks;
 
     public class HostApplicationConfiguration : IHostApplicationConfiguration
     {
@@ -26,7 +27,7 @@
         {
             var newPeer = new Peer(peer);
 
-            this._transportConfiguration.Transporter.RequestEnpoints(newPeer);
+            Task.Factory.StartNew(() => this._transportConfiguration.Transporter.RequestEnpoints(newPeer));
 
             this._peers.Add(newPeer);
 

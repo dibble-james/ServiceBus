@@ -2,8 +2,6 @@
 {
     using System;
     using System.Collections.Generic;
-    using System.Collections.ObjectModel;
-    using System.Threading.Tasks;
 
     using Transport;
 
@@ -13,7 +11,7 @@
         private readonly object _peersLock;
         private readonly IEnumerable<IEndpoint> _endpoints;
         private readonly object _endpointsLock;
-        private ITransporter _transport;
+        private readonly ITransporter _transport;
 
         public ServiceBus(Uri hostAddress, ITransporter transporter, IEnumerable<IEndpoint> endpoints, IEnumerable<IPeer> peers)
         {
@@ -23,6 +21,7 @@
             this.HostAddress = hostAddress;
             this._endpoints = endpoints;
             this._peers = peers;
+            this._transport = transporter;
         }
 
         public Uri HostAddress { get; private set; }

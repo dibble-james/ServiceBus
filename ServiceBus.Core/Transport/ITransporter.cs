@@ -1,10 +1,11 @@
 ﻿namespace ServiceBus.Transport
 {
+    using Messages;
     using Messaging;
 
     public interface ITransporter
     {
-        void RequestEnpoints(IPeer peer);
+        AvailableEndpointsMessage RequestEnpoints(IPeer peer);
 
         void SendMessage<TMessage>(IPeer peerToRecieve, TMessage message) where TMessage : class, IMessage;
     }
