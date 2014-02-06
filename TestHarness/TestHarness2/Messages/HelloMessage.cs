@@ -1,20 +1,26 @@
-﻿namespace ServiceBus.Messages
+﻿// --------------------------------------------------------------------------------------------------------------------
+// <copyright file="HelloMessage.cs" company="James Dibble">
+//    Copyright 2012 James Dibble
+// </copyright>
+// --------------------------------------------------------------------------------------------------------------------
+namespace TestHarness2.Messages
 {
-    using System;
     using System.Runtime.Serialization;
 
-    public class EndpointDescriptor : ISerializable
+    using ServiceBus.Messaging;
+
+    public class HelloMessage : IMessage
     {
-        public EndpointDescriptor()
+        public string World { get; set; }
+
+        public HelloMessage()
         {
         }
 
-        public EndpointDescriptor(SerializationInfo info, StreamingContext context)
+        public HelloMessage(SerializationInfo info, StreamingContext context)
         {
-            this.EndpointAddress = new Uri(info.GetString("EndpointAddress"));
+            this.World = info.GetString("World");
         }
-
-        public Uri EndpointAddress { get; set; }
 
         /// <summary>
         /// Populates a <see cref="T:System.Runtime.Serialization.SerializationInfo"/> with the data needed to serialize the target object.
@@ -22,7 +28,9 @@
         /// <param name="info">The <see cref="T:System.Runtime.Serialization.SerializationInfo"/> to populate with data. </param><param name="context">The destination (see <see cref="T:System.Runtime.Serialization.StreamingContext"/>) for this serialization. </param><exception cref="T:System.Security.SecurityException">The caller does not have the required permission. </exception>
         public void GetObjectData(SerializationInfo info, StreamingContext context)
         {
-            info.AddValue("EndpointAddress", this.EndpointAddress.ToString());
+            info.AddValue("World", this.World);
         }
+
+        public string MessageType { get; private set; }
     }
 }

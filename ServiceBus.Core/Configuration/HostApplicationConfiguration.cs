@@ -2,8 +2,7 @@
 {
     using System;
     using System.Collections.Generic;
-    using System.Collections.ObjectModel;
-    using System.Threading.Tasks;
+    using System.Collections.ObjectModel;   
 
     public class HostApplicationConfiguration : IHostApplicationConfiguration
     {
@@ -25,11 +24,7 @@
 
         public IHostApplicationConfiguration WithPeer(Uri peer)
         {
-            var newPeer = new Peer(peer);
-
-            Task.Factory.StartNew(() => this._transportConfiguration.Transporter.RequestEnpoints(newPeer));
-
-            this._peers.Add(newPeer);
+            this._peers.Add(new Peer(peer));
 
             return this;
         }

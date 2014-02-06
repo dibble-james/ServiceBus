@@ -1,6 +1,5 @@
 ﻿namespace ServiceBus.Transport.Http
 {
-    using Messages;
     using Messaging;
     using System;
     using System.IO;
@@ -14,21 +13,20 @@
         private const string actionBase = "service-bus";
 
         private readonly HttpClient _client;
+        private readonly IMessageSerialiser _serialiser;
 
-        public HttpTransporter(HttpClient client)
+        public HttpTransporter(HttpClient client, IMessageSerialiser serialiser)
         {
             this._client = client;
+            this._serialiser = serialiser;
         }
 
-        public AvailableEndpointsMessage RequestEnpoints(IPeer peer)
+        public IMessageSerialiser Serialiser
         {
-            const string action = "peer/endpoints";
-
-            var fullActionPath = Path.Combine(peer.PeerAddress.AbsoluteUri, HttpTransporter.actionBase, action);
-
-            var message = this.ExecuteGetRequest<AvailableEndpointsMessage>(new Uri(fullActionPath));
-
-            return message;
+            get
+            {
+                return this._serialiser;
+            }
         }
 
         public void SendMessage<TMessage>(IPeer peerToRecieve, TMessage message) where TMessage : class, IMessage
@@ -40,7 +38,7 @@
             this.ExecutePostRequest(new Uri(fullActionPath), message);
         }
 
-        private void ExecutePostRequest<TMessageOut>(Uri address, TMessageOut messageToPost) 
+        private void ExecutePostRequest<TMessageOut>(Uri address, TMessageOut messageToPost)
             where TMessageOut : class, IMessage
         {
             var messageAsJson = JsonConvert.SerializeObject(messageToPost);
@@ -59,14 +57,7 @@
                 return null;
             }
 
-            return DeserialiseMessage<TMessage>(response.Result.Content.ReadAsStringAsync().Result);
-        }
-
-        private static TMessage DeserialiseMessage<TMessage>(string messageContent) where TMessage : class, IMessage
-        {
-            var message = JsonConvert.DeserializeObject<TMessage>(messageContent);
-
-            return message;
+            return this._serialiser.Deserialise<TMessage>(response.Result.Content.ReadAsStringAsync().Result);
         }
     }
 }

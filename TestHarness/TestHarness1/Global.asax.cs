@@ -9,6 +9,7 @@ using System.Web.Routing;
 namespace TestHarness1
 {
     using ServiceBus.Configuration;
+    using ServiceBus.Messaging;
     using ServiceBus.Transport.Http.Configuration;
     using ServiceBus.Web.Mvc.Configuration;
 
@@ -28,7 +29,7 @@ namespace TestHarness1
             var serviceBus =
                 ServiceBusBuilder.Configure()
                     .WithHostAddress(new Uri("http://localhost:55001"))
-                    .WithHttpTransport()
+                    .WithHttpTransport(new JsonMessageSerialiser())
                     .AsMvcServiceBus(RouteTable.Routes)
                     .WithPeer(new Uri("http://localhost:55033"))
                     .Build();

@@ -4,10 +4,10 @@
     ViewBag.Title = "Index";
 }
 
-<h2>Endpoints</h2>
+<h2>Peers</h2>
 <ul>
-    @foreach (var endpoint in this.Model.Peers.SelectMany(p => p.Endpoints))
+    @foreach (var endpoint in this.Model.Peers)
     {
-        <li>@endpoint.EndpointAddress</li>
+        <li>@endpoint.PeerAddress</li>
     }
 </ul>

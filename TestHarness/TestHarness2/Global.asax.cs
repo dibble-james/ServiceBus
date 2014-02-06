@@ -10,6 +10,7 @@ namespace TestHarness2
 {
     using ServiceBus;
     using ServiceBus.Configuration;
+    using ServiceBus.Messaging;
     using ServiceBus.Transport.Http.Configuration;
     using ServiceBus.Web.Mvc.Configuration;
 
@@ -27,7 +28,7 @@ namespace TestHarness2
             var serviceBus =
                 ServiceBusBuilder.Configure()
                     .WithHostAddress(new Uri("http://localhost:55033"))
-                    .WithHttpTransport()
+                    .WithHttpTransport(new JsonMessageSerialiser())
                     .AsMvcServiceBus(RouteTable.Routes)
                     .WithLocalEndpoint(new Endpoint(new Uri("http://localhost:55033/endpoint")))
                     .Build();

@@ -3,6 +3,8 @@
     using System;
     using System.Collections.Generic;
 
+    using Messaging;
+
     using Transport;
 
     public sealed class ServiceBus : IServiceBus
@@ -34,6 +36,14 @@
                 {
                     return this._endpoints;
                 }
+            }
+        }
+
+        public IMessageSerialiser Serialiser
+        {
+            get
+            {
+                return this._transport.Serialiser;
             }
         }
 

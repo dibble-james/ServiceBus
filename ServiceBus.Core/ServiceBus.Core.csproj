@@ -52,10 +52,9 @@
     <Compile Include="IEndpoint.cs" />
     <Compile Include="IPeer.cs" />
     <Compile Include="IServiceBus.cs" />
-    <Compile Include="Messages\AvailableEndpointsMessage.cs" />
-    <Compile Include="Messages\EndpointDescriptor.cs" />
     <Compile Include="Messaging\IMessage.cs" />
-    <Compile Include="Messages\ResponseMessage.cs" />
+    <Compile Include="Messaging\IMessageSerialiser.cs" />
+    <Compile Include="Messaging\JsonMessageSerialiser.cs" />
     <Compile Include="Peer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ServiceBus.cs" />
