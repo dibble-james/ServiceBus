@@ -1,16 +1,12 @@
 ﻿// --------------------------------------------------------------------------------------------------------------------
-// <copyright file="IMessageTransformer.cs" company="James Dibble">
+// <copyright file="IMessageHandler.cs" company="James Dibble">
 //    Copyright 2012 James Dibble
 // </copyright>
 // --------------------------------------------------------------------------------------------------------------------
 namespace ServiceBus.Messaging
 {
-    public interface IMessageSerialiser
+    public interface IMessageHandler
     {
-        MessageTypeDictionary MessageTypeDictionary { get; }
-
-        IMessage Deserialise(string messageContent);
-
-        string Serialise<TMessage>(TMessage message) where TMessage : class, IMessage;
+        string HandledMessageType { get; }
     }
 }

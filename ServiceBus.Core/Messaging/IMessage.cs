@@ -4,5 +4,6 @@
 
     public interface IMessage : ISerializable
     {
+        string MessageType { get; }
     }
 }

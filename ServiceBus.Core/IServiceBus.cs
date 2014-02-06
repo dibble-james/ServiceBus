@@ -3,7 +3,7 @@
     using System;
     using System.Collections.Generic;
 
-    using global::ServiceBus.Messaging;
+    using Messaging;
 
     public interface IServiceBus
     {
@@ -14,5 +14,7 @@
         IEnumerable<IEndpoint> LocalEndpoints { get; }
 
         IMessageSerialiser Serialiser { get; }
+
+        void Recieve(IMessage message);
     }
 }

@@ -6,8 +6,6 @@
     using System.Net.Http;
     using System.Text;
 
-    using Newtonsoft.Json;
-
     public class HttpTransporter : ITransporter
     {
         private const string actionBase = "service-bus";
@@ -41,14 +39,14 @@
         private void ExecutePostRequest<TMessageOut>(Uri address, TMessageOut messageToPost)
             where TMessageOut : class, IMessage
         {
-            var messageAsJson = JsonConvert.SerializeObject(messageToPost);
+            var serialisedMessage = this.Serialiser.Serialise(messageToPost);
 
-            var content = new StringContent(messageAsJson, Encoding.UTF8, "application/json");
+            var content = new StringContent(serialisedMessage, Encoding.UTF8, "application/json");
 
             this._client.PostAsync(address, content);
         }
 
-        private TMessage ExecuteGetRequest<TMessage>(Uri address) where TMessage : class, IMessage
+        private IMessage ExecuteGetRequest(Uri address)
         {
             var response = this._client.GetAsync(address);
 
@@ -57,7 +55,7 @@
                 return null;
             }
 
-            return this._serialiser.Deserialise<TMessage>(response.Result.Content.ReadAsStringAsync().Result);
+            return this._serialiser.Deserialise(response.Result.Content.ReadAsStringAsync().Result);
         }
     }
 }
