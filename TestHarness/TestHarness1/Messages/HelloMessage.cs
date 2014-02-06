@@ -3,7 +3,7 @@
 //    Copyright 2012 James Dibble
 // </copyright>
 // --------------------------------------------------------------------------------------------------------------------
-namespace TestHarness2.Messages
+namespace TestHarness1.Messages
 {
     using System.Runtime.Serialization;
 

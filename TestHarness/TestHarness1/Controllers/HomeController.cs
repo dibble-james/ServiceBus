@@ -5,9 +5,12 @@
 // --------------------------------------------------------------------------------------------------------------------
 namespace TestHarness1.Controllers
 {
+    using System.Linq;
     using System.Web.Mvc;
 
     using ServiceBus;
+
+    using TestHarness1.Messages;
 
     public class HomeController : Controller
     {
@@ -26,6 +29,8 @@ namespace TestHarness1.Controllers
         [HttpPost]
         public ActionResult SendMessage(string message)
         {
+            this._serviceBus.Send(this._serviceBus.Peers.First(), new HelloMessage { World = message });
+
             return this.RedirectToAction("index");
         }
     }

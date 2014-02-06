@@ -11,3 +11,10 @@
         <li>@endpoint.PeerAddress</li>
     }
 </ul>
+<h2>Send Message</h2>
+@using (this.Html.BeginForm("sendmessage", "home"))
+{
+    <br />
+    @Html.TextBox("message")
+    <button type="submit">Send</button>
+}

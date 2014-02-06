@@ -143,7 +143,7 @@ namespace ServiceBus.Messaging
         /// <param name="key">The object to use as the key of the element to add.</param><param name="value">The object to use as the value of the element to add.</param><exception cref="T:System.ArgumentNullException"><paramref name="key"/> is null.</exception><exception cref="T:System.ArgumentException">An element with the same key already exists in the <see cref="T:System.Collections.Generic.IDictionary`2"/>.</exception><exception cref="T:System.NotSupportedException">The <see cref="T:System.Collections.Generic.IDictionary`2"/> is read-only.</exception>
         public void Add(string key, Type value)
         {
-            if (!value.IsAssignableFrom(typeof(IMessage)))
+            if (!typeof(IMessage).IsAssignableFrom(value))
             {
                 throw new InvalidOperationException("The type being added to the MessageTypeDictionary is not an IMessage.");
             }
@@ -152,6 +152,8 @@ namespace ServiceBus.Messaging
             {
                 throw new InvalidOperationException("Message types to be used by the MessageTypeDictionary must have a default constructor.");
             }
+
+            this._types.Add(key, value);
         }
 
         /// <summary>

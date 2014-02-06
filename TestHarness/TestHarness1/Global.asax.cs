@@ -13,6 +13,8 @@ namespace TestHarness1
     using ServiceBus.Transport.Http.Configuration;
     using ServiceBus.Web.Mvc.Configuration;
 
+    using TestHarness1.Messages;
+
     using TestHarness2;
 
     // Note: For instructions on enabling IIS6 or IIS7 classic mode, 
@@ -25,11 +27,16 @@ namespace TestHarness1
 
             WebApiConfig.Register(GlobalConfiguration.Configuration);
             FilterConfig.RegisterGlobalFilters(GlobalFilters.Filters);
+
+            var messageDictionary = new MessageTypeDictionary
+                                    {
+                                        { HelloMessage.HelloMessageType, typeof(HelloMessage) }
+                                    };
             
             var serviceBus =
                 ServiceBusBuilder.Configure()
                     .WithHostAddress(new Uri("http://localhost:55001"))
-                    .WithHttpTransport(new JsonMessageSerialiser())
+                    .WithHttpTransport(new JsonMessageSerialiser(messageDictionary))
                     .AsMvcServiceBus(RouteTable.Routes)
                     .WithPeer(new Uri("http://localhost:55033"))
                     .Build();

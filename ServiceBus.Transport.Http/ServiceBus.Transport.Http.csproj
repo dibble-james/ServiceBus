@@ -51,6 +51,7 @@
   <ItemGroup>
     <Compile Include="Configuration\ServiceBusBuilderExtensions.cs" />
     <Compile Include="Controllers\MessageController.cs" />
+    <Compile Include="Controllers\ServiceBusController.cs" />
     <Compile Include="HttpTransporter.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

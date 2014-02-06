@@ -6,6 +6,8 @@
 namespace ServiceBus.Messaging
 {
     using System;
+    using System.Linq;
+    using System.Reflection;
 
     using Newtonsoft.Json;
 
@@ -30,7 +32,7 @@ namespace ServiceBus.Messaging
         {
             dynamic messageFromJson = JsonConvert.DeserializeObject(messageContent);
 
-            var messageTypeName = messageFromJson.MessageType as string;
+            var messageTypeName = messageFromJson.MessageType.ToString();
 
             if (!this._messageTypeDictionary.ContainsKey(messageTypeName))
             {
@@ -51,7 +53,15 @@ namespace ServiceBus.Messaging
 
         private IMessage ConvertToMessage(string messageContent, Type messageType)
         {
-            var method = typeof(JsonConvert).GetMethod("DeserializeObject").MakeGenericMethod(messageType);
+            var method = 
+                typeof(JsonConvert)
+                    .GetMethods(BindingFlags.Public | BindingFlags.Static | BindingFlags.InvokeMethod)
+                    .First(
+                    m => m.IsGenericMethod 
+                        && m.Name == "DeserializeObject" 
+                        && m.GetParameters().Count() == 1
+                        && m.GetParameters().Count(p => p.ParameterType == typeof(string)) == 1)
+                    .MakeGenericMethod(messageType);
 
             var message = method.Invoke(null, new object[] { messageContent });
 

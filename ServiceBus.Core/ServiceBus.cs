@@ -2,6 +2,7 @@
 {
     using System;
     using System.Collections.Generic;
+    using System.Threading.Tasks;
 
     using Messaging;
 
@@ -45,6 +46,15 @@
             {
                 return this._transport.Serialiser;
             }
+        }
+
+        public void Recieve(IMessage message)
+        {
+        }
+
+        public void Send(IPeer peer, IMessage message)
+        {
+            this._transport.SendMessage(peer, message);
         }
 
         public IEnumerable<IPeer> Peers

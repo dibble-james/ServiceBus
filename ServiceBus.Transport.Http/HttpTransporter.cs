@@ -1,5 +1,7 @@
 ﻿namespace ServiceBus.Transport.Http
 {
+    using System.Collections.Generic;
+
     using Messaging;
     using System;
     using System.IO;
@@ -31,9 +33,9 @@
         {
             const string action = "message";
 
-            var fullActionPath = Path.Combine(peerToRecieve.PeerAddress.AbsolutePath, HttpTransporter.actionBase, action);
+            var fullActionPath = new Uri(peerToRecieve.PeerAddress, Path.Combine(HttpTransporter.actionBase, action));
 
-            this.ExecutePostRequest(new Uri(fullActionPath), message);
+            this.ExecutePostRequest(fullActionPath, message);
         }
 
         private void ExecutePostRequest<TMessageOut>(Uri address, TMessageOut messageToPost)
@@ -41,7 +43,7 @@
         {
             var serialisedMessage = this.Serialiser.Serialise(messageToPost);
 
-            var content = new StringContent(serialisedMessage, Encoding.UTF8, "application/json");
+            var content = new FormUrlEncodedContent(new Dictionary<string, string> { { "message", serialisedMessage } });
 
             this._client.PostAsync(address, content);
         }
