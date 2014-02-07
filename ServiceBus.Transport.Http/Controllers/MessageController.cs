@@ -18,11 +18,11 @@ namespace ServiceBus.Transport.Http.Controllers
         }
 
         [HttpPost]
-        public ActionResult Recieve(string message)
+        public ActionResult Receive(string message)
         {
             var deserialisedMessage = this._serviceBus.Serialiser.Deserialise(message);
 
-            this._serviceBus.Recieve(deserialisedMessage);
+            this._serviceBus.Receive(deserialisedMessage);
 
             return new HttpStatusCodeResult(HttpStatusCode.OK);
         }

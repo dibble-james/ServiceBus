@@ -15,7 +15,7 @@
 
         IMessageSerialiser Serialiser { get; }
 
-        void Recieve(IMessage message);
+        void Receive(IMessage message);
 
         void Send(IPeer peer, IMessage message);
     }

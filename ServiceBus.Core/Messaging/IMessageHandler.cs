@@ -7,6 +7,11 @@ namespace ServiceBus.Messaging
 {
     public interface IMessageHandler
     {
-        string HandledMessageType { get; }
+        void ProcessMessage(IMessage message);
+    }
+
+    public interface IMessageHandler<in TMessage> : IEndpoint, IMessageHandler where TMessage : class, IMessage
+    {
+        void ProcessMessage(TMessage message);
     }
 }

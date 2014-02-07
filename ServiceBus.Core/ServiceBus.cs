@@ -4,6 +4,8 @@
     using System.Collections.Generic;
     using System.Threading.Tasks;
 
+    using global::ServiceBus.Routing;
+
     using Messaging;
 
     using Transport;
@@ -48,13 +50,14 @@
             }
         }
 
-        public void Recieve(IMessage message)
+        public void Receive(IMessage message)
         {
+            MessageRouter.RouteMessage(message, this.LocalEndpoints);
         }
 
         public void Send(IPeer peer, IMessage message)
         {
-            this._transport.SendMessage(peer, message);
+            Task.Factory.StartNew(() => this._transport.SendMessage(peer, message));
         }
 
         public IEnumerable<IPeer> Peers

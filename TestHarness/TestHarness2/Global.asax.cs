@@ -11,6 +11,7 @@ namespace TestHarness2
     using ServiceBus.Transport.Http.Configuration;
     using ServiceBus.Web.Mvc.Configuration;
 
+    using TestHarness2.MessageHandlers;
     using TestHarness2.Messages;
 
     // Note: For instructions on enabling IIS6 or IIS7 classic mode, 
@@ -34,7 +35,7 @@ namespace TestHarness2
                     .WithHostAddress(new Uri("http://localhost:55033"))
                     .WithHttpTransport(new JsonMessageSerialiser(messageDictionary))
                     .AsMvcServiceBus(RouteTable.Routes)
-                    .WithLocalEndpoint(new Endpoint(new Uri("http://localhost:55033/endpoint")))
+                    .WithLocalEndpoint(new HelloMessageHandler())
                     .Build();
 
             RouteConfig.RegisterRoutes(RouteTable.Routes);
