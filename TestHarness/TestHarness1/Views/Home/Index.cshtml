@@ -11,9 +11,18 @@
         <li>@endpoint.PeerAddress</li>
     }
 </ul>
-<h2>Send Message</h2>
+<h2>Send Messages</h2>
 @using (this.Html.BeginForm("sendmessage", "home"))
 {
+    <p>Say Hello</p>
+    <br />
+    @Html.TextBox("message")
+    <button type="submit">Send</button>
+}
+
+@using (this.Html.BeginForm("sendgoodbyemessage", "home"))
+{
+    <p>Say Goodbye</p>
     <br />
     @Html.TextBox("message")
     <button type="submit">Send</button>

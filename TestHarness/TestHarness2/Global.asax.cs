@@ -27,7 +27,8 @@ namespace TestHarness2
 
             var messageDictionary = new MessageTypeDictionary
                                     {
-                                        { HelloMessage.HelloMessageType, typeof(HelloMessage) }
+                                        { HelloMessage.HelloMessageType, typeof(HelloMessage) },
+                                        { GoodbyeMessage.GoodbyeMessageType, typeof(GoodbyeMessage) }
                                     };
             
             var serviceBus =
@@ -36,6 +37,7 @@ namespace TestHarness2
                     .WithHttpTransport(new JsonMessageSerialiser(messageDictionary))
                     .AsMvcServiceBus(RouteTable.Routes)
                     .WithLocalEndpoint(new HelloMessageHandler())
+                    .WithLocalEndpoint(new GoodbyeMessageHandler())
                     .Build();
 
             RouteConfig.RegisterRoutes(RouteTable.Routes);

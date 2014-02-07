@@ -33,5 +33,13 @@ namespace TestHarness1.Controllers
 
             return this.RedirectToAction("index");
         }
+
+        [HttpPost]
+        public ActionResult SendGoodbyeMessage(string message)
+        {
+            this._serviceBus.Send(this._serviceBus.Peers.First(), new GoodbyeMessage { Planet = message });
+
+            return this.RedirectToAction("index");
+        }
     }
 }
