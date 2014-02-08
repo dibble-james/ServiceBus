@@ -72,12 +72,6 @@
               <templateBindingHasTemplateParameterSubstitution>
                 <templateParameterSubstitution
                   Id="85c60001-dd59-42f5-8b5f-4e2b38a6e298">
-                  <actuals>
-                    <undefinedTypeMoniker
-                      Id="eda53782-ea69-4be7-89dc-7ba8bf79b8db"
-                      LastKnownName="TMessage"
-                      LastKnownLocation="Package9_1219.uml" />
-                  </actuals>
                   <formal>
                     <classifierTemplateParameterMoniker
                       Id="b89196ce-1367-420a-af60-f1cdc8f8d29d"

@@ -101,6 +101,23 @@
     <Content Include="ModelDefinition\Package_1219.uml">
       <SubType>Content</SubType>
     </Content>
+    <Content Include="ModelDefinition\Package_1818.uml">
+      <SubType>Content</SubType>
+    </Content>
+    <Content Include="Routing.classdiagram">
+      <SubType>Content</SubType>
+    </Content>
+    <Content Include="Routing.classdiagram.layout">
+      <SubType>Content</SubType>
+      <DependentUpon>Routing.classdiagram</DependentUpon>
+    </Content>
+    <Content Include="Serialisation.classdiagram">
+      <SubType>Content</SubType>
+    </Content>
+    <Content Include="Serialisation.classdiagram.layout">
+      <SubType>Content</SubType>
+      <DependentUpon>Serialisation.classdiagram</DependentUpon>
+    </Content>
     <Content Include="ServiceBus.classdiagram">
       <SubType>Content</SubType>
     </Content>
