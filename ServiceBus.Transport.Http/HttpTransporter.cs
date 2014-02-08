@@ -14,10 +14,14 @@
         private readonly HttpClient _client;
         private readonly IMessageSerialiser _serialiser;
 
+        private bool _disposed;
+
         public HttpTransporter(HttpClient client, IMessageSerialiser serialiser)
         {
             this._client = client;
             this._serialiser = serialiser;
+
+            this._disposed = false;
         }
 
         public IMessageSerialiser Serialiser
@@ -57,6 +61,26 @@
             }
 
             return this._serialiser.Deserialise(response.Result.Content.ReadAsStringAsync().Result);
+        }
+
+        public void Dispose()
+        {
+            if (!this._disposed)
+            {
+                this.Dispose(true);
+            }
+        }
+
+        private void Dispose(bool disposing)
+        {
+            if (!disposing)
+            {
+                return;
+            }
+
+            this._client.Dispose();
+
+            GC.SuppressFinalize(this);
         }
     }
 }

@@ -10,7 +10,7 @@ namespace ServiceBus.Event
         void Handle(IEvent @event);
     }
 
-    public interface IEventHandler<in TEvent> : IEndpoint where TEvent : class, IEvent
+    public interface IEventHandler<in TEvent> : IEndpoint, IEventHandler where TEvent : class, IEvent
     {
         void Handle(TEvent @event);
     }

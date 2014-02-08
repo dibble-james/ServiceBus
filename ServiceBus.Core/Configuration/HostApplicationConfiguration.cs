@@ -23,7 +23,7 @@
 
         public IServiceBus Build()
         {
-            return new Bus(this._transportConfiguration.HostAddressConfiguration.HostAddress, this._transportConfiguration.Transporter, this._endpoints, this._peers);
+            return new Bus(this._transportConfiguration.HostAddressConfiguration.HostAddress, this._transportConfiguration.Transporter, this._endpoints, this._peers, this._eventHandlers);
         }
 
         public IHostApplicationConfiguration WithPeer(Uri peer)
@@ -43,7 +43,9 @@
         public IHostApplicationConfiguration Subscribe<TEvent>(IEventHandler<TEvent> eventHandler)
             where TEvent : class, IEvent
         {
-            
+            this._eventHandlers.Add(eventHandler);
+
+            return this;
         }
     }
 }

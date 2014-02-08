@@ -6,7 +6,7 @@
     using ServiceBus.Event;
     using ServiceBus.Messaging;
 
-    public interface IServiceBus
+    public interface IServiceBus : IDisposable
     {
         Uri HostAddress { get; }
 

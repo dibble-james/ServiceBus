@@ -1,8 +1,10 @@
 ﻿namespace ServiceBus.Transport
 {
+    using System;
+
     using ServiceBus.Messaging;
 
-    public interface ITransporter
+    public interface ITransporter : IDisposable
     {
         IMessageSerialiser Serialiser { get; }
 

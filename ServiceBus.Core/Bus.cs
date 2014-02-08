@@ -2,6 +2,7 @@
 {
     using System;
     using System.Collections.Generic;
+    using System.Linq;
     using System.Threading.Tasks;
 
     using ServiceBus.Event;
@@ -19,7 +20,9 @@
         private readonly ICollection<IEventHandler> _eventHandlers;
         private readonly object _eventHandlersLock;
 
-        public Bus(Uri hostAddress, ITransporter transporter, IEnumerable<IEndpoint> endpoints, IEnumerable<IPeer> peers)
+        private bool _disposed;
+
+        public Bus(Uri hostAddress, ITransporter transporter, IEnumerable<IEndpoint> endpoints, IEnumerable<IPeer> peers, ICollection<IEventHandler> eventHandlers)
         {
             this._peersLock = new object();
             this._endpointsLock = new object();
@@ -29,6 +32,9 @@
             this._endpoints = endpoints;
             this._peers = peers;
             this._transport = transporter;
+            this._eventHandlers = eventHandlers;
+
+            this._disposed = false;
         }
 
         public Uri HostAddress { get; private set; }
@@ -54,7 +60,14 @@
 
         public void Receive(IMessage message)
         {
-            MessageRouter.RouteMessage(message, this.LocalEndpoints);
+            if (message is IEvent)
+            {
+                MessageRouter.HandleEvent(message as IEvent, this._eventHandlers);
+            }
+            else
+            {
+                MessageRouter.RouteMessage(message, this.LocalEndpoints);   
+            }
         }
 
         public void Send(IPeer peer, IMessage message)
@@ -64,12 +77,19 @@
 
         public void Publish<TEvent>(TEvent @event) where TEvent : class, IEvent
         {
-            throw new NotImplementedException();
+            MessageRouter.HandleEvent(@event, this.EventHandlers);
+
+            foreach (var peer in Peers)
+            {
+                var peerPointer = peer;
+
+                Task.Factory.StartNew(() => this._transport.SendMessage(peerPointer, @event));
+            }
         }
 
         public void Subscribe<TEvent>(IEventHandler<TEvent> eventHandler) where TEvent : class, IEvent
         {
-            throw new NotImplementedException();
+            this.EventHandlers.Add(eventHandler);
         }
 
         public IEnumerable<IPeer> Peers
@@ -81,6 +101,50 @@
                     return this._peers;
                 }
             }
+        }
+
+        private ICollection<IEventHandler> EventHandlers
+        {
+            get
+            {
+                lock (this._eventHandlersLock)
+                {
+                    return this._eventHandlers;
+                }
+            }
+        }
+
+        /// <summary>
+        /// Performs application-defined tasks associated with freeing, releasing, or resetting unmanaged resources.
+        /// </summary>
+        public void Dispose()
+        {
+            if (!this._disposed)
+            {
+                this.Dispose(true);
+            }
+        }
+
+        private void Dispose(bool disposing)
+        {
+            if (!disposing)
+            {
+                return;
+            }
+
+            this._transport.Dispose();
+
+            foreach (var eventHandler in this.EventHandlers.OfType<IDisposable>())
+            {
+                eventHandler.Dispose();
+            }
+
+            foreach (var localEndpoint in this.LocalEndpoints.OfType<IDisposable>())
+            {
+                localEndpoint.Dispose();
+            }
+
+            this._disposed = true;
         }
     }
 }
