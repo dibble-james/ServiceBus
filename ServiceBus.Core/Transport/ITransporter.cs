@@ -1,6 +1,6 @@
 ﻿namespace ServiceBus.Transport
 {
-    using Messaging;
+    using ServiceBus.Messaging;
 
     public interface ITransporter
     {

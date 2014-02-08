@@ -1,6 +1,6 @@
 ﻿namespace ServiceBus.Configuration
 {
-    using Transport;
+    using ServiceBus.Transport;
 
     public interface ITransportConfiguration
     {

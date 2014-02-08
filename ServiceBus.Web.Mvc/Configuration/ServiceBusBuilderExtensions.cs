@@ -4,7 +4,7 @@
     using System.Web.Routing;
     using Transport.Http.Controllers;
 
-    using global::ServiceBus.Configuration;
+    using ServiceBus.Configuration;
 
     public static class ServiceBusBuilderExtensions
     {

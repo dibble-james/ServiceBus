@@ -9,7 +9,7 @@ namespace ServiceBus.Routing
     using System.Linq;
     using System.Threading.Tasks;
 
-    using Messaging;
+    using ServiceBus.Messaging;
 
     internal static class MessageRouter
     {

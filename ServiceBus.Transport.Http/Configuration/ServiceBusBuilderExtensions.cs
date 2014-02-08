@@ -1,9 +1,9 @@
 ﻿namespace ServiceBus.Transport.Http.Configuration
 {
-    using global::ServiceBus.Configuration;
     using System.Net.Http;
 
-    using global::ServiceBus.Messaging;
+    using ServiceBus.Configuration;
+    using ServiceBus.Messaging;
 
     public static class ServiceBusBuilderExtensions
     {

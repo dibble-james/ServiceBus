@@ -1,6 +1,6 @@
-﻿namespace ServiceBus.Transport.Http.Configuration
+﻿namespace ServiceBus.Configuration
 {
-    using global::ServiceBus.Configuration;
+    using ServiceBus.Transport;
 
     public class TransportConfiguration : ITransportConfiguration
     {

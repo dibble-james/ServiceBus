@@ -4,24 +4,26 @@
     using System.Collections.Generic;
     using System.Threading.Tasks;
 
-    using global::ServiceBus.Routing;
+    using ServiceBus.Event;
+    using ServiceBus.Routing;
+    using ServiceBus.Messaging;
+    using ServiceBus.Transport;
 
-    using Messaging;
-
-    using Transport;
-
-    public sealed class ServiceBus : IServiceBus
+    public sealed class Bus : IServiceBus
     {
         private readonly IEnumerable<IPeer> _peers;
         private readonly object _peersLock;
         private readonly IEnumerable<IEndpoint> _endpoints;
         private readonly object _endpointsLock;
         private readonly ITransporter _transport;
+        private readonly ICollection<IEventHandler> _eventHandlers;
+        private readonly object _eventHandlersLock;
 
-        public ServiceBus(Uri hostAddress, ITransporter transporter, IEnumerable<IEndpoint> endpoints, IEnumerable<IPeer> peers)
+        public Bus(Uri hostAddress, ITransporter transporter, IEnumerable<IEndpoint> endpoints, IEnumerable<IPeer> peers)
         {
             this._peersLock = new object();
             this._endpointsLock = new object();
+            this._eventHandlersLock = new object();
 
             this.HostAddress = hostAddress;
             this._endpoints = endpoints;
@@ -58,6 +60,16 @@
         public void Send(IPeer peer, IMessage message)
         {
             Task.Factory.StartNew(() => this._transport.SendMessage(peer, message));
+        }
+
+        public void Publish<TEvent>(TEvent @event) where TEvent : class, IEvent
+        {
+            throw new NotImplementedException();
+        }
+
+        public void Subscribe<TEvent>(IEventHandler<TEvent> eventHandler) where TEvent : class, IEvent
+        {
+            throw new NotImplementedException();
         }
 
         public IEnumerable<IPeer> Peers

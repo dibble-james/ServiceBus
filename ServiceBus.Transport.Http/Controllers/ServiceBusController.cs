@@ -8,7 +8,7 @@ namespace ServiceBus.Transport.Http.Controllers
     using System.Text;
     using System.Web.Mvc;
 
-    using Messaging;
+    using ServiceBus.Messaging;
 
     using Newtonsoft.Json;
 
