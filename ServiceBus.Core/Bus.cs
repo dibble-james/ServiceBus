@@ -22,7 +22,12 @@
 
         private bool _disposed;
 
-        public Bus(Uri hostAddress, ITransporter transporter, IEnumerable<IEndpoint> endpoints, IEnumerable<IPeer> peers, ICollection<IEventHandler> eventHandlers)
+        public Bus(
+            Uri hostAddress, 
+            ITransporter transporter, 
+            IEnumerable<IEndpoint> endpoints, 
+            IEnumerable<IPeer> peers, 
+            ICollection<IEventHandler> eventHandlers)
         {
             this._peersLock = new object();
             this._endpointsLock = new object();
@@ -58,11 +63,27 @@
             }
         }
 
+        public IEnumerable<IPeer> Peers
+        {
+            get
+            {
+                lock (this._peersLock)
+                {
+                    return this._peers;
+                }
+            }
+        }
+
         public void Receive(IMessage message)
         {
+            if(message == null)
+            {
+                return;
+            }
+
             if (message is IEvent)
             {
-                MessageRouter.HandleEvent(message as IEvent, this._eventHandlers);
+                MessageRouter.HandleEvent(message as IEvent, this.EventHandlers);
             }
             else
             {
@@ -92,14 +113,14 @@
             this.EventHandlers.Add(eventHandler);
         }
 
-        public IEnumerable<IPeer> Peers
+        /// <summary>
+        /// Performs application-defined tasks associated with freeing, releasing, or resetting unmanaged resources.
+        /// </summary>
+        public void Dispose()
         {
-            get
+            if (!this._disposed)
             {
-                lock (this._peersLock)
-                {
-                    return this._peers;
-                }
+                this.Dispose(true);
             }
         }
 
@@ -111,17 +132,6 @@
                 {
                     return this._eventHandlers;
                 }
-            }
-        }
-
-        /// <summary>
-        /// Performs application-defined tasks associated with freeing, releasing, or resetting unmanaged resources.
-        /// </summary>
-        public void Dispose()
-        {
-            if (!this._disposed)
-            {
-                this.Dispose(true);
             }
         }
 

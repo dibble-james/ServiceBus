@@ -126,6 +126,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Bootstrapper.cs" />
+    <Compile Include="Events\HelloEvent.cs" />
+    <Compile Include="EventHandlers\HelloEventHandler.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>

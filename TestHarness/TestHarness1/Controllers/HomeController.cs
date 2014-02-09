@@ -5,11 +5,13 @@
 // --------------------------------------------------------------------------------------------------------------------
 namespace TestHarness1.Controllers
 {
+    using System;
     using System.Linq;
     using System.Web.Mvc;
 
     using ServiceBus;
 
+    using TestHarness1.Events;
     using TestHarness1.Messages;
 
     public class HomeController : Controller
@@ -38,6 +40,14 @@ namespace TestHarness1.Controllers
         public ActionResult SendGoodbyeMessage(string message)
         {
             this._serviceBus.Send(this._serviceBus.Peers.First(), new GoodbyeMessage { Planet = message });
+
+            return this.RedirectToAction("index");
+        }
+
+        [HttpPost]
+        public ActionResult RaiseHelloEvent()
+        {
+            this._serviceBus.Publish(new HelloEvent { EventRaised = DateTime.Now });
 
             return this.RedirectToAction("index");
         }

@@ -5,12 +5,13 @@ using System.Web.Routing;
 
 namespace TestHarness2
 {
-    using ServiceBus;
     using ServiceBus.Configuration;
     using ServiceBus.Messaging;
     using ServiceBus.Transport.Http.Configuration;
     using ServiceBus.Web.Mvc.Configuration;
 
+    using TestHarness2.EventHandlers;
+    using TestHarness2.Events;
     using TestHarness2.MessageHandlers;
     using TestHarness2.Messages;
 
@@ -28,7 +29,8 @@ namespace TestHarness2
             var messageDictionary = new MessageTypeDictionary
                                     {
                                         { HelloMessage.HelloMessageType, typeof(HelloMessage) },
-                                        { GoodbyeMessage.GoodbyeMessageType, typeof(GoodbyeMessage) }
+                                        { GoodbyeMessage.GoodbyeMessageType, typeof(GoodbyeMessage) },
+                                        { HelloEvent.HelloEventType, typeof(HelloEvent) }
                                     };
             
             var serviceBus =
@@ -38,6 +40,7 @@ namespace TestHarness2
                     .AsMvcServiceBus(RouteTable.Routes)
                     .WithLocalEndpoint(new HelloMessageHandler())
                     .WithLocalEndpoint(new GoodbyeMessageHandler())
+                    .Subscribe(new HelloEventHandler())
                     .Build();
 
             RouteConfig.RegisterRoutes(RouteTable.Routes);

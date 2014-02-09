@@ -27,3 +27,10 @@
     @Html.TextBox("message")
     <button type="submit">Send</button>
 }
+<h2>Raise Events</h2>
+@using (this.Html.BeginForm("raisehelloevent", "home"))
+{
+    <p>Raise Hello</p>
+    <br />
+    <button type="submit">Raise</button>
+}
