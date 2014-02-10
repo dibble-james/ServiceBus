@@ -9,6 +9,7 @@
     using ServiceBus.Routing;
     using ServiceBus.Messaging;
     using ServiceBus.Transport;
+    using ServiceBus.Queueing;
 
     public sealed class Bus : IServiceBus
     {
@@ -19,12 +20,14 @@
         private readonly ITransporter _transport;
         private readonly ICollection<IEventHandler> _eventHandlers;
         private readonly object _eventHandlersLock;
+        private readonly IQueueManager _queueManager;
 
         private bool _disposed;
 
         public Bus(
             Uri hostAddress, 
             ITransporter transporter, 
+            IQueueManager queueManager,
             IEnumerable<IEndpoint> endpoints, 
             IEnumerable<IPeer> peers, 
             ICollection<IEventHandler> eventHandlers)
@@ -34,10 +37,13 @@
             this._eventHandlersLock = new object();
 
             this.HostAddress = hostAddress;
+            
             this._endpoints = endpoints;
-            this._peers = peers;
-            this._transport = transporter;
             this._eventHandlers = eventHandlers;
+            this._peers = peers;
+
+            this._transport = transporter;
+            this._queueManager = queueManager;
 
             this._disposed = false;
         }
@@ -91,9 +97,9 @@
             }
         }
 
-        public void Send(IPeer peer, IMessage message)
+        public void Send<TMessage>(IPeer peer, TMessage message) where TMessage : class, IMessage, new()
         {
-            Task.Factory.StartNew(() => this._transport.SendMessage(peer, message));
+            this._queueManager.Enqueue(peer, message);
         }
 
         public void Publish<TEvent>(TEvent @event) where TEvent : class, IEvent
@@ -141,6 +147,8 @@
             {
                 return;
             }
+
+            this._queueManager.Dispose();
 
             this._transport.Dispose();
 

@@ -5,6 +5,8 @@
     using Transport.Http.Controllers;
 
     using ServiceBus.Configuration;
+    using System.Web;
+    using System.IO;
 
     public static class ServiceBusBuilderExtensions
     {
@@ -16,7 +18,14 @@
                 new { controller = "Message", action = "Receive" },
                 new string[] { typeof(MessageController).Namespace });
 
-            return new HostApplicationConfiguration(transportConfiguration);
+            var appDataPath = HttpContext.Current.Server.MapPath("~/App_Data");
+
+            if (!Directory.Exists(appDataPath))
+            {
+                Directory.CreateDirectory(appDataPath);
+            }
+
+            return new HostApplicationConfiguration(transportConfiguration, appDataPath);
         }
     }
 }

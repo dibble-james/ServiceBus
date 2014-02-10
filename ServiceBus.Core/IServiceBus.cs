@@ -18,7 +18,7 @@
 
         void Receive(IMessage message);
 
-        void Send(IPeer peer, IMessage message);
+        void Send<TMessage>(IPeer peer, TMessage message) where TMessage : class, IMessage, new();
 
         void Publish<TEvent>(TEvent @event) where TEvent : class, IEvent;
 

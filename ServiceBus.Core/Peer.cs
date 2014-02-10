@@ -9,6 +9,6 @@
             this.PeerAddress = address;
         }
 
-        public Uri PeerAddress { get; private set; }
+        public Uri PeerAddress { get; set; }
     }
 }
