@@ -5,6 +5,8 @@
 // --------------------------------------------------------------------------------------------------------------------
 namespace ServiceBus.Messaging
 {
+    using ServiceBus.Events;
+
     public interface IMessageHandler
     {
         void ProcessMessage(IMessage message);

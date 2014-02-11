@@ -3,14 +3,14 @@
     using ServiceBus.Messaging;
     using System;
 
-    internal class QueuedMessage
+    public class QueuedMessage
     {
-        internal DateTime QueuedAt { get; set; }
+        public DateTime QueuedAt { get; set; }
 
-        internal IPeer Peer { get; set; }
+        public IPeer Peer { get; set; }
 
-        internal IMessage Message { get; set; }
+        public IMessage Message { get; set; }
 
-        internal bool HasSent { get; set; }
+        public bool HasSent { get; set; }
     }
 }

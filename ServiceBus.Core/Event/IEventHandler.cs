@@ -5,6 +5,8 @@
 // --------------------------------------------------------------------------------------------------------------------
 namespace ServiceBus.Event
 {
+    using ServiceBus.Events;
+
     public interface IEventHandler
     {
         void Handle(IEvent @event);

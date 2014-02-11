@@ -10,6 +10,7 @@
     using ServiceBus.Messaging;
     using ServiceBus.Transport;
     using ServiceBus.Queueing;
+    using ServiceBus.Events;
 
     public sealed class Bus : IServiceBus
     {
@@ -21,31 +22,37 @@
         private readonly ICollection<IEventHandler> _eventHandlers;
         private readonly object _eventHandlersLock;
         private readonly IQueueManager _queueManager;
+        private readonly MessageRouter _messageRouter;
 
         private bool _disposed;
 
         public Bus(
-            Uri hostAddress, 
-            ITransporter transporter, 
+            Uri hostAddress,
+            ITransporter transporter,
             IQueueManager queueManager,
-            IEnumerable<IEndpoint> endpoints, 
-            IEnumerable<IPeer> peers, 
+            IEnumerable<IEndpoint> endpoints,
+            IEnumerable<IPeer> peers,
             ICollection<IEventHandler> eventHandlers)
         {
+            this._disposed = false;
+
             this._peersLock = new object();
             this._endpointsLock = new object();
             this._eventHandlersLock = new object();
 
             this.HostAddress = hostAddress;
-            
+
             this._endpoints = endpoints;
             this._eventHandlers = eventHandlers;
             this._peers = peers;
 
             this._transport = transporter;
             this._queueManager = queueManager;
+            this._messageRouter = new MessageRouter(this.LocalEndpoints, this.EventHandlers);
 
-            this._disposed = false;
+            this._queueManager.MessageQueued += this._transport.SendMessage;
+            this._transport.MessageSent += this._queueManager.Dequeue;
+            this._transport.MessageRecieved += this._messageRouter.RouteMessage;
         }
 
         public Uri HostAddress { get; private set; }
@@ -69,6 +76,14 @@
             }
         }
 
+        public ITransporter Transporter
+        {
+            get
+            {
+                return this._transport;
+            }
+        }
+
         public IEnumerable<IPeer> Peers
         {
             get
@@ -80,45 +95,25 @@
             }
         }
 
-        public void Receive(IMessage message)
-        {
-            if(message == null)
-            {
-                return;
-            }
-
-            if (message is IEvent)
-            {
-                MessageRouter.HandleEvent(message as IEvent, this.EventHandlers);
-            }
-            else
-            {
-                MessageRouter.RouteMessage(message, this.LocalEndpoints);   
-            }
-        }
-
         public void Send<TMessage>(IPeer peer, TMessage message) where TMessage : class, IMessage, new()
         {
             this._queueManager.Enqueue(peer, message);
-
-            var dequeuedMessage = this._queueManager.Dequeue(peer);
-
-            this._transport.SendMessage(peer, dequeuedMessage);
         }
 
-        public void Publish<TEvent>(TEvent @event) where TEvent : class, IEvent
+        public void Publish<TEvent>(TEvent @event) where TEvent : class, IEvent, new()
         {
-            MessageRouter.HandleEvent(@event, this.EventHandlers);
-
-            foreach (var peer in Peers)
+            foreach(var handler in this.EventHandlers.OfType<IEventHandler<TEvent>>())
             {
-                var peerPointer = peer;
+                handler.Handle(@event);
+            }
 
-                Task.Factory.StartNew(() => this._transport.SendMessage(peerPointer, @event));
+            foreach (var peer in this.Peers)
+            {
+                this._queueManager.Enqueue(peer, @event);
             }
         }
 
-        public void Subscribe<TEvent>(IEventHandler<TEvent> eventHandler) where TEvent : class, IEvent
+        public void Subscribe<TEvent>(IEventHandler<TEvent> eventHandler) where TEvent : class, IEvent, new()
         {
             this.EventHandlers.Add(eventHandler);
         }

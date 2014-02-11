@@ -20,9 +20,7 @@ namespace ServiceBus.Transport.Http.Controllers
         [HttpPost]
         public ActionResult Receive(string message)
         {
-            var deserialisedMessage = this._serviceBus.Serialiser.Deserialise(message);
-
-            this._serviceBus.Receive(deserialisedMessage);
+            this._serviceBus.Transporter.Receive(message);
 
             return new HttpStatusCodeResult(HttpStatusCode.OK);
         }

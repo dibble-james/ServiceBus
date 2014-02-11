@@ -8,12 +8,16 @@
     using ServiceBus.Messaging;
     using System;
     using System.IO;
+    using ServiceBus.Events;
+    using System.Threading.Tasks;
 
     internal class QueueManager : IQueueManager
     {
         private bool _disposed;
 
         private readonly IObjectContainer _queuePersistence;
+
+        public event EventHandler<MessageQueuedEventArgs> MessageQueued;
 
         public QueueManager(string storeDirectory)
         {
@@ -31,16 +35,48 @@
             this._queuePersistence.Store(queuedMessage);
 
             this._queuePersistence.Commit();
+
+            if (this.MessageQueued != null)
+            {
+                this.MessageQueued(this, new MessageQueuedEventArgs { MessageQueued = queuedMessage });
+            }
         }
 
-        public IMessage Dequeue(IPeer peer)
+        public void Dequeue(object sender, MessageSentEventArgs args)
+        {
+            this.Dequeue(args.MessageSent);
+        }
+
+        public void Dequeue(QueuedMessage message)
+        {
+            var queuedMessage = this._queuePersistence.AsQueryable<QueuedMessage>()
+                            .FirstOrDefault(qm => qm.QueuedAt == message.QueuedAt && qm.Peer == message.Peer && !message.HasSent);
+
+            if (queuedMessage == null)
+            {
+                throw new InvalidOperationException(
+                    string.Format(
+                        "Message for peer [{0}] queued at [{1}] with message type [{2}] has already been dequeued",
+                        message.Peer.PeerAddress.AbsoluteUri,
+                        message.QueuedAt,
+                        message.Message.MessageType));
+            }
+
+            queuedMessage.HasSent = true;
+
+            this._queuePersistence.Store(queuedMessage);
+
+            this._queuePersistence.Commit();
+        }
+
+        public QueuedMessage PeersNextMessageOrDefault(IPeer peer)
         {
             var nextMessage =
                 this._queuePersistence.AsQueryable<QueuedMessage>()
                     .OrderByDescending(qm => qm.QueuedAt)
                     .FirstOrDefault(qm => !qm.HasSent);
 
-            return nextMessage == null ? null : nextMessage.Message;
+            return nextMessage;
         }
 
         /// <summary>
