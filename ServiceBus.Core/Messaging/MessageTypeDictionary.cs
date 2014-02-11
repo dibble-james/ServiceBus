@@ -18,6 +18,82 @@ namespace ServiceBus.Messaging
             this._types = new Dictionary<string, Type>();
         }
 
+        /// <summary>
+        /// Gets an <see cref="T:System.Collections.Generic.ICollection`1"/> containing the keys of the <see cref="T:System.Collections.Generic.IDictionary`2"/>.
+        /// </summary>
+        /// <returns>
+        /// An <see cref="T:System.Collections.Generic.ICollection`1"/> containing the keys of the object that implements <see cref="T:System.Collections.Generic.IDictionary`2"/>.
+        /// </returns>
+        public ICollection<string> Keys
+        {
+            get
+            {
+                return this._types.Keys;
+            }
+        }
+
+        /// <summary>
+        /// Gets an <see cref="T:System.Collections.Generic.ICollection`1"/> containing the values in the <see cref="T:System.Collections.Generic.IDictionary`2"/>.
+        /// </summary>
+        /// <returns>
+        /// An <see cref="T:System.Collections.Generic.ICollection`1"/> containing the values in the object that implements <see cref="T:System.Collections.Generic.IDictionary`2"/>.
+        /// </returns>
+        public ICollection<Type> Values
+        {
+            get
+            {
+                return this._types.Values;
+            }
+        }
+
+        /// <summary>
+        /// Gets the number of elements contained in the <see cref="T:System.Collections.Generic.ICollection`1"/>.
+        /// </summary>
+        /// <returns>
+        /// The number of elements contained in the <see cref="T:System.Collections.Generic.ICollection`1"/>.
+        /// </returns>
+        public int Count
+        {
+            get
+            {
+                return this._types.Count;
+            }
+        }
+
+        /// <summary>
+        /// Gets a value indicating whether the <see cref="T:System.Collections.Generic.ICollection`1"/> is read-only.
+        /// </summary>
+        /// <returns>
+        /// true if the <see cref="T:System.Collections.Generic.ICollection`1"/> is read-only; otherwise, false.
+        /// </returns>
+        public bool IsReadOnly
+        {
+            get
+            {
+                return this._types.IsReadOnly;
+            }
+        }
+        
+        /// <summary>
+        /// Gets or sets the element with the specified key.
+        /// </summary>
+        /// <returns>
+        /// The element with the specified key.
+        /// </returns>
+        /// <param name="key">The key of the element to get or set.</param><exception cref="T:System.ArgumentNullException"><paramref name="key"/> is null.</exception><exception cref="T:System.Collections.Generic.KeyNotFoundException">The property is retrieved and <paramref name="key"/> is not found.</exception><exception cref="T:System.NotSupportedException">The property is set and the <see cref="T:System.Collections.Generic.IDictionary`2"/> is read-only.</exception>
+        public Type this[string key]
+        {
+            get
+            {
+                return this._types[key];
+            }
+
+            set
+            {
+                this._types[key] = value;
+            }
+        }
+
         public void Add<TMessage>(string key) where TMessage : IMessage, new()
         {
             this.Add(key, typeof(TMessage));
@@ -97,35 +173,6 @@ namespace ServiceBus.Messaging
         }
 
         /// <summary>
-        /// Gets the number of elements contained in the <see cref="T:System.Collections.Generic.ICollection`1"/>.
-        /// </summary>
-        /// <returns>
-        /// The number of elements contained in the <see cref="T:System.Collections.Generic.ICollection`1"/>.
-        /// </returns>
-        public int Count
-        {
-            get
-            {
-                return this._types.Count;
-            }
-        }
-
-        /// <summary>
-        /// Gets a value indicating whether the <see cref="T:System.Collections.Generic.ICollection`1"/> is read-only.
-        /// </summary>
-        /// <returns>
-        /// true if the <see cref="T:System.Collections.Generic.ICollection`1"/> is read-only; otherwise, false.
-        /// </returns>
-        public bool IsReadOnly
-        {
-            get
-            {
-                return this._types.IsReadOnly;
-            }
-
-        }
-
-        /// <summary>
         /// Determines whether the <see cref="T:System.Collections.Generic.IDictionary`2"/> contains an element with the specified key.
         /// </summary>
         /// <returns>
@@ -178,53 +225,6 @@ namespace ServiceBus.Messaging
         public bool TryGetValue(string key, out Type value)
         {
             return this._types.TryGetValue(key, out value);
-        }
-
-        /// <summary>
-        /// Gets or sets the element with the specified key.
-        /// </summary>
-        /// <returns>
-        /// The element with the specified key.
-        /// </returns>
-        /// <param name="key">The key of the element to get or set.</param><exception cref="T:System.ArgumentNullException"><paramref name="key"/> is null.</exception><exception cref="T:System.Collections.Generic.KeyNotFoundException">The property is retrieved and <paramref name="key"/> is not found.</exception><exception cref="T:System.NotSupportedException">The property is set and the <see cref="T:System.Collections.Generic.IDictionary`2"/> is read-only.</exception>
-        public Type this[string key]
-        {
-            get
-            {
-                return this._types[key];
-            }
-            set
-            {
-                this._types[key] = value;
-            }
-        }
-
-        /// <summary>
-        /// Gets an <see cref="T:System.Collections.Generic.ICollection`1"/> containing the keys of the <see cref="T:System.Collections.Generic.IDictionary`2"/>.
-        /// </summary>
-        /// <returns>
-        /// An <see cref="T:System.Collections.Generic.ICollection`1"/> containing the keys of the object that implements <see cref="T:System.Collections.Generic.IDictionary`2"/>.
-        /// </returns>
-        public ICollection<string> Keys
-        {
-            get
-            {
-                return this._types.Keys;
-            }
-        }
-
-        /// <summary>
-        /// Gets an <see cref="T:System.Collections.Generic.ICollection`1"/> containing the values in the <see cref="T:System.Collections.Generic.IDictionary`2"/>.
-        /// </summary>
-        /// <returns>
-        /// An <see cref="T:System.Collections.Generic.ICollection`1"/> containing the values in the object that implements <see cref="T:System.Collections.Generic.IDictionary`2"/>.
-        /// </returns>
-        public ICollection<Type> Values
-        {
-            get
-            {
-                return this._types.Values;
-            }
         }
     }
 }

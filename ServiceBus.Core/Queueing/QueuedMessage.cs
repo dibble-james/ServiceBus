@@ -1,7 +1,7 @@
 ﻿namespace ServiceBus.Queueing
 {
-    using ServiceBus.Messaging;
     using System;
+    using ServiceBus.Messaging;
 
     public class QueuedMessage
     {

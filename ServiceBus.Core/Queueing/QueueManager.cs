@@ -1,24 +1,19 @@
 ﻿namespace ServiceBus.Queueing
 {
-    using System.Linq;
-
-    using Db4objects.Db4o;
-    using Db4objects.Db4o.Linq;
-
-    using ServiceBus.Messaging;
     using System;
     using System.IO;
+    using System.Linq;
+    using Db4objects.Db4o;
+    using Db4objects.Db4o.Linq;
     using ServiceBus.Events;
-    using System.Threading.Tasks;
+    using ServiceBus.Messaging;
 
     internal class QueueManager : IQueueManager
     {
-        private bool _disposed;
-
         private readonly IObjectContainer _queuePersistence;
 
-        public event EventHandler<MessageQueuedEventArgs> MessageQueued;
-
+        private bool _disposed;
+                
         public QueueManager(string storeDirectory)
         {
             this._disposed = false;
@@ -27,6 +22,8 @@
 
             this._queuePersistence = Db4oEmbedded.OpenFile(databasePath);
         }
+
+        public event EventHandler<MessageQueuedEventArgs> MessageQueued;
 
         public void Enqueue<TMessage>(IPeer peer, TMessage message) where TMessage : class, IMessage, new()
         {

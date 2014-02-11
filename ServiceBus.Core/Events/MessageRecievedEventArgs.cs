@@ -1,7 +1,7 @@
 ﻿namespace ServiceBus.Events
 {
-    using ServiceBus.Messaging;
     using System;
+    using ServiceBus.Messaging;
 
     public class MessageRecievedEventArgs : EventArgs
     {

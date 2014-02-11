@@ -50,7 +50,6 @@ namespace ServiceBus.Routing
             }
         }
 
-
         private void HandleEvent(IEvent @event)
         {
             var eventHandlers = this._endpoints.Where(

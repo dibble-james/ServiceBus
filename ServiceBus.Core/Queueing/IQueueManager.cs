@@ -1,8 +1,8 @@
 ﻿namespace ServiceBus.Queueing
 {
+    using System;
     using ServiceBus.Events;
     using ServiceBus.Messaging;
-    using System;
 
     public interface IQueueManager : IDisposable
     {

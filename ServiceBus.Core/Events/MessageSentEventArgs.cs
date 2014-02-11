@@ -1,6 +1,5 @@
 ﻿namespace ServiceBus.Events
 {
-    using ServiceBus.Messaging;
     using System;
     using ServiceBus.Queueing;
 

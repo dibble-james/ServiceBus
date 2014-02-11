@@ -20,7 +20,7 @@ namespace ServiceBus.Transport.Http.Controllers
         [HttpPost]
         public ActionResult Receive(string message)
         {
-            this._serviceBus.Transporter.Receive(message);
+            this._serviceBus.Transporter.Recieve(message);
 
             return new HttpStatusCodeResult(HttpStatusCode.OK);
         }

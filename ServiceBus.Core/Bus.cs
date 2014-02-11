@@ -3,14 +3,12 @@
     using System;
     using System.Collections.Generic;
     using System.Linq;
-    using System.Threading.Tasks;
 
     using ServiceBus.Event;
-    using ServiceBus.Routing;
     using ServiceBus.Messaging;
-    using ServiceBus.Transport;
     using ServiceBus.Queueing;
-    using ServiceBus.Events;
+    using ServiceBus.Routing;
+    using ServiceBus.Transport;
 
     public sealed class Bus : IServiceBus
     {
@@ -94,6 +92,17 @@
                 }
             }
         }
+        
+        private ICollection<IEventHandler> EventHandlers
+        {
+            get
+            {
+                lock (this._eventHandlersLock)
+                {
+                    return this._eventHandlers;
+                }
+            }
+        }
 
         public void Send<TMessage>(IPeer peer, TMessage message) where TMessage : class, IMessage, new()
         {
@@ -102,7 +111,7 @@
 
         public void Publish<TEvent>(TEvent @event) where TEvent : class, IEvent, new()
         {
-            foreach(var handler in this.EventHandlers.OfType<IEventHandler<TEvent>>())
+            foreach (var handler in this.EventHandlers.OfType<IEventHandler<TEvent>>())
             {
                 handler.Handle(@event);
             }
@@ -126,17 +135,6 @@
             if (!this._disposed)
             {
                 this.Dispose(true);
-            }
-        }
-
-        private ICollection<IEventHandler> EventHandlers
-        {
-            get
-            {
-                lock (this._eventHandlersLock)
-                {
-                    return this._eventHandlers;
-                }
             }
         }
 

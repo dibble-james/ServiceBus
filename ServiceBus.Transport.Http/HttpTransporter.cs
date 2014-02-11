@@ -58,7 +58,7 @@
             }
         }
 
-        public void Receive(string messageContent)
+        public void Recieve(string messageContent)
         {
             var message = this.Serialiser.Deserialise(messageContent);
 
