@@ -6,5 +6,7 @@
     public interface IQueueManager : IDisposable
     {
         void Enqueue<TMessage>(IPeer peer, TMessage message) where TMessage : class, IMessage, new();
+
+        IMessage Dequeue(IPeer peer);
     }
 }

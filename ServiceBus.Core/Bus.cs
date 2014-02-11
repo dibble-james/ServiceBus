@@ -100,6 +100,10 @@
         public void Send<TMessage>(IPeer peer, TMessage message) where TMessage : class, IMessage, new()
         {
             this._queueManager.Enqueue(peer, message);
+
+            var dequeuedMessage = this._queueManager.Dequeue(peer);
+
+            this._transport.SendMessage(peer, dequeuedMessage);
         }
 
         public void Publish<TEvent>(TEvent @event) where TEvent : class, IEvent

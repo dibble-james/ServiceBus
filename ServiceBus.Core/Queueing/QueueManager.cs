@@ -1,6 +1,10 @@
 ﻿namespace ServiceBus.Queueing
 {
+    using System.Linq;
+
     using Db4objects.Db4o;
+    using Db4objects.Db4o.Linq;
+
     using ServiceBus.Messaging;
     using System;
     using System.IO;
@@ -22,11 +26,21 @@
 
         public void Enqueue<TMessage>(IPeer peer, TMessage message) where TMessage : class, IMessage, new()
         {
-            var queuedMessage = new QueuedMessage<TMessage> { QueuedAt = DateTime.Now, Peer = peer, Message = message, HasSent = false };
+            var queuedMessage = new QueuedMessage { QueuedAt = DateTime.Now, Peer = peer, Message = message, HasSent = false };
 
             this._queuePersistence.Store(queuedMessage);
 
             this._queuePersistence.Commit();
+        }
+
+        public IMessage Dequeue(IPeer peer)
+        {
+            var nextMessage =
+                this._queuePersistence.AsQueryable<QueuedMessage>()
+                    .OrderByDescending(qm => qm.QueuedAt)
+                    .FirstOrDefault(qm => !qm.HasSent);
+
+            return nextMessage == null ? null : nextMessage.Message;
         }
 
         /// <summary>
