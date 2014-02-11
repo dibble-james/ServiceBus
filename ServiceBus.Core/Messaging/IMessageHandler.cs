@@ -1,12 +1,5 @@
-﻿// --------------------------------------------------------------------------------------------------------------------
-// <copyright file="IMessageHandler.cs" company="James Dibble">
-//    Copyright 2012 James Dibble
-// </copyright>
-// --------------------------------------------------------------------------------------------------------------------
-namespace ServiceBus.Messaging
+﻿namespace ServiceBus.Messaging
 {
-    using ServiceBus.Events;
-
     /// <summary>
     /// DO NOT IMPLEMENT.  Always implement <see cref="IMessageHandler{TMessage}"/> so that it can be registered.
     /// </summary>
@@ -20,9 +13,9 @@ namespace ServiceBus.Messaging
     }
 
     /// <summary>
-    /// Implementing classes can be used to recieve messages of <typeparamref name="TMessage"/> type.
+    /// Implementing classes can be used to receive messages of <typeparamref name="TMessage"/> type.
     /// </summary>
-    /// <typeparam name="TMessage">The type of <see cref="IMessage"/> this <see cref="IMessageHandler{TMessage}"/> can recieve.</typeparam>
+    /// <typeparam name="TMessage">The type of <see cref="IMessage"/> this <see cref="IMessageHandler{TMessage}"/> can receive.</typeparam>
     public interface IMessageHandler<in TMessage> : IEndpoint, IMessageHandler where TMessage : class, IMessage
     {
         /// <summary>

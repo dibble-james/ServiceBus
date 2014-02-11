@@ -10,6 +10,10 @@
     using ServiceBus.Routing;
     using ServiceBus.Transport;
 
+    /// <summary>
+    /// An object for sending and receiving messages to and from other <see cref="IServiceBus"/> instances, and
+    /// invoking subscribers to <see cref="IEvent"/>s.
+    /// </summary>
     public sealed class Bus : IServiceBus
     {
         private readonly IEnumerable<IPeer> _peers;
@@ -24,6 +28,15 @@
 
         private bool _disposed;
 
+        /// <summary>
+        /// Initialises a new instance of the <see cref="Bus"/> class.
+        /// </summary>
+        /// <param name="hostAddress">The address this service bus can be reached.</param>
+        /// <param name="transporter">The protocol to use to communicate with other <see cref="IServiceBus"/>es</param>
+        /// <param name="queueManager">The message persistence service to use.</param>
+        /// <param name="endpoints">Any <see cref="IMessageHandler"/>s known before runtime.</param>
+        /// <param name="peers">Any known remote instances of <see cref="IServiceBus"/> known before runtime.</param>
+        /// <param name="eventHandlers">Any subscribed <see cref="IEventHandler"/>s known before runtime.</param>
         public Bus(
             Uri hostAddress,
             ITransporter transporter,
@@ -53,8 +66,14 @@
             this._transport.MessageRecieved += this._messageRouter.RouteMessage;
         }
 
+        /// <summary>
+        /// Gets the <see cref="System.Uri"/> that this <see cref="IServiceBus"/> is hosted upon.
+        /// </summary>
         public Uri HostAddress { get; private set; }
 
+        /// <summary>
+        /// Gets the <see cref="IEndpoint"/>s that are known to the <see cref="IServiceBus"/>.
+        /// </summary>
         public IEnumerable<IEndpoint> LocalEndpoints
         {
             get
@@ -66,6 +85,9 @@
             }
         }
 
+        /// <summary>
+        /// Gets the <see cref="IMessageSerialiser"/> that is registered to the <see cref="IServiceBus"/>es <see cref="ITransporter"/>.
+        /// </summary>
         public IMessageSerialiser Serialiser
         {
             get
@@ -74,6 +96,9 @@
             }
         }
 
+        /// <summary>
+        /// Gets the <see cref="ITransporter"/> that is registered to the <see cref="IServiceBus"/>.
+        /// </summary>
         public ITransporter Transporter
         {
             get
@@ -82,6 +107,9 @@
             }
         }
 
+        /// <summary>
+        /// Gets the <see cref="IPeer"/>s that are known to the <see cref="IServiceBus"/>.
+        /// </summary>
         public IEnumerable<IPeer> Peers
         {
             get
@@ -104,11 +132,22 @@
             }
         }
 
+        /// <summary>
+        /// Directly send an <paramref name="message"/> to a given <paramref name="peer"/>.
+        /// </summary>
+        /// <typeparam name="TMessage">The type of the <see cref="IMessage"/> to send.</typeparam>
+        /// <param name="peer">The peer who should receive the <paramref name="message"/>.</param>
+        /// <param name="message">The <see cref="IMessage"/> to send.</param>
         public void Send<TMessage>(IPeer peer, TMessage message) where TMessage : class, IMessage, new()
         {
             this._queueManager.Enqueue(peer, message);
         }
 
+        /// <summary>
+        /// Raise an instance of <typeparamref name="TEvent"/> to the <see cref="P:Peers"/>.
+        /// </summary>
+        /// <typeparam name="TEvent">The type of <see cref="IEvent"/> to raise.</typeparam>
+        /// <param name="event">The event data to publish.</param>
         public void Publish<TEvent>(TEvent @event) where TEvent : class, IEvent, new()
         {
             foreach (var handler in this.EventHandlers.OfType<IEventHandler<TEvent>>())
@@ -122,6 +161,11 @@
             }
         }
 
+        /// <summary>
+        /// Register an instance of an <see cref="IEventHandler{TEvent}"/> to the <see cref="IServiceBus"/> so it can handle a <typeparamref name="TEvent"/>.
+        /// </summary>
+        /// <typeparam name="TEvent">The type of event the <paramref name="eventHandler"/> handles.</typeparam>
+        /// <param name="eventHandler">The <see cref="IEventHandler{TEvent}"/> to register.</param>
         public void Subscribe<TEvent>(IEventHandler<TEvent> eventHandler) where TEvent : class, IEvent, new()
         {
             this.EventHandlers.Add(eventHandler);

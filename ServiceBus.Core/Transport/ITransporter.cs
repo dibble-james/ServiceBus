@@ -12,12 +12,12 @@
     public interface ITransporter : IDisposable
     {
         /// <summary>
-        /// An event raised when an <see cref="IMessage"/> is recieved by the <see cref="ITransporter"/>.
+        /// An event raised when an <see cref="IMessage"/> is received by the <see cref="ITransporter"/>.
         /// </summary>
         event EventHandler<MessageRecievedEventArgs> MessageRecieved;
 
         /// <summary>
-        /// An event raised when an <see cref="IMessage"/> is sucessfully exported.
+        /// An event raised when an <see cref="IMessage"/> is successfully exported.
         /// </summary>
         event EventHandler<MessageSentEventArgs> MessageSent;
 
@@ -27,7 +27,7 @@
         IMessageSerialiser Serialiser { get; }
 
         /// <summary>
-        /// Take the raw content of the message, deserialise it, and pass it back to the <see cref="IServiceBus"/>.
+        /// Take the raw content of the message, de-serialize it, and pass it back to the <see cref="IServiceBus"/>.
         /// </summary>
         /// <param name="messageContent">The raw content of the message.</param>
         void Recieve(string messageContent);
@@ -43,7 +43,7 @@
         /// Transport a <see cref="QueuedMessage"/>.
         /// </summary>
         /// <typeparam name="TMessage">The type of <see cref="IMessage"/> to transport.</typeparam>
-        /// <param name="peerToRecieve">The <see cref="IPeer"/> that should recieve the <paramref name="message"/>.</param>
+        /// <param name="peerToRecieve">The <see cref="IPeer"/> that should receive the <paramref name="message"/>.</param>
         /// <param name="message">The <see cref="IMessage"/> to transport.</param>
         void SendMessage<TMessage>(IPeer peerToRecieve, TMessage message) where TMessage : QueuedMessage;
     }

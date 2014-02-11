@@ -1,12 +1,5 @@
-﻿// --------------------------------------------------------------------------------------------------------------------
-// <copyright file="IEventHandler.cs" company="James Dibble">
-//    Copyright 2012 James Dibble
-// </copyright>
-// --------------------------------------------------------------------------------------------------------------------
-namespace ServiceBus.Event
+﻿namespace ServiceBus.Event
 {
-    using ServiceBus.Events;
-
     /// <summary>
     /// DO NOT IMPLEMENT.  Implement the generic IEventHandler to that it can be registered.
     /// </summary>

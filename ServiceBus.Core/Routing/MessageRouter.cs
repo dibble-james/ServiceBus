@@ -1,9 +1,4 @@
-﻿// --------------------------------------------------------------------------------------------------------------------
-// <copyright file="MessageRouter.cs" company="James Dibble">
-//    Copyright 2012 James Dibble
-// </copyright>
-// --------------------------------------------------------------------------------------------------------------------
-namespace ServiceBus.Routing
+﻿namespace ServiceBus.Routing
 {
     using System.Collections.Generic;
     using System.Linq;

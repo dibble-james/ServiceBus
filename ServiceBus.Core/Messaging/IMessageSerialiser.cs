@@ -1,9 +1,4 @@
-﻿// --------------------------------------------------------------------------------------------------------------------
-// <copyright file="IMessageTransformer.cs" company="James Dibble">
-//    Copyright 2012 James Dibble
-// </copyright>
-// --------------------------------------------------------------------------------------------------------------------
-namespace ServiceBus.Messaging
+﻿namespace ServiceBus.Messaging
 {
     /// <summary>
     /// Implementing classes define methods to transform message data to or from raw strings.
@@ -19,7 +14,7 @@ namespace ServiceBus.Messaging
         /// Take raw message content and transform it into its concrete implementation.
         /// </summary>
         /// <param name="messageContent">The raw message content.</param>
-        /// <returns></returns>
+        /// <returns>The concrete message data.</returns>
         IMessage Deserialise(string messageContent);
 
         /// <summary>

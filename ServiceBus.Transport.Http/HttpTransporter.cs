@@ -5,24 +5,27 @@
     using System.IO;
     using System.Net.Http;
 
-    using ServiceBus.Messaging;
     using ServiceBus.Events;
+    using ServiceBus.Messaging;
     using ServiceBus.Queueing;
-    using System.Threading.Tasks;
 
+    /// <summary>
+    /// An <see cref="ITransporter"/> that uses the HTTP protocol.
+    /// </summary>
     public class HttpTransporter : ITransporter
     {
-        private const string actionBase = "service-bus";
+        private const string ActionBase = "service-bus";
 
         private readonly HttpClient _client;
         private readonly IMessageSerialiser _serialiser;
 
         private bool _disposed;
 
-        public event EventHandler<MessageRecievedEventArgs> MessageRecieved;
-
-        public event EventHandler<MessageSentEventArgs> MessageSent;
-
+        /// <summary>
+        /// Initialises a new instance of the <see cref="HttpTransporter"/> class.
+        /// </summary>
+        /// <param name="client">The <see cref="HttpClient"/> to use.</param>
+        /// <param name="serialiser">The <see cref="IMessageSerialiser"/> to use.</param>
         public HttpTransporter(HttpClient client, IMessageSerialiser serialiser)
         {
             this._disposed = false;
@@ -31,6 +34,19 @@
             this._serialiser = serialiser;
         }
 
+        /// <summary>
+        /// An event raised when an <see cref="IMessage"/> is received by the <see cref="ITransporter"/>.
+        /// </summary>
+        public event EventHandler<MessageRecievedEventArgs> MessageRecieved;
+
+        /// <summary>
+        /// An event raised when an <see cref="IMessage"/> is successfully exported.
+        /// </summary>
+        public event EventHandler<MessageSentEventArgs> MessageSent;
+
+        /// <summary>
+        /// Gets the <see cref="IMessageSerialiser"/> that is registered to this <see cref="ITransporter"/>.
+        /// </summary>
         public IMessageSerialiser Serialiser
         {
             get
@@ -39,16 +55,27 @@
             }
         }
 
+        /// <summary>
+        /// Transport a <see cref="QueuedMessage"/>.
+        /// </summary>
+        /// <param name="sender">The object that raised the <see cref="E:IQueueManager.MessageQueued"/> event.</param>
+        /// <param name="args">The <see cref="QueuedMessage"/>.</param>
         public void SendMessage(object sender, MessageQueuedEventArgs args)
         {
             this.SendMessage(args.MessageQueued.Peer, args.MessageQueued);
         }
 
+        /// <summary>
+        /// Transport a <see cref="QueuedMessage"/>.
+        /// </summary>
+        /// <typeparam name="TMessage">The type of <see cref="IMessage"/> to transport.</typeparam>
+        /// <param name="peerToRecieve">The <see cref="IPeer"/> that should receive the <paramref name="message"/>.</param>
+        /// <param name="message">The <see cref="IMessage"/> to transport.</param>
         public void SendMessage<TMessage>(IPeer peerToRecieve, TMessage message) where TMessage : QueuedMessage
         {
-            const string action = "message";
+            const string Action = "message";
 
-            var fullActionPath = new Uri(peerToRecieve.PeerAddress, Path.Combine(HttpTransporter.actionBase, action));
+            var fullActionPath = new Uri(peerToRecieve.PeerAddress, Path.Combine(HttpTransporter.ActionBase, Action));
 
             var result = this.ExecutePostRequest(fullActionPath, message.Message);
 
@@ -58,6 +85,10 @@
             }
         }
 
+        /// <summary>
+        /// Take the raw content of the message, de-serialize it, and pass it back to the <see cref="IServiceBus"/>.
+        /// </summary>
+        /// <param name="messageContent">The raw content of the message.</param>
         public void Recieve(string messageContent)
         {
             var message = this.Serialiser.Deserialise(messageContent);
@@ -68,12 +99,18 @@
             }
         }
 
+        /// <summary>
+        /// Performs application-defined tasks associated with freeing, releasing, or resetting unmanaged resources.
+        /// </summary>
+        /// <filterpriority>2</filterpriority>
         public void Dispose()
         {
             if (!this._disposed)
             {
                 this.Dispose(true);
             }
+
+            this._disposed = true;
         }
 
         private HttpResponseMessage ExecutePostRequest<TMessageOut>(Uri address, TMessageOut messageToPost)

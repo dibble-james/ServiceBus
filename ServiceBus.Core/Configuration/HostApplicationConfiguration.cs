@@ -5,8 +5,11 @@
     using System.Collections.ObjectModel;
 
     using ServiceBus.Event;
-using ServiceBus.Queueing;
+    using ServiceBus.Queueing;
 
+    /// <summary>
+    /// The configuration for the host application type.
+    /// </summary>
     public class HostApplicationConfiguration : IHostApplicationConfiguration
     {
         private readonly ITransportConfiguration _transportConfiguration;
@@ -15,6 +18,11 @@ using ServiceBus.Queueing;
         private readonly ICollection<IEventHandler> _eventHandlers;
         private readonly IQueueManager _queueManager;
 
+        /// <summary>
+        /// Initialises a new instance of the <see cref="HostApplicationConfiguration"/> class.
+        /// </summary>
+        /// <param name="transportConfiguration">The <see cref="ITransportConfiguration"/>.</param>
+        /// <param name="queueStoreDirectory">The path of the directory where the queued will be placed.</param>
         public HostApplicationConfiguration(ITransportConfiguration transportConfiguration, string queueStoreDirectory)
         {
             this._transportConfiguration = transportConfiguration;
@@ -24,17 +32,26 @@ using ServiceBus.Queueing;
             this._queueManager = new QueueManager(queueStoreDirectory);
         }
 
+        /// <summary>
+        /// Build an instance of <see cref="IServiceBus"/> with all the information previously set.
+        /// </summary>
+        /// <returns>An <see cref="IServiceBus"/> instance.</returns>
         public IServiceBus Build()
         {
             return new Bus(
-                this._transportConfiguration.HostAddressConfiguration.HostAddress, 
-                this._transportConfiguration.Transporter, 
-                this._queueManager, 
-                this._endpoints, 
-                this._peers, 
+                this._transportConfiguration.HostAddressConfiguration.HostAddress,
+                this._transportConfiguration.Transporter,
+                this._queueManager,
+                this._endpoints,
+                this._peers,
                 this._eventHandlers);
         }
 
+        /// <summary>
+        /// Add a remote instance of <see cref="IServiceBus"/>.
+        /// </summary>
+        /// <param name="peer">The known <see cref="IServiceBus"/> location.</param>
+        /// <returns>The <see cref="IHostApplicationConfiguration"/>.</returns>
         public IHostApplicationConfiguration WithPeer(Uri peer)
         {
             this._peers.Add(new Peer(peer));
@@ -42,6 +59,11 @@ using ServiceBus.Queueing;
             return this;
         }
 
+        /// <summary>
+        /// Register an <see cref="IEndpoint"/> to the <see cref="IServiceBus"/>.
+        /// </summary>
+        /// <param name="endpoint">The <see cref="IEndpoint"/> to register.</param>
+        /// <returns>The <see cref="IHostApplicationConfiguration"/>.</returns>
         public IHostApplicationConfiguration WithLocalEndpoint(IEndpoint endpoint)
         {
             this._endpoints.Add(endpoint);
@@ -49,6 +71,12 @@ using ServiceBus.Queueing;
             return this;
         }
 
+        /// <summary>
+        /// Register an <see cref="IEventHandler"/>.
+        /// </summary>
+        /// <typeparam name="TEvent">The type of <see cref="IEvent"/> this <see cref="IEventHandler"/> handles.</typeparam>
+        /// <param name="eventHandler">The <see cref="IEventHandler"/> to register.</param>
+        /// <returns>The <see cref="IHostApplicationConfiguration"/>.</returns>
         public IHostApplicationConfiguration Subscribe<TEvent>(IEventHandler<TEvent> eventHandler)
             where TEvent : class, IEvent
         {

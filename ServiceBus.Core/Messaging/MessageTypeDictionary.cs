@@ -1,18 +1,19 @@
-﻿// --------------------------------------------------------------------------------------------------------------------
-// <copyright file="IMessageTypeDictionary.cs" company="James Dibble">
-//    Copyright 2012 James Dibble
-// </copyright>
-// --------------------------------------------------------------------------------------------------------------------
-namespace ServiceBus.Messaging
+﻿namespace ServiceBus.Messaging
 {
     using System;
     using System.Collections;
     using System.Collections.Generic;
 
+    /// <summary>
+    /// A mapper for <see cref="IMessage"/> keys and their types.
+    /// </summary>
     public sealed class MessageTypeDictionary : IDictionary<string, Type>
     {
         private readonly IDictionary<string, Type> _types;
 
+        /// <summary>
+        /// Initialises a new instance of the <see cref="MessageTypeDictionary"/> class.
+        /// </summary>
         public MessageTypeDictionary()
         {
             this._types = new Dictionary<string, Type>();
@@ -94,6 +95,11 @@ namespace ServiceBus.Messaging
             }
         }
 
+        /// <summary>
+        /// Add a <see cref="IMessage"/> type mapping.
+        /// </summary>
+        /// <typeparam name="TMessage">The type of <see cref="IMessage"/> to map.</typeparam>
+        /// <param name="key">The key of the <see cref="IMessage"/> type.</param>
         public void Add<TMessage>(string key) where TMessage : IMessage, new()
         {
             this.Add(key, typeof(TMessage));

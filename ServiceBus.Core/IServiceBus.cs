@@ -8,7 +8,7 @@
     using ServiceBus.Transport;
 
     /// <summary>
-    /// Implemening classes define methods for interacting with a messaging system with event notifications.
+    /// Implementing classes define methods for interacting with a messaging system with event notifications.
     /// </summary>
     public interface IServiceBus : IDisposable
     {
@@ -23,12 +23,12 @@
         IEnumerable<IPeer> Peers { get; }
 
         /// <summary>
-        /// Gets the <see cref="IEndpoints"/> that are known to the <see cref="IServiceBus"/>.
+        /// Gets the <see cref="IEndpoint"/>s that are known to the <see cref="IServiceBus"/>.
         /// </summary>
         IEnumerable<IEndpoint> LocalEndpoints { get; }
 
         /// <summary>
-        /// Gets the <see cref="IMessageSerialiser"/> that is regisitered to the <see cref="IServiceBus"/>es <see cref="ITransporter"/>.
+        /// Gets the <see cref="IMessageSerialiser"/> that is registered to the <see cref="IServiceBus"/>es <see cref="ITransporter"/>.
         /// </summary>
         IMessageSerialiser Serialiser { get; }
 
@@ -41,7 +41,7 @@
         /// Directly send an <paramref name="message"/> to a given <paramref name="peer"/>.
         /// </summary>
         /// <typeparam name="TMessage">The type of the <see cref="IMessage"/> to send.</typeparam>
-        /// <param name="peer">The peer who should recieve the <paramref name="message"/>.</param>
+        /// <param name="peer">The peer who should receive the <paramref name="message"/>.</param>
         /// <param name="message">The <see cref="IMessage"/> to send.</param>
         void Send<TMessage>(IPeer peer, TMessage message) where TMessage : class, IMessage, new();
 
