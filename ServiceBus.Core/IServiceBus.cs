@@ -2,6 +2,7 @@
 {
     using System;
     using System.Collections.Generic;
+    using System.Threading.Tasks;
 
     using ServiceBus.Event;
     using ServiceBus.Messaging;
@@ -43,14 +44,14 @@
         /// <typeparam name="TMessage">The type of the <see cref="IMessage"/> to send.</typeparam>
         /// <param name="peer">The peer who should receive the <paramref name="message"/>.</param>
         /// <param name="message">The <see cref="IMessage"/> to send.</param>
-        void Send<TMessage>(IPeer peer, TMessage message) where TMessage : class, IMessage, new();
+        Task Send<TMessage>(IPeer peer, TMessage message) where TMessage : class, IMessage, new();
 
         /// <summary>
         /// Raise an instance of <typeparamref name="TEvent"/> to the <see cref="P:Peers"/>.
         /// </summary>
         /// <typeparam name="TEvent">The type of <see cref="IEvent"/> to raise.</typeparam>
         /// <param name="event">The event data to publish.</param>
-        void Publish<TEvent>(TEvent @event) where TEvent : class, IEvent, new();
+        Task Publish<TEvent>(TEvent @event) where TEvent : class, IEvent, new();
 
         /// <summary>
         /// Register an instance of an <see cref="IEventHandler{TEvent}"/> to the <see cref="IServiceBus"/> so it can handle a <typeparamref name="TEvent"/>.

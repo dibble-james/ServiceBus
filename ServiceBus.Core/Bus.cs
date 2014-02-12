@@ -3,6 +3,7 @@
     using System;
     using System.Collections.Generic;
     using System.Linq;
+    using System.Threading.Tasks;
 
     using ServiceBus.Event;
     using ServiceBus.Messaging;
@@ -14,7 +15,7 @@
     /// An object for sending and receiving messages to and from other <see cref="IServiceBus"/> instances, and
     /// invoking subscribers to <see cref="IEvent"/>s.
     /// </summary>
-    public sealed class Bus : IServiceBus
+    internal sealed class Bus : IServiceBus
     {
         private readonly IEnumerable<IPeer> _peers;
         private readonly object _peersLock;
@@ -37,7 +38,7 @@
         /// <param name="endpoints">Any <see cref="IMessageHandler"/>s known before runtime.</param>
         /// <param name="peers">Any known remote instances of <see cref="IServiceBus"/> known before runtime.</param>
         /// <param name="eventHandlers">Any subscribed <see cref="IEventHandler"/>s known before runtime.</param>
-        public Bus(
+        internal Bus(
             Uri hostAddress,
             ITransporter transporter,
             IQueueManager queueManager,
@@ -138,9 +139,9 @@
         /// <typeparam name="TMessage">The type of the <see cref="IMessage"/> to send.</typeparam>
         /// <param name="peer">The peer who should receive the <paramref name="message"/>.</param>
         /// <param name="message">The <see cref="IMessage"/> to send.</param>
-        public void Send<TMessage>(IPeer peer, TMessage message) where TMessage : class, IMessage, new()
+        public async Task Send<TMessage>(IPeer peer, TMessage message) where TMessage : class, IMessage, new()
         {
-            this._queueManager.Enqueue(peer, message);
+            await this._queueManager.Enqueue(peer, message);
         }
 
         /// <summary>
@@ -148,17 +149,15 @@
         /// </summary>
         /// <typeparam name="TEvent">The type of <see cref="IEvent"/> to raise.</typeparam>
         /// <param name="event">The event data to publish.</param>
-        public void Publish<TEvent>(TEvent @event) where TEvent : class, IEvent, new()
+        public async Task Publish<TEvent>(TEvent @event) where TEvent : class, IEvent, new()
         {
-            foreach (var handler in this.EventHandlers.OfType<IEventHandler<TEvent>>())
-            {
-                handler.Handle(@event);
-            }
+            var localEventHandlerTasks = 
+                this.EventHandlers.OfType<IEventHandler<TEvent>>().Select(eh => Task.Factory.StartNew(() => eh.Handle(@event)));
 
-            foreach (var peer in this.Peers)
-            {
-                this._queueManager.Enqueue(peer, @event);
-            }
+            var raiseEventToPeerTasks =
+                this.Peers.Select(p => Task.Factory.StartNew(() => this._queueManager.Enqueue(p, @event)));
+
+            await Task.WhenAll(raiseEventToPeerTasks.Union(localEventHandlerTasks));
         }
 
         /// <summary>

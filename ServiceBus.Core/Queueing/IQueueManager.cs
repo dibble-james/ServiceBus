@@ -1,6 +1,8 @@
 ﻿namespace ServiceBus.Queueing
 {
     using System;
+    using System.Threading.Tasks;
+
     using ServiceBus.Events;
     using ServiceBus.Messaging;
 
@@ -20,7 +22,7 @@
         /// <typeparam name="TMessage">The type of <see cref="IMessage"/> to queue.</typeparam>
         /// <param name="peer">The peer that will receive the <see cref="IMessage"/>.</param>
         /// <param name="message">The message to place into the queue.</param>
-        void Enqueue<TMessage>(IPeer peer, TMessage message) where TMessage : class, IMessage, new();
+        Task Enqueue<TMessage>(IPeer peer, TMessage message) where TMessage : class, IMessage, new();
 
         /// <summary>
         /// Mark a message as sent.

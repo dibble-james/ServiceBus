@@ -77,11 +77,20 @@
 
             var fullActionPath = new Uri(peerToRecieve.PeerAddress, Path.Combine(HttpTransporter.ActionBase, Action));
 
-            var result = this.ExecutePostRequest(fullActionPath, message.Message);
-
-            if (result.IsSuccessStatusCode && this.MessageSent != null)
+            try
             {
-                this.MessageSent(this, new MessageSentEventArgs { MessageSent = message, Recipient = peerToRecieve }); 
+                var result = this.ExecutePostRequest(fullActionPath, message.Message);
+
+                if (result.IsSuccessStatusCode && this.MessageSent != null)
+                {
+                    this.MessageSent(
+                        this,
+                        new MessageSentEventArgs { MessageSent = message, Recipient = peerToRecieve });
+                }
+            }
+            catch
+            {
+                // For now just swallow exceptions.
             }
         }
 

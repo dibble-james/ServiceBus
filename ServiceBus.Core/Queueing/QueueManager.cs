@@ -3,6 +3,8 @@
     using System;
     using System.IO;
     using System.Linq;
+    using System.Threading.Tasks;
+
     using Db4objects.Db4o;
     using Db4objects.Db4o.Linq;
     using ServiceBus.Events;
@@ -25,17 +27,17 @@
 
         public event EventHandler<MessageQueuedEventArgs> MessageQueued;
 
-        public void Enqueue<TMessage>(IPeer peer, TMessage message) where TMessage : class, IMessage, new()
+        public async Task Enqueue<TMessage>(IPeer peer, TMessage message) where TMessage : class, IMessage, new()
         {
             var queuedMessage = new QueuedMessage { QueuedAt = DateTime.Now, Peer = peer, Message = message, HasSent = false };
 
             this._queuePersistence.Store(queuedMessage);
 
-            this._queuePersistence.Commit();
+            await Task.Factory.StartNew(() => this._queuePersistence.Commit());
 
             if (this.MessageQueued != null)
             {
-                this.MessageQueued(this, new MessageQueuedEventArgs { MessageQueued = queuedMessage });
+                await Task.Factory.StartNew(() => this.MessageQueued(this, new MessageQueuedEventArgs { MessageQueued = queuedMessage }));
             }
         }
 

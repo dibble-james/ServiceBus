@@ -7,6 +7,7 @@ namespace TestHarness1.Controllers
 {
     using System;
     using System.Linq;
+    using System.Threading.Tasks;
     using System.Web.Mvc;
 
     using ServiceBus;
@@ -29,17 +30,17 @@ namespace TestHarness1.Controllers
         }
 
         [HttpPost]
-        public ActionResult SendMessage(string message)
+        public async Task<ActionResult> SendMessage(string message)
         {
-            this._serviceBus.Send(this._serviceBus.Peers.First(), new HelloMessage { World = message });
+            await this._serviceBus.Send(this._serviceBus.Peers.First(), new HelloMessage { World = message });
 
             return this.RedirectToAction("index");
         }
 
         [HttpPost]
-        public ActionResult SendGoodbyeMessage(string message)
+        public async Task<ActionResult> SendGoodbyeMessage(string message)
         {
-            this._serviceBus.Send(this._serviceBus.Peers.First(), new GoodbyeMessage { Planet = message });
+            await this._serviceBus.Send(this._serviceBus.Peers.First(), new GoodbyeMessage { Planet = message });
 
             return this.RedirectToAction("index");
         }
@@ -47,7 +48,7 @@ namespace TestHarness1.Controllers
         [HttpPost]
         public ActionResult RaiseHelloEvent()
         {
-            this._serviceBus.Publish(new HelloEvent { EventRaised = DateTime.Now });
+            this._serviceBus.Publish(new HelloEvent { EventRaised = DateTime.Now }).RunSynchronously();
 
             return this.RedirectToAction("index");
         }
