@@ -18,18 +18,18 @@
             this._eventHandlers = eventHandlers;
         }
 
-        internal void RouteMessage(object sender, MessageRecievedEventArgs args)
+        internal async void RouteMessage(object sender, MessageRecievedEventArgs args)
         {
             if (args.MessageRecieved is IEvent)
             {
-                this.HandleEvent(args.MessageRecieved as IEvent);
+                await this.HandleEvent(args.MessageRecieved as IEvent);
                 return;
             }
 
-            this.HandleMessage(args.MessageRecieved);
+            await this.HandleMessage(args.MessageRecieved);
         }
 
-        private void HandleMessage(IMessage message)
+        private async Task HandleMessage(IMessage message)
         {
             var messageHandlers = this._endpoints.Where(
                 e => e.GetType().GetInterfaces()
@@ -37,15 +37,12 @@
                     && i.GetGenericTypeDefinition() == typeof(IMessageHandler<>)
                     && i.GenericTypeArguments.Any(m => m == message.GetType())));
 
-            foreach (var messageHandler in messageHandlers.Select(mh => mh as IMessageHandler))
-            {
-                var handlerPointer = messageHandler;
+            var handlingTasks = messageHandlers.Select(mh => Task.Factory.StartNew(() => (mh as IMessageHandler).ProcessMessage(message)));
 
-                Task.Factory.StartNew(() => handlerPointer.ProcessMessage(message));
-            }
+            await Task.WhenAll(handlingTasks);
         }
 
-        private void HandleEvent(IEvent @event)
+        private async Task HandleEvent(IEvent @event)
         {
             var eventHandlers = this._endpoints.Where(
                 e => e.GetType().GetInterfaces()
@@ -53,12 +50,9 @@
                     && i.GetGenericTypeDefinition() == typeof(IEventHandler<>)
                     && i.GenericTypeArguments.Any(m => m == @event.GetType())));
 
-            foreach (var eventHandler in eventHandlers.Select(eh => eh as IEventHandler))
-            {
-                var handlerPointer = eventHandler;
+            var handlingTasks = eventHandlers.Select(mh => Task.Factory.StartNew(() => (mh as IEventHandler).Handle(@event)));
 
-                Task.Factory.StartNew(() => handlerPointer.Handle(@event));
-            }
+            await Task.WhenAll(handlingTasks);
         }
     }
 }
