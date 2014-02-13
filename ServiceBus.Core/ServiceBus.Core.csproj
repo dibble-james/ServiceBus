@@ -62,10 +62,6 @@
     <Compile Include="Configuration\ITransportConfiguration.cs" />
     <Compile Include="Configuration\ServiceBusBuilder.cs" />
     <Compile Include="Configuration\TransportConfiguration.cs" />
-    <Compile Include="Events\EventRaisedEventArgs.cs" />
-    <Compile Include="Events\MessageQueuedEventArgs.cs" />
-    <Compile Include="Events\MessageRecievedEventArgs.cs" />
-    <Compile Include="Events\MessageSentEventArgs.cs" />
     <Compile Include="Event\IEvent.cs" />
     <Compile Include="Event\IEventHandler.cs" />
     <Compile Include="IEndpoint.cs" />

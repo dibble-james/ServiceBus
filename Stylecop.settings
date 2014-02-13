@@ -2,6 +2,7 @@
   <GlobalSettings>
     <StringProperty Name="Culture">en-GB</StringProperty>
     <CollectionProperty Name="RecognizedWords">
+      <Value>awaitable</Value>
       <Value>es</Value>
     </CollectionProperty>
   </GlobalSettings>

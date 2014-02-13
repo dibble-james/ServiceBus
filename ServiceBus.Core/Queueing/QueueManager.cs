@@ -7,7 +7,6 @@
 
     using Db4objects.Db4o;
     using Db4objects.Db4o.Linq;
-    using ServiceBus.Events;
     using ServiceBus.Messaging;
 
     internal class QueueManager : IQueueManager
@@ -25,7 +24,7 @@
             this._queuePersistence = Db4oEmbedded.OpenFile(databasePath);
         }
 
-        public event EventHandler<MessageQueuedEventArgs> MessageQueued;
+        public event Action<QueuedMessage> MessageQueued;
 
         public async Task Enqueue<TMessage>(IPeer peer, TMessage message) where TMessage : class, IMessage, new()
         {
@@ -37,13 +36,8 @@
 
             if (this.MessageQueued != null)
             {
-                await Task.Factory.StartNew(() => this.MessageQueued(this, new MessageQueuedEventArgs { MessageQueued = queuedMessage }));
+                await Task.Factory.StartNew(() => this.MessageQueued(queuedMessage));
             }
-        }
-
-        public void Dequeue(object sender, MessageSentEventArgs args)
-        {
-            this.Dequeue(args.MessageSent);
         }
 
         public void Dequeue(QueuedMessage message)

@@ -3,7 +3,6 @@
     using System;
     using System.Threading.Tasks;
 
-    using ServiceBus.Events;
     using ServiceBus.Messaging;
 
     /// <summary>
@@ -14,7 +13,7 @@
         /// <summary>
         /// An event that is raised when an <see cref="IMessage"/> is placed onto the <see cref="IServiceBus"/> and persisted.
         /// </summary>
-        event EventHandler<MessageQueuedEventArgs> MessageQueued;
+        event Action<QueuedMessage> MessageQueued;
 
         /// <summary>
         /// Persist an <see cref="IMessage"/> and raise <see cref="E:IQueueManager.MessageQueue"/>.
@@ -22,14 +21,8 @@
         /// <typeparam name="TMessage">The type of <see cref="IMessage"/> to queue.</typeparam>
         /// <param name="peer">The peer that will receive the <see cref="IMessage"/>.</param>
         /// <param name="message">The message to place into the queue.</param>
+        /// <returns>An awaitable object representing the enqueue operation.</returns>
         Task Enqueue<TMessage>(IPeer peer, TMessage message) where TMessage : class, IMessage, new();
-
-        /// <summary>
-        /// Mark a message as sent.
-        /// </summary>
-        /// <param name="sender">The object that raised the event</param>
-        /// <param name="args">The <see cref="QueuedMessage"/> that was sent.</param>
-        void Dequeue(object sender, MessageSentEventArgs args);
 
         /// <summary>
         /// Mark a message as sent.

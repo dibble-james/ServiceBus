@@ -2,7 +2,6 @@
 {
     using System;
 
-    using ServiceBus.Events;
     using ServiceBus.Messaging;
     using ServiceBus.Queueing;
 
@@ -14,12 +13,12 @@
         /// <summary>
         /// An event raised when an <see cref="IMessage"/> is received by the <see cref="ITransporter"/>.
         /// </summary>
-        event EventHandler<MessageRecievedEventArgs> MessageRecieved;
+        event Action<IMessage> MessageRecieved;
 
         /// <summary>
         /// An event raised when an <see cref="IMessage"/> is successfully exported.
         /// </summary>
-        event EventHandler<MessageSentEventArgs> MessageSent;
+        event Action<QueuedMessage> MessageSent;
 
         /// <summary>
         /// Gets the <see cref="IMessageSerialiser"/> that is registered to this <see cref="ITransporter"/>.
@@ -31,13 +30,6 @@
         /// </summary>
         /// <param name="messageContent">The raw content of the message.</param>
         void Recieve(string messageContent);
-
-        /// <summary>
-        /// Transport a <see cref="QueuedMessage"/>.
-        /// </summary>
-        /// <param name="sender">The object that raised the <see cref="E:IQueueManager.MessageQueued"/> event.</param>
-        /// <param name="args">The <see cref="QueuedMessage"/>.</param>
-        void SendMessage(object sender, MessageQueuedEventArgs args);
 
         /// <summary>
         /// Transport a <see cref="QueuedMessage"/>.

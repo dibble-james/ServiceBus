@@ -1,7 +1,7 @@
 ﻿namespace ServiceBus.Event
 {
     /// <summary>
-    /// DO NOT IMPLEMENT.  Implement the generic IEventHandler to that it can be registered.
+    /// DO NOT IMPLEMENT.  Implement the generic IEventHandler so that it can be registered.
     /// </summary>
     public interface IEventHandler
     {

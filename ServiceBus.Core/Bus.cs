@@ -62,7 +62,7 @@
             this._queueManager = queueManager;
             this._messageRouter = new MessageRouter(this.LocalEndpoints, this.EventHandlers);
 
-            this._queueManager.MessageQueued += this._transport.SendMessage;
+            this._queueManager.MessageQueued += m => this._transport.SendMessage(m.Peer, m);
             this._transport.MessageSent += this._queueManager.Dequeue;
             this._transport.MessageRecieved += this._messageRouter.RouteMessage;
         }
@@ -139,6 +139,7 @@
         /// <typeparam name="TMessage">The type of the <see cref="IMessage"/> to send.</typeparam>
         /// <param name="peer">The peer who should receive the <paramref name="message"/>.</param>
         /// <param name="message">The <see cref="IMessage"/> to send.</param>
+        /// <returns>An awaitable object representing the send operation.</returns>
         public async Task Send<TMessage>(IPeer peer, TMessage message) where TMessage : class, IMessage, new()
         {
             await this._queueManager.Enqueue(peer, message);
@@ -149,6 +150,7 @@
         /// </summary>
         /// <typeparam name="TEvent">The type of <see cref="IEvent"/> to raise.</typeparam>
         /// <param name="event">The event data to publish.</param>
+        /// <returns>An awaitable object representing the publish operation.</returns>
         public async Task Publish<TEvent>(TEvent @event) where TEvent : class, IEvent, new()
         {
             var localEventHandlerTasks = 

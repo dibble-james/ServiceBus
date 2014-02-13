@@ -5,7 +5,6 @@
     using System.IO;
     using System.Net.Http;
 
-    using ServiceBus.Events;
     using ServiceBus.Messaging;
     using ServiceBus.Queueing;
 
@@ -37,12 +36,12 @@
         /// <summary>
         /// An event raised when an <see cref="IMessage"/> is received by the <see cref="ITransporter"/>.
         /// </summary>
-        public event EventHandler<MessageRecievedEventArgs> MessageRecieved;
+        public event Action<IMessage> MessageRecieved;
 
         /// <summary>
         /// An event raised when an <see cref="IMessage"/> is successfully exported.
         /// </summary>
-        public event EventHandler<MessageSentEventArgs> MessageSent;
+        public event Action<QueuedMessage> MessageSent;
 
         /// <summary>
         /// Gets the <see cref="IMessageSerialiser"/> that is registered to this <see cref="ITransporter"/>.
@@ -53,16 +52,6 @@
             {
                 return this._serialiser;
             }
-        }
-
-        /// <summary>
-        /// Transport a <see cref="QueuedMessage"/>.
-        /// </summary>
-        /// <param name="sender">The object that raised the <see cref="E:IQueueManager.MessageQueued"/> event.</param>
-        /// <param name="args">The <see cref="QueuedMessage"/>.</param>
-        public void SendMessage(object sender, MessageQueuedEventArgs args)
-        {
-            this.SendMessage(args.MessageQueued.Peer, args.MessageQueued);
         }
 
         /// <summary>
@@ -83,9 +72,7 @@
 
                 if (result.IsSuccessStatusCode && this.MessageSent != null)
                 {
-                    this.MessageSent(
-                        this,
-                        new MessageSentEventArgs { MessageSent = message, Recipient = peerToRecieve });
+                    this.MessageSent(message);
                 }
             }
             catch
@@ -104,7 +91,7 @@
 
             if (this.MessageRecieved != null)
             {
-                this.MessageRecieved(this, new MessageRecievedEventArgs { MessageRecieved = message });
+                this.MessageRecieved(message);
             }
         }
 

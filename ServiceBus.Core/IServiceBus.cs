@@ -44,6 +44,7 @@
         /// <typeparam name="TMessage">The type of the <see cref="IMessage"/> to send.</typeparam>
         /// <param name="peer">The peer who should receive the <paramref name="message"/>.</param>
         /// <param name="message">The <see cref="IMessage"/> to send.</param>
+        /// <returns>An awaitable object representing the send operation.</returns>
         Task Send<TMessage>(IPeer peer, TMessage message) where TMessage : class, IMessage, new();
 
         /// <summary>
@@ -51,6 +52,7 @@
         /// </summary>
         /// <typeparam name="TEvent">The type of <see cref="IEvent"/> to raise.</typeparam>
         /// <param name="event">The event data to publish.</param>
+        /// <returns>An awaitable object representing the publish operation.</returns>
         Task Publish<TEvent>(TEvent @event) where TEvent : class, IEvent, new();
 
         /// <summary>
