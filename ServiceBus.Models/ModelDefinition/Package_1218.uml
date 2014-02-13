@@ -3131,5 +3131,11 @@
         LastKnownName="Routing"
         LastKnownLocation="Package_1818.uml" />
     </packageHasNamedElement>
+    <packageHasNamedElement>
+      <packageMoniker
+        Id="c8aa7393-ffa3-4d8e-ba6e-13eeb2f24aac"
+        LastKnownName="Event"
+        LastKnownLocation="Package_1637.uml" />
+    </packageHasNamedElement>
   </packagedElements>
 </package>
