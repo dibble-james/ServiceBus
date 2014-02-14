@@ -53,13 +53,13 @@
         /// <typeparam name="TEvent">The type of <see cref="IEvent"/> to raise.</typeparam>
         /// <param name="event">The event data to publish.</param>
         /// <returns>An awaitable object representing the publish operation.</returns>
-        Task Publish<TEvent>(TEvent @event) where TEvent : class, IEvent, new();
+        Task Publish<TEvent>(TEvent @event) where TEvent : class, IEvent<TEvent>, new();
 
         /// <summary>
         /// Register an instance of an <see cref="IEventHandler{TEvent}"/> to the <see cref="IServiceBus"/> so it can handle a <typeparamref name="TEvent"/>.
         /// </summary>
         /// <typeparam name="TEvent">The type of event the <paramref name="eventHandler"/> handles.</typeparam>
         /// <param name="eventHandler">The <see cref="IEventHandler{TEvent}"/> to register.</param>
-        void Subscribe<TEvent>(IEventHandler<TEvent> eventHandler) where TEvent : class, IEvent, new();
+        void Subscribe<TEvent>(IEventHandler<TEvent> eventHandler) where TEvent : class, IEvent<TEvent>, new();
     }
 }

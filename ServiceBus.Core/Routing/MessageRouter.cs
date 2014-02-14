@@ -2,8 +2,8 @@
 {
     using System.Collections.Generic;
     using System.Linq;
+    using System.Reflection;
     using System.Threading.Tasks;
-
     using ServiceBus.Event;
     using ServiceBus.Messaging;
 
@@ -44,15 +44,22 @@
 
         private async Task HandleEvent(IEvent @event)
         {
-            var eventHandlers = this._eventHandlers.Where(
-                e => e.GetType().GetInterfaces()
-                .Any(i => i.IsGenericType
-                    && i.GetGenericTypeDefinition() == typeof(IEventHandler<>)
-                    && i.GenericTypeArguments.Any(m => m == @event.GetType())));
+            var handleEventGeneric = this.GetType()
+                .GetMethods(BindingFlags.NonPublic | BindingFlags.Instance)
+                .FirstOrDefault(m => m.Name == "HandleEvent" && m.IsGenericMethod)
+                .MakeGenericMethod(@event.GetType());
 
-            var handlingTasks = eventHandlers.Select(mh => Task.Factory.StartNew(() => mh.Handle(@event)));
+            await Task.Factory.StartNew(() => handleEventGeneric.Invoke(this, new object[] { @event }));
+        }
 
-            await Task.WhenAll(handlingTasks);
+        private async Task HandleEvent<TEvent>(IEvent<TEvent> @event) where TEvent : class, IEvent<TEvent>
+        {
+            foreach (var eventHandler in this._eventHandlers.OfType<IEventHandler<TEvent>>())
+            {
+                @event.EventRaised += eventHandler.Handle;
+            }
+
+            await @event.RaiseLocal();
         }
     }
 }

@@ -35,6 +35,6 @@
         /// <typeparam name="TEvent">The type of <see cref="IEvent"/> this <see cref="IEventHandler"/> handles.</typeparam>
         /// <param name="eventHandler">The <see cref="IEventHandler"/> to register.</param>
         /// <returns>The <see cref="IHostApplicationConfiguration"/>.</returns>
-        IHostApplicationConfiguration Subscribe<TEvent>(IEventHandler<TEvent> eventHandler) where TEvent : class, IEvent;
+        IHostApplicationConfiguration Subscribe<TEvent>(IEventHandler<TEvent> eventHandler) where TEvent : class, IEvent<TEvent>;
     }
 }

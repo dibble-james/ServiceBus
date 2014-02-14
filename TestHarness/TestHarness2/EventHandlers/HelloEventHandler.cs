@@ -15,9 +15,12 @@ namespace TestHarness2.EventHandlers
 
     public class HelloEventHandler : IEventHandler<HelloEvent>
     {
-        public void Handle(IEvent @event)
+        public string EndpointPath
         {
-            this.Handle(@event as HelloEvent);
+            get
+            {
+                return "HelloEventHandler";
+            }
         }
 
         public void Handle(HelloEvent @event)
@@ -25,16 +28,8 @@ namespace TestHarness2.EventHandlers
             Debug.WriteLine(
                 "HelloEvent Received [{0}], Raised [{1}], ThreadId[{2}]",
                 DateTime.Now,
-                @event.EventRaised,
+                @event.TimeEventRaised,
                 Thread.CurrentThread.ManagedThreadId);
-        }
-
-        public string EndpointPath
-        {
-            get
-            {
-                return "HelloEventHandler";
-            }
         }
     }
 }

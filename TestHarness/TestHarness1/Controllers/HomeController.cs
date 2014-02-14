@@ -48,7 +48,7 @@ namespace TestHarness1.Controllers
         [HttpPost]
         public ActionResult RaiseHelloEvent()
         {
-            this._serviceBus.Publish(new HelloEvent { EventRaised = DateTime.Now }).RunSynchronously();
+            this._serviceBus.Publish(new HelloEvent { TimeEventRaised = DateTime.Now }).RunSynchronously();
 
             return this.RedirectToAction("index");
         }

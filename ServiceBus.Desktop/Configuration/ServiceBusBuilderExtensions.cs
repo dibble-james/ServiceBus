@@ -1,7 +1,7 @@
 ﻿namespace ServiceBus.Desktop
 {
     using System.Net.Http;
-    using global::ServiceBus.Configuration;
+    using ServiceBus.Configuration;
     using Microsoft.Owin.Hosting;
 
     public static class ServiceBusBuilderExtensions

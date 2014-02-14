@@ -151,7 +151,7 @@
         /// <typeparam name="TEvent">The type of <see cref="IEvent"/> to raise.</typeparam>
         /// <param name="event">The event data to publish.</param>
         /// <returns>An awaitable object representing the publish operation.</returns>
-        public async Task Publish<TEvent>(TEvent @event) where TEvent : class, IEvent, new()
+        public async Task Publish<TEvent>(TEvent @event) where TEvent : class, IEvent<TEvent>, new()
         {
             var localEventHandlerTasks = 
                 this.EventHandlers.OfType<IEventHandler<TEvent>>().Select(eh => Task.Factory.StartNew(() => eh.Handle(@event)));
@@ -167,7 +167,7 @@
         /// </summary>
         /// <typeparam name="TEvent">The type of event the <paramref name="eventHandler"/> handles.</typeparam>
         /// <param name="eventHandler">The <see cref="IEventHandler{TEvent}"/> to register.</param>
-        public void Subscribe<TEvent>(IEventHandler<TEvent> eventHandler) where TEvent : class, IEvent, new()
+        public void Subscribe<TEvent>(IEventHandler<TEvent> eventHandler) where TEvent : class, IEvent<TEvent>, new()
         {
             this.EventHandlers.Add(eventHandler);
         }

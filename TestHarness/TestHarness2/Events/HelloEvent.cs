@@ -10,7 +10,7 @@ namespace TestHarness2.Events
 
     using ServiceBus.Event;
 
-    public class HelloEvent : IEvent
+    public class HelloEvent : EventBase<HelloEvent>
     {
         public const string HelloEventType = "HelloEvent";
 
@@ -20,22 +20,22 @@ namespace TestHarness2.Events
 
         public HelloEvent(SerializationInfo info, StreamingContext context)
         {
-            this.EventRaised = info.GetDateTime("EventRaised");
+            this.TimeEventRaised = info.GetDateTime("TimeEventRaised");
         }
 
         /// <summary>
         /// Populates a <see cref="T:System.Runtime.Serialization.SerializationInfo"/> with the data needed to serialize the target object.
         /// </summary>
         /// <param name="info">The <see cref="T:System.Runtime.Serialization.SerializationInfo"/> to populate with data. </param><param name="context">The destination (see <see cref="T:System.Runtime.Serialization.StreamingContext"/>) for this serialization. </param><exception cref="T:System.Security.SecurityException">The caller does not have the required permission. </exception>
-        public void GetObjectData(SerializationInfo info, StreamingContext context)
+        public override void GetObjectData(SerializationInfo info, StreamingContext context)
         {
             info.AddValue("MessageType", this.MessageType);
-            info.AddValue("EventRaised", this.EventRaised);
+            info.AddValue("TimeEventRaised", this.TimeEventRaised);
         }
 
-        public DateTime EventRaised { get; set; }
+        public DateTime TimeEventRaised { get; set; }
 
-        public string MessageType
+        public override string MessageType
         {
             get
             {

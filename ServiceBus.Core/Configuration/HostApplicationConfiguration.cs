@@ -78,7 +78,7 @@
         /// <param name="eventHandler">The <see cref="IEventHandler"/> to register.</param>
         /// <returns>The <see cref="IHostApplicationConfiguration"/>.</returns>
         public IHostApplicationConfiguration Subscribe<TEvent>(IEventHandler<TEvent> eventHandler)
-            where TEvent : class, IEvent
+            where TEvent : class, IEvent<TEvent>
         {
             this._eventHandlers.Add(eventHandler);
 

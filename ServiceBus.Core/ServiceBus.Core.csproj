@@ -62,6 +62,7 @@
     <Compile Include="Configuration\ITransportConfiguration.cs" />
     <Compile Include="Configuration\ServiceBusBuilder.cs" />
     <Compile Include="Configuration\TransportConfiguration.cs" />
+    <Compile Include="Event\EventBase.cs" />
     <Compile Include="Event\IEvent.cs" />
     <Compile Include="Event\IEventHandler.cs" />
     <Compile Include="IEndpoint.cs" />
