@@ -45,7 +45,7 @@
         /// <param name="peer">The peer who should receive the <paramref name="message"/>.</param>
         /// <param name="message">The <see cref="IMessage"/> to send.</param>
         /// <returns>An awaitable object representing the send operation.</returns>
-        Task Send<TMessage>(IPeer peer, TMessage message) where TMessage : class, IMessage, new();
+        Task SendAsync<TMessage>(IPeer peer, TMessage message) where TMessage : class, IMessage, new();
 
         /// <summary>
         /// Raise an instance of <typeparamref name="TEvent"/> to the <see cref="P:Peers"/>.
@@ -53,7 +53,7 @@
         /// <typeparam name="TEvent">The type of <see cref="IEvent"/> to raise.</typeparam>
         /// <param name="event">The event data to publish.</param>
         /// <returns>An awaitable object representing the publish operation.</returns>
-        Task Publish<TEvent>(TEvent @event) where TEvent : class, IEvent<TEvent>, new();
+        Task PublishAsync<TEvent>(TEvent @event) where TEvent : class, IEvent<TEvent>, new();
 
         /// <summary>
         /// Register an instance of an <see cref="IEventHandler{TEvent}"/> to the <see cref="IServiceBus"/> so it can handle a <typeparamref name="TEvent"/>.

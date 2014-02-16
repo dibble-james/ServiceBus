@@ -22,7 +22,7 @@
         /// <param name="peer">The peer that will receive the <see cref="IMessage"/>.</param>
         /// <param name="message">The message to place into the queue.</param>
         /// <returns>An awaitable object representing the enqueue operation.</returns>
-        Task Enqueue<TMessage>(IPeer peer, TMessage message) where TMessage : class, IMessage, new();
+        Task EnqueueAsync<TMessage>(IPeer peer, TMessage message) where TMessage : class, IMessage, new();
 
         /// <summary>
         /// Mark a message as sent.

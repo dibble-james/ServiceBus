@@ -18,7 +18,7 @@
             this._eventHandlers = eventHandlers;
         }
 
-        internal async void RouteMessage(IMessage message)
+        internal async void RouteMessageAsync(IMessage message)
         {
             if (message is IEvent)
             {
@@ -52,14 +52,14 @@
             await Task.Factory.StartNew(() => handleEventGeneric.Invoke(this, new object[] { @event }));
         }
 
-        private async Task HandleEvent<TEvent>(IEvent<TEvent> @event) where TEvent : class, IEvent<TEvent>
+        private async Task HandleEvent<TEvent>(TEvent @event) where TEvent : class, IEvent<TEvent>
         {
             foreach (var eventHandler in this._eventHandlers.OfType<IEventHandler<TEvent>>())
             {
                 @event.EventRaised += eventHandler.Handle;
             }
 
-            await @event.RaiseLocal();
+            await @event.RaiseLocalAsync();
         }
     }
 }

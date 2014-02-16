@@ -26,7 +26,7 @@
 
         public event Action<QueuedMessage> MessageQueued;
 
-        public async Task Enqueue<TMessage>(IPeer peer, TMessage message) where TMessage : class, IMessage, new()
+        public async Task EnqueueAsync<TMessage>(IPeer peer, TMessage message) where TMessage : class, IMessage, new()
         {
             var queuedMessage = new QueuedMessage { QueuedAt = DateTime.Now, Peer = peer, Message = message, HasSent = false };
 

@@ -30,7 +30,7 @@
         /// Raise the <see cref="E:EventRaised"/> event.
         /// </summary>
         /// <returns>An awaitable object representing the RaiseLocal operation.</returns>
-        public async Task RaiseLocal()
+        public async Task RaiseLocalAsync()
         {
             if (this.EventRaised != null)
             {

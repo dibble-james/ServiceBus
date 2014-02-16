@@ -64,7 +64,7 @@
 
             this._queueManager.MessageQueued += m => this._transport.SendMessage(m.Peer, m);
             this._transport.MessageSent += this._queueManager.Dequeue;
-            this._transport.MessageRecieved += this._messageRouter.RouteMessage;
+            this._transport.MessageRecieved += this._messageRouter.RouteMessageAsync;
         }
 
         /// <summary>
@@ -140,9 +140,9 @@
         /// <param name="peer">The peer who should receive the <paramref name="message"/>.</param>
         /// <param name="message">The <see cref="IMessage"/> to send.</param>
         /// <returns>An awaitable object representing the send operation.</returns>
-        public async Task Send<TMessage>(IPeer peer, TMessage message) where TMessage : class, IMessage, new()
+        public async Task SendAsync<TMessage>(IPeer peer, TMessage message) where TMessage : class, IMessage, new()
         {
-            await this._queueManager.Enqueue(peer, message);
+            await this._queueManager.EnqueueAsync(peer, message);
         }
 
         /// <summary>
@@ -151,13 +151,13 @@
         /// <typeparam name="TEvent">The type of <see cref="IEvent"/> to raise.</typeparam>
         /// <param name="event">The event data to publish.</param>
         /// <returns>An awaitable object representing the publish operation.</returns>
-        public async Task Publish<TEvent>(TEvent @event) where TEvent : class, IEvent<TEvent>, new()
+        public async Task PublishAsync<TEvent>(TEvent @event) where TEvent : class, IEvent<TEvent>, new()
         {
             var localEventHandlerTasks = 
                 this.EventHandlers.OfType<IEventHandler<TEvent>>().Select(eh => Task.Factory.StartNew(() => eh.Handle(@event)));
 
             var raiseEventToPeerTasks =
-                this.Peers.Select(p => Task.Factory.StartNew(() => this._queueManager.Enqueue(p, @event)));
+                this.Peers.Select(p => Task.Factory.StartNew(() => this._queueManager.EnqueueAsync(p, @event)));
 
             await Task.WhenAll(raiseEventToPeerTasks.Union(localEventHandlerTasks));
         }
