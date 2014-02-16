@@ -32,7 +32,7 @@ namespace TestHarness1.Controllers
         [HttpPost]
         public async Task<ActionResult> SendMessage(string message)
         {
-            await this._serviceBus.Send(this._serviceBus.Peers.First(), new HelloMessage { World = message });
+            await this._serviceBus.SendAsync(this._serviceBus.Peers.First(), new HelloMessage { World = message });
 
             return this.RedirectToAction("index");
         }
@@ -40,15 +40,15 @@ namespace TestHarness1.Controllers
         [HttpPost]
         public async Task<ActionResult> SendGoodbyeMessage(string message)
         {
-            await this._serviceBus.Send(this._serviceBus.Peers.First(), new GoodbyeMessage { Planet = message });
+            await this._serviceBus.SendAsync(this._serviceBus.Peers.First(), new GoodbyeMessage { Planet = message });
 
             return this.RedirectToAction("index");
         }
 
         [HttpPost]
-        public ActionResult RaiseHelloEvent()
+        public async Task<ActionResult> RaiseHelloEvent()
         {
-            this._serviceBus.PublishAsync(new HelloEvent { TimeEventRaised = DateTime.Now }).RunSynchronously();
+            await this._serviceBus.PublishAsync(new HelloEvent { TimeEventRaised = DateTime.Now });
 
             return this.RedirectToAction("index");
         }

@@ -5,6 +5,7 @@
     using System.Linq;
     using System.Threading.Tasks;
 
+    using ServiceBus.Core.EventHandlers;
     using ServiceBus.Event;
     using ServiceBus.Messaging;
     using ServiceBus.Queueing;
@@ -52,7 +53,7 @@
             this._endpointsLock = new object();
             this._eventHandlersLock = new object();
 
-            this.HostAddress = hostAddress;
+            this.PeerAddress = hostAddress;
 
             this._endpoints = endpoints;
             this._eventHandlers = eventHandlers;
@@ -62,15 +63,17 @@
             this._queueManager = queueManager;
             this._messageRouter = new MessageRouter(this.LocalEndpoints, this.EventHandlers);
 
+            this.RegisterSystemEventHandlers();
+
             this._queueManager.MessageQueued += m => this._transport.SendMessage(m.Peer, m);
             this._transport.MessageSent += this._queueManager.Dequeue;
             this._transport.MessageRecieved += this._messageRouter.RouteMessageAsync;
         }
 
         /// <summary>
-        /// Gets the <see cref="System.Uri"/> that this <see cref="IServiceBus"/> is hosted upon.
+        /// Gets the <see cref="System.Uri"/> of the location of the <see cref="IPeer"/>.
         /// </summary>
-        public Uri HostAddress { get; private set; }
+        public Uri PeerAddress { get; private set; }
 
         /// <summary>
         /// Gets the <see cref="IEndpoint"/>s that are known to the <see cref="IServiceBus"/>.
@@ -173,6 +176,26 @@
         }
 
         /// <summary>
+        /// Transmit all queued messages to the given <paramref name="peer"/>.
+        /// </summary>
+        /// <param name="peer">The peer to synchronise.</param>
+        /// <returns>An awaitable object representing the synchronise operation.</returns>
+        public async Task SynchroniseAsync(IPeer peer)
+        {
+            QueuedMessage message = null;
+
+            var sendMessageTasks = new List<Task>();
+
+            while ((message = this._queueManager.PeersNextMessageOrDefault(peer)) != null)
+            {
+                var messagePointer = message;
+                sendMessageTasks.Add(new Task(() => this._transport.SendMessage(peer, messagePointer)));
+            }
+
+            await Task.WhenAll(sendMessageTasks);
+        }
+
+        /// <summary>
         /// Performs application-defined tasks associated with freeing, releasing, or resetting unmanaged resources.
         /// </summary>
         public void Dispose()
@@ -181,6 +204,11 @@
             {
                 this.Dispose(true);
             }
+        }
+
+        private void RegisterSystemEventHandlers()
+        {
+            this.Subscribe(new PeerConnectedEventHandler(this));
         }
 
         private void Dispose(bool disposing)

@@ -4,6 +4,8 @@
     using System.Collections.Generic;
     using System.Collections.ObjectModel;
 
+    using ServiceBus.Core.EventHandlers;
+    using ServiceBus.Core.Events;
     using ServiceBus.Event;
     using ServiceBus.Queueing;
 
@@ -54,7 +56,15 @@
         /// <returns>The <see cref="IHostApplicationConfiguration"/>.</returns>
         public IHostApplicationConfiguration WithPeer(Uri peer)
         {
-            this._peers.Add(new Peer(peer));
+            var newPeer = new Peer(peer);
+
+            this._queueManager.EnqueueAsync(newPeer, new PeerConnectedEvent
+                                                     {
+                                                         ConnectedPeer = 
+                                                            new Peer(this._transportConfiguration.HostAddressConfiguration.HostAddress)
+                                                     });
+
+            this._peers.Add(newPeer);
 
             return this;
         }

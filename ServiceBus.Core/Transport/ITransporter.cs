@@ -1,6 +1,7 @@
 ﻿namespace ServiceBus.Transport
 {
     using System;
+    using System.Threading.Tasks;
 
     using ServiceBus.Messaging;
     using ServiceBus.Queueing;
@@ -29,7 +30,7 @@
         /// Take the raw content of the message, de-serialize it, and pass it back to the <see cref="IServiceBus"/>.
         /// </summary>
         /// <param name="messageContent">The raw content of the message.</param>
-        void Recieve(string messageContent);
+        Task RecieveAsync(string messageContent);
 
         /// <summary>
         /// Transport a <see cref="QueuedMessage"/>.

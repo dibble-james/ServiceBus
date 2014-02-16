@@ -62,6 +62,7 @@
     <Compile Include="Configuration\ITransportConfiguration.cs" />
     <Compile Include="Configuration\ServiceBusBuilder.cs" />
     <Compile Include="Configuration\TransportConfiguration.cs" />
+    <Compile Include="Core\EventHandlers\PeerConnectedEventHandler.cs" />
     <Compile Include="Event\EventBase.cs" />
     <Compile Include="Event\IEvent.cs" />
     <Compile Include="Event\IEventHandler.cs" />
@@ -80,6 +81,7 @@
     <Compile Include="Queueing\QueueManager.cs" />
     <Compile Include="Routing\MessageRouter.cs" />
     <Compile Include="Bus.cs" />
+    <Compile Include="Core\Events\PeerConnectedEvent.cs" />
     <Compile Include="Transport\ITransporter.cs" />
   </ItemGroup>
   <ItemGroup>

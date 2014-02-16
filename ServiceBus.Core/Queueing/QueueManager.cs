@@ -66,8 +66,9 @@
         {
             var nextMessage =
                 this._queuePersistence.AsQueryable<QueuedMessage>()
-                    .OrderByDescending(qm => qm.QueuedAt)
-                    .FirstOrDefault(qm => !qm.HasSent);
+                    .OrderByDescending(qm => qm.HasSent)
+                    .ThenByDescending(qm => qm.QueuedAt)
+                    .FirstOrDefault(qm => !qm.HasSent && qm.Peer.PeerAddress == peer.PeerAddress);
 
             return nextMessage;
         }

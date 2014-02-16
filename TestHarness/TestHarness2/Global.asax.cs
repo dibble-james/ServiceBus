@@ -41,6 +41,7 @@ namespace TestHarness2
                     .WithLocalEndpoint(new HelloMessageHandler())
                     .WithLocalEndpoint(new GoodbyeMessageHandler())
                     .Subscribe(new HelloEventHandler())
+                    .WithPeer(new Uri("http://localhost:55001"))
                     .Build();
 
             RouteConfig.RegisterRoutes(RouteTable.Routes);

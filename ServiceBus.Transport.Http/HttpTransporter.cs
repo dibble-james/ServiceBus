@@ -4,6 +4,7 @@
     using System.Collections.Generic;
     using System.IO;
     using System.Net.Http;
+    using System.Threading.Tasks;
 
     using ServiceBus.Messaging;
     using ServiceBus.Queueing;
@@ -85,13 +86,13 @@
         /// Take the raw content of the message, de-serialize it, and pass it back to the <see cref="IServiceBus"/>.
         /// </summary>
         /// <param name="messageContent">The raw content of the message.</param>
-        public void Recieve(string messageContent)
+        public async Task RecieveAsync(string messageContent)
         {
             var message = this.Serialiser.Deserialise(messageContent);
 
             if (this.MessageRecieved != null)
             {
-                this.MessageRecieved(message);
+                await Task.Factory.StartNew(() => this.MessageRecieved(message));
             }
         }
 

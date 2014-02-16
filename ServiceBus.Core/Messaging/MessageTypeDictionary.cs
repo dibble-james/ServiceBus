@@ -4,6 +4,8 @@
     using System.Collections;
     using System.Collections.Generic;
 
+    using ServiceBus.Core.Events;
+
     /// <summary>
     /// A mapper for <see cref="IMessage"/> keys and their types.
     /// </summary>
@@ -17,6 +19,8 @@
         public MessageTypeDictionary()
         {
             this._types = new Dictionary<string, Type>();
+
+            this.RegisterSystemEvents();
         }
 
         /// <summary>
@@ -231,6 +235,11 @@
         public bool TryGetValue(string key, out Type value)
         {
             return this._types.TryGetValue(key, out value);
+        }
+
+        private void RegisterSystemEvents()
+        {
+            this._types.Add(PeerConnectedEvent.PeerConnectedEventMessageType, typeof(PeerConnectedEvent));
         }
     }
 }

@@ -1,6 +1,7 @@
 ﻿namespace ServiceBus.Transport.Http.Controllers
 {
     using System.Net;
+    using System.Threading.Tasks;
     using System.Web.Mvc;
 
     using ServiceBus.Messaging;
@@ -27,9 +28,9 @@
         /// <param name="message">The raw message data.</param>
         /// <returns>An <see cref="ActionResult"/>.</returns>
         [HttpPost]
-        public ActionResult Receive(string message)
+        public async Task<ActionResult> Receive(string message)
         {
-            this._serviceBus.Transporter.Recieve(message);
+            await this._serviceBus.Transporter.RecieveAsync(message);
 
             return new HttpStatusCodeResult(HttpStatusCode.OK);
         }

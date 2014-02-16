@@ -11,13 +11,8 @@
     /// <summary>
     /// Implementing classes define methods for interacting with a messaging system with event notifications.
     /// </summary>
-    public interface IServiceBus : IDisposable
+    public interface IServiceBus : IPeer, IDisposable
     {
-        /// <summary>
-        /// Gets the <see cref="System.Uri"/> that this <see cref="IServiceBus"/> is hosted upon.
-        /// </summary>
-        Uri HostAddress { get; }
-
         /// <summary>
         /// Gets the <see cref="IPeer"/>s that are known to the <see cref="IServiceBus"/>.
         /// </summary>
@@ -61,5 +56,12 @@
         /// <typeparam name="TEvent">The type of event the <paramref name="eventHandler"/> handles.</typeparam>
         /// <param name="eventHandler">The <see cref="IEventHandler{TEvent}"/> to register.</param>
         void Subscribe<TEvent>(IEventHandler<TEvent> eventHandler) where TEvent : class, IEvent<TEvent>, new();
+
+        /// <summary>
+        /// Transmit all queued messages to the given <paramref name="peer"/>.
+        /// </summary>
+        /// <param name="peer">The peer to synchronise.</param>
+        /// <returns>An awaitable object representing the synchronise operation.</returns>
+        Task SynchroniseAsync(IPeer peer);
     }
 }
