@@ -30,7 +30,7 @@
         [HttpPost]
         public async Task<ActionResult> Receive(string message)
         {
-            await this._serviceBus.Transporter.RecieveAsync(message);
+            await this._serviceBus.Transporter.ReceiveAsync(message);
 
             return new HttpStatusCodeResult(HttpStatusCode.OK);
         }

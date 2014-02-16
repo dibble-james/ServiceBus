@@ -13,15 +13,6 @@
         }
 
         /// <summary>
-        /// Invoke services to deal with this PeerConnectedEvent.
-        /// </summary>
-        /// <param name="event">The PeerConnectedEvent data.</param>
-        public void Handle(PeerConnectedEvent @event)
-        {
-            this._serviceBus.SynchroniseAsync(@event.ConnectedPeer);
-        }
-
-        /// <summary>
         /// Gets the <see cref="System.Uri"/> part that defines the location of this <see cref="IEndpoint"/>.
         /// </summary>
         public string EndpointPath
@@ -30,6 +21,15 @@
             {
                 return "service-bus/peer-connected";
             }
+        }
+
+        /// <summary>
+        /// Invoke services to deal with this PeerConnectedEvent.
+        /// </summary>
+        /// <param name="event">The PeerConnectedEvent data.</param>
+        public void Handle(PeerConnectedEvent @event)
+        {
+            this._serviceBus.SynchroniseAsync(@event.ConnectedPeer);
         }
     }
 }

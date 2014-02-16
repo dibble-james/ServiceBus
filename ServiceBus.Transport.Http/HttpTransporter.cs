@@ -86,7 +86,8 @@
         /// Take the raw content of the message, de-serialize it, and pass it back to the <see cref="IServiceBus"/>.
         /// </summary>
         /// <param name="messageContent">The raw content of the message.</param>
-        public async Task RecieveAsync(string messageContent)
+        /// <returns>An awaitable object representing the receive operation.</returns>
+        public async Task ReceiveAsync(string messageContent)
         {
             var message = this.Serialiser.Deserialise(messageContent);
 

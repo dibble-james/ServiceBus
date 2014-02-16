@@ -30,7 +30,8 @@
         /// Take the raw content of the message, de-serialize it, and pass it back to the <see cref="IServiceBus"/>.
         /// </summary>
         /// <param name="messageContent">The raw content of the message.</param>
-        Task RecieveAsync(string messageContent);
+        /// <returns>An awaitable object representing the receive operation.</returns>
+        Task ReceiveAsync(string messageContent);
 
         /// <summary>
         /// Transport a <see cref="QueuedMessage"/>.

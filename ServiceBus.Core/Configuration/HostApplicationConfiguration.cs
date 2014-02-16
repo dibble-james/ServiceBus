@@ -58,11 +58,13 @@
         {
             var newPeer = new Peer(peer);
 
-            this._queueManager.EnqueueAsync(newPeer, new PeerConnectedEvent
-                                                     {
-                                                         ConnectedPeer = 
-                                                            new Peer(this._transportConfiguration.HostAddressConfiguration.HostAddress)
-                                                     });
+            this._queueManager.EnqueueAsync(
+                newPeer, 
+                new PeerConnectedEvent
+                    {
+                        ConnectedPeer = 
+                        new Peer(this._transportConfiguration.HostAddressConfiguration.HostAddress)
+                    });
 
             this._peers.Add(newPeer);
 
