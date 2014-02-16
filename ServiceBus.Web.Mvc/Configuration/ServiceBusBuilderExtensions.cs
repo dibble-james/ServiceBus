@@ -25,7 +25,7 @@
                 "MessageReceive", 
                 "service-bus/message", 
                 new { controller = "Message", action = "Receive" },
-                new string[] { typeof(MessageController).Namespace });
+                new[] { typeof(MessageController).Namespace });
 
             var appDataPath = HttpContext.Current.Server.MapPath("~/App_Data");
 

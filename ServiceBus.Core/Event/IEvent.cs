@@ -15,7 +15,7 @@
     /// Implementing classes define an event that can be raised and subscribed to.
     /// </summary>
     /// <typeparam name="TEvent">A self referencing type.</typeparam>
-    public interface IEvent<TEvent> : IEvent where TEvent : class, IEvent<TEvent>
+    public interface IEvent<out TEvent> : IEvent where TEvent : class, IEvent<TEvent>
     {
         /// <summary>
         /// A subscription for raising this <see cref="IEvent"/> instance when it is received.

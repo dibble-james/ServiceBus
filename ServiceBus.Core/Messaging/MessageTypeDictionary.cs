@@ -7,7 +7,7 @@
     using ServiceBus.Core.Events;
 
     /// <summary>
-    /// A mapper for <see cref="IMessage"/> keys and their types.
+    /// A mapper for <see cref="IMessage"/> keys and their types.  This class cannot be inherited.
     /// </summary>
     public sealed class MessageTypeDictionary : IDictionary<string, Type>
     {

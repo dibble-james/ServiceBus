@@ -4,7 +4,6 @@
     using System.Collections.Generic;
     using System.Collections.ObjectModel;
 
-    using ServiceBus.Core.EventHandlers;
     using ServiceBus.Core.Events;
     using ServiceBus.Event;
     using ServiceBus.Queueing;

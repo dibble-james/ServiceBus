@@ -63,9 +63,9 @@
         /// <param name="message">The <see cref="IMessage"/> to transport.</param>
         public void SendMessage<TMessage>(IPeer peerToRecieve, TMessage message) where TMessage : QueuedMessage
         {
-            const string Action = "message";
+            const string action = "message";
 
-            var fullActionPath = new Uri(peerToRecieve.PeerAddress, Path.Combine(HttpTransporter.ActionBase, Action));
+            var fullActionPath = new Uri(peerToRecieve.PeerAddress, Path.Combine(ActionBase, action));
 
             try
             {
@@ -78,7 +78,7 @@
             }
             catch
             {
-                // For now just swallow exceptions.
+                // For now just swallow exceptions.  TODO: Log a failed send attempt
             }
         }
 
@@ -121,18 +121,6 @@
             var postResult = this._client.PostAsync(address, content);
 
             return postResult.Result;
-        }
-
-        private IMessage ExecuteGetRequest(Uri address)
-        {
-            var response = this._client.GetAsync(address);
-
-            if (!response.Result.IsSuccessStatusCode)
-            {
-                return null;
-            }
-
-            return this._serialiser.Deserialise(response.Result.Content.ReadAsStringAsync().Result);
         }
 
         private void Dispose(bool disposing)

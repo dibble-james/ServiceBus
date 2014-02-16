@@ -9,7 +9,7 @@
     using ServiceBus.Transport;
 
     /// <summary>
-    /// Implementing classes define methods for interacting with a messaging system with event notifications.
+    /// Implementing classes define an object for orchestrating reliable message and event managing.
     /// </summary>
     public interface IServiceBus : IPeer, IDisposable
     {

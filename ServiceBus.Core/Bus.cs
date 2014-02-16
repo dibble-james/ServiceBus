@@ -13,8 +13,7 @@
     using ServiceBus.Transport;
 
     /// <summary>
-    /// An object for sending and receiving messages to and from other <see cref="IServiceBus"/> instances, and
-    /// invoking subscribers to <see cref="IEvent"/>s.
+    /// An object for orchestrating reliable message and event managing.  This class cannot be inherited.
     /// </summary>
     internal sealed class Bus : IServiceBus
     {
@@ -182,7 +181,7 @@
         /// <returns>An awaitable object representing the synchronise operation.</returns>
         public async Task SynchroniseAsync(IPeer peer)
         {
-            QueuedMessage message = null;
+            QueuedMessage message;
 
             var sendMessageTasks = new List<Task>();
 

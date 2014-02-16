@@ -46,7 +46,7 @@
         {
             var handleEventGeneric = this.GetType()
                 .GetMethods(BindingFlags.NonPublic | BindingFlags.Instance)
-                .FirstOrDefault(m => m.Name == "HandleEvent" && m.IsGenericMethod)
+                .First(m => m.Name == "HandleEvent" && m.IsGenericMethod)
                 .MakeGenericMethod(@event.GetType());
 
             await Task.Factory.StartNew(() => handleEventGeneric.Invoke(this, new object[] { @event }));
