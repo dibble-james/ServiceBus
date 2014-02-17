@@ -10,26 +10,28 @@
     /// A base class for an event message so the pattern can be transparently implemented.
     /// </summary>
     /// <typeparam name="TEvent">A self referencing type.</typeparam>
-    public abstract class EventBase<TEvent> : IEvent<TEvent> where TEvent : class, IEvent<TEvent>
+    public abstract class EventBase<TEvent> : MessageBase, IEvent<TEvent> where TEvent : class, IEvent<TEvent>
     {
+        /// <summary>
+        /// Initialises the <see cref="EventBase{TEvent}"/> class.
+        /// </summary>
+        protected EventBase() : base()
+        {
+        }
+
+        /// <summary>
+        /// Initialises the <see cref="EventBase{TEvent}"/> class.
+        /// </summary>
+        /// <param name="info">The <see cref="T:System.Runtime.Serialization.SerializationInfo"/> to extract data. </param>
+        /// <param name="context">The source (see <see cref="T:System.Runtime.Serialization.StreamingContext"/>) for this serialization. </param>
+        protected EventBase(SerializationInfo info, StreamingContext context) : base(info, context)
+        {
+        }
+
         /// <summary>
         /// A subscription for raising this <see cref="IEvent"/> instance when it is received.
         /// </summary>
         public event Action<TEvent> EventRaised;
-
-        /// <summary>
-        /// Gets the identifier of this <see cref="IMessage"/>.
-        /// </summary>
-        public abstract string MessageType { get; }
-
-        /// <summary>
-        /// Populates a <see cref="T:System.Runtime.Serialization.SerializationInfo"/> with the data needed to serialize the target object.
-        /// </summary>
-        /// <param name="info">The <see cref="T:System.Runtime.Serialization.SerializationInfo"/> to populate with data. </param><param name="context">The destination (see <see cref="T:System.Runtime.Serialization.StreamingContext"/>) for this serialization. </param><exception cref="T:System.Security.SecurityException">The caller does not have the required permission. </exception>
-        public virtual void GetObjectData(SerializationInfo info, StreamingContext context)
-        {
-            info.AddValue("MessageType", this.MessageType);
-        }
 
         /// <summary>
         /// Raise the <see cref="E:EventRaised"/> event.
