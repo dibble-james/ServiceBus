@@ -7,6 +7,8 @@
 
     using Db4objects.Db4o;
     using Db4objects.Db4o.Linq;
+
+    using ServiceBus.Core.Events;
     using ServiceBus.Messaging;
 
     internal class QueueManager : IQueueManager
@@ -67,8 +69,27 @@
             var nextMessage =
                 this._queuePersistence.AsQueryable<QueuedMessage>()
                     .OrderByDescending(qm => qm.HasSent)
-                    .ThenByDescending(qm => qm.QueuedAt)
-                    .FirstOrDefault(qm => !qm.HasSent && qm.Peer.PeerAddress == peer.PeerAddress);
+                    .ThenBy(qm => qm.QueuedAt)
+                    .FirstOrDefault(
+                    qm => 
+                           !qm.HasSent 
+                        && qm.Peer.PeerAddress == peer.PeerAddress
+                        && !(qm.Message is PeerConnectedEvent));
+
+            return nextMessage;
+        }
+
+        public QueuedMessage PeersNextMessageOrDefault(IPeer peer, DateTime messageQueuedBefore)
+        {
+            var nextMessage =
+                this._queuePersistence.AsQueryable<QueuedMessage>()
+                    .OrderByDescending(qm => qm.HasSent)
+                    .ThenBy(qm => qm.QueuedAt)
+                    .FirstOrDefault(
+                        qm =>    !qm.HasSent 
+                              && qm.Peer.PeerAddress == peer.PeerAddress
+                              && qm.QueuedAt < messageQueuedBefore
+                              && !(qm.Message is PeerConnectedEvent));
 
             return nextMessage;
         }

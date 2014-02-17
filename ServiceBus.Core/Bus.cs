@@ -188,9 +188,9 @@
             while (message != null)
             {
                 var messagePointer = message;
-                sendMessageTasks.Add(new Task(() => this._transport.SendMessage(peer, messagePointer)));
+                sendMessageTasks.Add(Task.Factory.StartNew(() => this._transport.SendMessage(peer, messagePointer)));
 
-                message = this._queueManager.PeersNextMessageOrDefault(peer);
+                message = this._queueManager.PeersNextMessageOrDefault(peer, message.QueuedAt);
             }
 
             await Task.WhenAll(sendMessageTasks);

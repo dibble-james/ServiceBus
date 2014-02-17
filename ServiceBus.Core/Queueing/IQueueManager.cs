@@ -36,5 +36,13 @@
         /// <param name="peer">The peer to check for <see cref="QueuedMessage"/>s.</param>
         /// <returns>The next <see cref="QueuedMessage"/> or null if the queue for the <paramref name="peer"/> is empty.</returns>
         QueuedMessage PeersNextMessageOrDefault(IPeer peer);
+
+        /// <summary>
+        /// Retrieve the next <see cref="QueuedMessage"/> for the given <paramref name="peer"/>.
+        /// </summary>
+        /// <param name="peer">The peer to check for <see cref="QueuedMessage"/>s.</param>
+        /// <param name="messageQueuedBefore">The <see cref="System.DateTime"/> to find messages queued before.</param>
+        /// <returns>The next <see cref="QueuedMessage"/> or null if the queue for the <paramref name="peer"/> is empty.</returns>
+        QueuedMessage PeersNextMessageOrDefault(IPeer peer, DateTime messageQueuedBefore);
     }
 }
