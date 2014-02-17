@@ -72,6 +72,7 @@
     <Compile Include="Messaging\IMessage.cs" />
     <Compile Include="Messaging\IMessageHandler.cs" />
     <Compile Include="Messaging\IMessageSerialiser.cs" />
+    <Compile Include="Messaging\MessageBase.cs" />
     <Compile Include="Messaging\MessageTypeDictionary.cs" />
     <Compile Include="Messaging\JsonMessageSerialiser.cs" />
     <Compile Include="Peer.cs" />

@@ -33,7 +33,7 @@
         /// Initialises a new instance of the <see cref="Bus"/> class.
         /// </summary>
         /// <param name="hostAddress">The address this service bus can be reached.</param>
-        /// <param name="transporter">The protocol to use to communicate with other <see cref="IServiceBus"/>es</param>
+        /// <param name="transporter">The protocol to use to communicate with other <see cref="IServiceBus"/>es.</param>
         /// <param name="queueManager">The message persistence service to use.</param>
         /// <param name="endpoints">Any <see cref="IMessageHandler"/>s known before runtime.</param>
         /// <param name="peers">Any known remote instances of <see cref="IServiceBus"/> known before runtime.</param>
