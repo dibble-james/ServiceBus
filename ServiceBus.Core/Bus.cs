@@ -181,14 +181,16 @@
         /// <returns>An awaitable object representing the synchronise operation.</returns>
         public async Task SynchroniseAsync(IPeer peer)
         {
-            QueuedMessage message;
+            var message = this._queueManager.PeersNextMessageOrDefault(peer);
 
             var sendMessageTasks = new List<Task>();
 
-            while ((message = this._queueManager.PeersNextMessageOrDefault(peer)) != null)
+            while (message != null)
             {
                 var messagePointer = message;
                 sendMessageTasks.Add(new Task(() => this._transport.SendMessage(peer, messagePointer)));
+
+                message = this._queueManager.PeersNextMessageOrDefault(peer);
             }
 
             await Task.WhenAll(sendMessageTasks);
