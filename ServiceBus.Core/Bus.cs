@@ -2,10 +2,12 @@
 {
     using System;
     using System.Collections.Generic;
+    using System.Collections.ObjectModel;
     using System.Linq;
     using System.Threading.Tasks;
 
     using ServiceBus.Core.EventHandlers;
+    using ServiceBus.Core.Events;
     using ServiceBus.Event;
     using ServiceBus.Messaging;
     using ServiceBus.Queueing;
@@ -17,9 +19,9 @@
     /// </summary>
     internal sealed class Bus : IServiceBus
     {
-        private readonly IEnumerable<IPeer> _peers;
+        private readonly ICollection<IPeer> _peers;
         private readonly object _peersLock;
-        private readonly IEnumerable<IEndpoint> _endpoints;
+        private readonly ICollection<IEndpoint> _endpoints;
         private readonly object _endpointsLock;
         private readonly ITransporter _transport;
         private readonly ICollection<IEventHandler> _eventHandlers;
@@ -35,16 +37,10 @@
         /// <param name="hostAddress">The address this service bus can be reached.</param>
         /// <param name="transporter">The protocol to use to communicate with other <see cref="IServiceBus"/>es.</param>
         /// <param name="queueManager">The message persistence service to use.</param>
-        /// <param name="endpoints">Any <see cref="IMessageHandler"/>s known before runtime.</param>
-        /// <param name="peers">Any known remote instances of <see cref="IServiceBus"/> known before runtime.</param>
-        /// <param name="eventHandlers">Any subscribed <see cref="IEventHandler"/>s known before runtime.</param>
         internal Bus(
             Uri hostAddress,
             ITransporter transporter,
-            IQueueManager queueManager,
-            IEnumerable<IEndpoint> endpoints,
-            IEnumerable<IPeer> peers,
-            ICollection<IEventHandler> eventHandlers)
+            IQueueManager queueManager)
         {
             this._disposed = false;
 
@@ -54,9 +50,9 @@
 
             this.PeerAddress = hostAddress;
 
-            this._endpoints = endpoints;
-            this._eventHandlers = eventHandlers;
-            this._peers = peers;
+            this._endpoints = new Collection<IEndpoint>();
+            this._eventHandlers = new Collection<IEventHandler>();
+            this._peers = new Collection<IPeer>();
 
             this._transport = transporter;
             this._queueManager = queueManager;
@@ -75,16 +71,13 @@
         public Uri PeerAddress { get; private set; }
 
         /// <summary>
-        /// Gets the <see cref="IEndpoint"/>s that are known to the <see cref="IServiceBus"/>.
+        /// Gets the <see cref="IPeer"/>s that are known to the <see cref="IServiceBus"/>.
         /// </summary>
-        public IEnumerable<IEndpoint> LocalEndpoints
+        public IEnumerable<IPeer> Peers
         {
             get
             {
-                lock (this._endpointsLock)
-                {
-                    return this._endpoints;
-                }
+                return this.RegisteredPeers;
             }
         }
 
@@ -110,10 +103,7 @@
             }
         }
 
-        /// <summary>
-        /// Gets the <see cref="IPeer"/>s that are known to the <see cref="IServiceBus"/>.
-        /// </summary>
-        public IEnumerable<IPeer> Peers
+        private ICollection<IPeer> RegisteredPeers
         {
             get
             {
@@ -123,7 +113,18 @@
                 }
             }
         }
-        
+
+        private ICollection<IEndpoint> LocalEndpoints
+        {
+            get
+            {
+                lock (this._endpointsLock)
+                {
+                    return this._endpoints;
+                }
+            }
+        }
+
         private ICollection<IEventHandler> EventHandlers
         {
             get
@@ -155,11 +156,11 @@
         /// <returns>An awaitable object representing the publish operation.</returns>
         public async Task PublishAsync<TEvent>(TEvent @event) where TEvent : class, IEvent<TEvent>, new()
         {
-            var localEventHandlerTasks = 
+            var localEventHandlerTasks =
                 this.EventHandlers.OfType<IEventHandler<TEvent>>().Select(eh => Task.Factory.StartNew(() => eh.Handle(@event)));
 
             var raiseEventToPeerTasks =
-                this.Peers.Select(p => Task.Factory.StartNew(() => this._queueManager.EnqueueAsync(p, @event)));
+                this.RegisteredPeers.Select(p => Task.Factory.StartNew(() => this._queueManager.EnqueueAsync(p, @event)));
 
             await Task.WhenAll(raiseEventToPeerTasks.Union(localEventHandlerTasks));
         }
@@ -169,9 +170,12 @@
         /// </summary>
         /// <typeparam name="TEvent">The type of event the <paramref name="eventHandler"/> handles.</typeparam>
         /// <param name="eventHandler">The <see cref="IEventHandler{TEvent}"/> to register.</param>
-        public void Subscribe<TEvent>(IEventHandler<TEvent> eventHandler) where TEvent : class, IEvent<TEvent>, new()
+        /// <returns>The <see cref="IServiceBus"/>.</returns>
+        public IServiceBus Subscribe<TEvent>(IEventHandler<TEvent> eventHandler) where TEvent : class, IEvent<TEvent>, new()
         {
             this.EventHandlers.Add(eventHandler);
+
+            return this;
         }
 
         /// <summary>
@@ -194,6 +198,42 @@
             }
 
             await Task.WhenAll(sendMessageTasks);
+        }
+
+        /// <summary>
+        /// Add a remote instance of <see cref="IServiceBus"/>.
+        /// </summary>
+        /// <param name="peer">The known <see cref="IServiceBus"/> location.</param>
+        /// <returns>The <see cref="IServiceBus"/>.</returns>
+        public async Task<IServiceBus> WithPeerAsync(Uri peer)
+        {
+            var newPeer = new Peer(peer);
+
+            var registerWithPeerTask = this._queueManager.EnqueueAsync(
+                newPeer,
+                new PeerConnectedEvent
+                {
+                    ConnectedPeer =
+                    new Peer(this.PeerAddress)
+                });
+
+            this.RegisteredPeers.Add(newPeer);
+
+            await registerWithPeerTask;
+
+            return this;
+        }
+
+        /// <summary>
+        /// Register an <see cref="IEndpoint"/> to the <see cref="IServiceBus"/>.
+        /// </summary>
+        /// <param name="endpoint">The <see cref="IEndpoint"/> to register.</param>
+        /// <returns>The <see cref="IServiceBus"/>.</returns>
+        public IServiceBus WithLocalEndpoint(IEndpoint endpoint)
+        {
+            this.LocalEndpoints.Add(endpoint);
+
+            return this;
         }
 
         /// <summary>

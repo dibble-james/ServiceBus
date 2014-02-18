@@ -38,15 +38,15 @@ namespace TestHarness2
                     .WithHostAddress(new Uri("http://localhost:55033"))
                     .WithHttpTransport(new JsonMessageSerialiser(messageDictionary))
                     .AsMvcServiceBus(RouteTable.Routes)
-                    .WithLocalEndpoint(new HelloMessageHandler())
-                    .WithLocalEndpoint(new GoodbyeMessageHandler())
-                    .Subscribe(new HelloEventHandler())
-                    .WithPeer(new Uri("http://localhost:55001"))
-                    .Build();
+                    .Build()
+                        .WithLocalEndpoint(new HelloMessageHandler())
+                        .WithLocalEndpoint(new GoodbyeMessageHandler())
+                        .Subscribe(new HelloEventHandler())
+                        .WithPeerAsync(new Uri("http://localhost:55001"));
 
             RouteConfig.RegisterRoutes(RouteTable.Routes);
 
-            Bootstrapper.Initialise(serviceBus);
+            Bootstrapper.Initialise(serviceBus.Result);
         }
 
         protected void Application_Error(object sender, EventArgs e)

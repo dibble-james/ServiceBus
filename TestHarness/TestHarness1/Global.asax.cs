@@ -38,12 +38,12 @@ namespace TestHarness1
                     .WithHostAddress(new Uri("http://localhost:55001"))
                     .WithHttpTransport(new JsonMessageSerialiser(messageDictionary))
                     .AsMvcServiceBus(RouteTable.Routes)
-                    .WithPeer(new Uri("http://localhost:55033"))
-                    .Build();
+                    .Build()
+                        .WithPeerAsync(new Uri("http://localhost:55033"));
 
             RouteConfig.RegisterRoutes(RouteTable.Routes);
 
-            Bootstrapper.Initialise(serviceBus);
+            Bootstrapper.Initialise(serviceBus.Result);
         }
     }
 }

@@ -19,11 +19,6 @@
         IEnumerable<IPeer> Peers { get; }
 
         /// <summary>
-        /// Gets the <see cref="IEndpoint"/>s that are known to the <see cref="IServiceBus"/>.
-        /// </summary>
-        IEnumerable<IEndpoint> LocalEndpoints { get; }
-
-        /// <summary>
         /// Gets the <see cref="IMessageSerialiser"/> that is registered to the <see cref="IServiceBus"/>es <see cref="ITransporter"/>.
         /// </summary>
         IMessageSerialiser Serialiser { get; }
@@ -55,7 +50,8 @@
         /// </summary>
         /// <typeparam name="TEvent">The type of event the <paramref name="eventHandler"/> handles.</typeparam>
         /// <param name="eventHandler">The <see cref="IEventHandler{TEvent}"/> to register.</param>
-        void Subscribe<TEvent>(IEventHandler<TEvent> eventHandler) where TEvent : class, IEvent<TEvent>, new();
+        /// <returns>The <see cref="IServiceBus"/>.</returns>
+        IServiceBus Subscribe<TEvent>(IEventHandler<TEvent> eventHandler) where TEvent : class, IEvent<TEvent>, new();
 
         /// <summary>
         /// Transmit all queued messages to the given <paramref name="peer"/>.
@@ -63,5 +59,19 @@
         /// <param name="peer">The peer to synchronise.</param>
         /// <returns>An awaitable object representing the synchronise operation.</returns>
         Task SynchroniseAsync(IPeer peer);
+
+        /// <summary>
+        /// Add a remote instance of <see cref="IServiceBus"/>.
+        /// </summary>
+        /// <param name="peer">The known <see cref="IServiceBus"/> location.</param>
+        /// <returns>The <see cref="IServiceBus"/>.</returns>
+        Task<IServiceBus> WithPeerAsync(Uri peer);
+
+        /// <summary>
+        /// Register an <see cref="IEndpoint"/> to the <see cref="IServiceBus"/>.
+        /// </summary>
+        /// <param name="endpoint">The <see cref="IEndpoint"/> to register.</param>
+        /// <returns>The <see cref="IServiceBus"/>.</returns>
+        IServiceBus WithLocalEndpoint(IEndpoint endpoint);
     }
 }
