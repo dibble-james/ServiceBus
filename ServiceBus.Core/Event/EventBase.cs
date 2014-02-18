@@ -10,12 +10,13 @@
     /// A base class for an event message so the pattern can be transparently implemented.
     /// </summary>
     /// <typeparam name="TEvent">A self referencing type.</typeparam>
+    [Serializable]
     public abstract class EventBase<TEvent> : MessageBase, IEvent<TEvent> where TEvent : class, IEvent<TEvent>
     {
         /// <summary>
         /// Initialises the <see cref="EventBase{TEvent}"/> class.
         /// </summary>
-        protected EventBase() : base()
+        protected EventBase()
         {
         }
 

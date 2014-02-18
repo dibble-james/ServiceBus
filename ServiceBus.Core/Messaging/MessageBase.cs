@@ -1,10 +1,12 @@
 ﻿namespace ServiceBus.Messaging
 {
+    using System;
     using System.Runtime.Serialization;
 
     /// <summary>
     /// A base implementation for <see cref="IMessage"/>.
     /// </summary>
+    [Serializable]
     public abstract class MessageBase : IMessage
     {
         /// <summary>

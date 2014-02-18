@@ -1,5 +1,6 @@
 ﻿namespace ServiceBus.Core.Events
 {
+    using System;
     using System.Runtime.Serialization;
 
     using ServiceBus.Event;
@@ -8,6 +9,7 @@
     /// <summary>
     /// A service bus system event to register a peer to it's own known peer network.  This class cannot be inherited.
     /// </summary>
+    [Serializable]
     public sealed class PeerConnectedEvent : EventBase<PeerConnectedEvent>
     {
         /// <summary>
@@ -27,7 +29,7 @@
         /// </summary>
         /// <param name="info">The <see cref="T:System.Runtime.Serialization.SerializationInfo"/> to extract data. </param>
         /// <param name="context">The source (see <see cref="T:System.Runtime.Serialization.StreamingContext"/>) for this serialization. </param>
-        public PeerConnectedEvent(SerializationInfo info, StreamingContext context)
+        private PeerConnectedEvent(SerializationInfo info, StreamingContext context) : base(info, context)
         {
             this.ConnectedPeer = info.GetValue("ConnectedPeer", typeof(Peer)) as IPeer;
         }

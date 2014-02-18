@@ -5,10 +5,12 @@
 // --------------------------------------------------------------------------------------------------------------------
 namespace TestHarness1.Messages
 {
+    using System;
     using System.Runtime.Serialization;
 
     using ServiceBus.Messaging;
 
+    [Serializable]
     public class GoodbyeMessage : IMessage
     {
         public const string GoodbyeMessageType = "GoodbyeMessage";

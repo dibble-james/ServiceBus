@@ -66,6 +66,7 @@
     <Compile Include="Event\EventBase.cs" />
     <Compile Include="Event\IEvent.cs" />
     <Compile Include="Event\IEventHandler.cs" />
+    <Compile Include="GlobalSuppressions.cs" />
     <Compile Include="IEndpoint.cs" />
     <Compile Include="IPeer.cs" />
     <Compile Include="IServiceBus.cs" />
