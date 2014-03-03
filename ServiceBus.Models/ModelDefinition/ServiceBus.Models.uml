@@ -42,6 +42,12 @@
         LastKnownName="Owin"
         LastKnownLocation="Package7_1219.uml" />
     </packageHasNamedElement>
+    <packageHasNamedElement>
+      <packageMoniker
+        Id="7b46b944-4043-4507-8f88-a77e77bd766c"
+        LastKnownName="Db4objects"
+        LastKnownLocation="Package1_2113.uml" />
+    </packageHasNamedElement>
   </packagedElements>
   <primitiveType
     Id="220a3521-e091-4221-bae9-3ef9018e845c"

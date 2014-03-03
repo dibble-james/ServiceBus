@@ -1,5 +1,6 @@
 ﻿namespace ServiceBus.Routing
 {
+    using System;
     using System.Collections.Generic;
     using System.Linq;
     using System.Reflection;
@@ -31,13 +32,19 @@
 
         private async Task HandleMessage(IMessage message)
         {
-            var messageHandlers = this._endpoints.Where(
-                e => e.GetType().GetInterfaces()
-                .Any(i => i.IsGenericType
-                    && i.GetGenericTypeDefinition() == typeof(IMessageHandler<>)
-                    && i.GenericTypeArguments.Any(m => m == message.GetType())));
+            var handleMessageGeneric = this.GetType()
+                .GetMethods(BindingFlags.NonPublic | BindingFlags.Instance)
+                .First(m => m.Name == ExpressionExtensions.MethodName(() => this.HandleMessage(message)) && m.IsGenericMethod)
+                .MakeGenericMethod(message.GetType());
 
-            var handlingTasks = messageHandlers.Select(mh => Task.Factory.StartNew(() => ((IMessageHandler)mh).ProcessMessage(message)));
+            await Task.Factory.StartNew(() => handleMessageGeneric.Invoke(this, new object[] { message }));
+        }
+
+        private async Task HandleMessage<TMessage>(TMessage message) where TMessage : class, IMessage
+        {
+            var handlingTasks = this._endpoints
+                    .OfType<IMessageHandler<TMessage>>()
+                    .Select(mh => mh.ProcessMessageAsync(message));
 
             await Task.WhenAll(handlingTasks);
         }
@@ -46,7 +53,7 @@
         {
             var handleEventGeneric = this.GetType()
                 .GetMethods(BindingFlags.NonPublic | BindingFlags.Instance)
-                .First(m => m.Name == "HandleEvent" && m.IsGenericMethod)
+                .First(m => m.Name == ExpressionExtensions.MethodName(() => this.HandleEvent(@event)) && m.IsGenericMethod)
                 .MakeGenericMethod(@event.GetType());
 
             await Task.Factory.StartNew(() => handleEventGeneric.Invoke(this, new object[] { @event }));
@@ -56,7 +63,8 @@
         {
             foreach (var eventHandler in this._eventHandlers.OfType<IEventHandler<TEvent>>())
             {
-                @event.EventRaised += eventHandler.Handle;
+                var handlerPointer = eventHandler;
+                @event.EventRaised += e => handlerPointer.HandleAsync(e);
             }
 
             await @event.RaiseLocalAsync();

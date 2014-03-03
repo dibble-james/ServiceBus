@@ -1,5 +1,7 @@
 ﻿namespace ServiceBus.Core.EventHandlers
 {
+    using System.Threading.Tasks;
+
     using ServiceBus.Core.Events;
     using ServiceBus.Event;
 
@@ -27,9 +29,10 @@
         /// Invoke services to deal with this PeerConnectedEvent.
         /// </summary>
         /// <param name="event">The PeerConnectedEvent data.</param>
-        public void Handle(PeerConnectedEvent @event)
+        /// <returns>An awaitable object representing the handling operation.</returns>
+        public async Task HandleAsync(PeerConnectedEvent @event)
         {
-            this._serviceBus.SynchroniseAsync(@event.ConnectedPeer);
+            await this._serviceBus.SynchroniseAsync(@event.ConnectedPeer);
         }
     }
 }

@@ -145,6 +145,9 @@
         /// <returns>An awaitable object representing the send operation.</returns>
         public async Task SendAsync<TMessage>(IPeer peer, TMessage message) where TMessage : class, IMessage, new()
         {
+            Argument.CannotBeNull(peer, "peer", "The peer to send to cannot be null.");
+            Argument.CannotBeNull(message, "message", "The message to send cannot be null.");
+
             await this._queueManager.EnqueueAsync(peer, message);
         }
 
@@ -156,13 +159,23 @@
         /// <returns>An awaitable object representing the publish operation.</returns>
         public async Task PublishAsync<TEvent>(TEvent @event) where TEvent : class, IEvent<TEvent>, new()
         {
-            var localEventHandlerTasks =
-                this.EventHandlers.OfType<IEventHandler<TEvent>>().Select(eh => Task.Factory.StartNew(() => eh.Handle(@event)));
+            Argument.CannotBeNull(@event, "event", "The event to publish cannot be null");
+
+            foreach (var eventHandler in this.EventHandlers.OfType<IEventHandler<TEvent>>())
+            {
+                var eventHandlerPointer = eventHandler;
+
+                @event.EventRaised += e => eventHandlerPointer.HandleAsync(e);
+            }
+
+            var handleEventLocallyTask = @event.RaiseLocalAsync();
 
             var raiseEventToPeerTasks =
-                this.RegisteredPeers.Select(p => Task.Factory.StartNew(() => this._queueManager.EnqueueAsync(p, @event)));
+                this.RegisteredPeers.Select(p => this._queueManager.EnqueueAsync(p, @event));
 
-            await Task.WhenAll(raiseEventToPeerTasks.Union(localEventHandlerTasks));
+            await Task.WhenAll(raiseEventToPeerTasks);
+
+            await handleEventLocallyTask;
         }
 
         /// <summary>
@@ -173,6 +186,8 @@
         /// <returns>The <see cref="IServiceBus"/>.</returns>
         public IServiceBus Subscribe<TEvent>(IEventHandler<TEvent> eventHandler) where TEvent : class, IEvent<TEvent>, new()
         {
+            Argument.CannotBeNull(eventHandler, "eventHandler", "To subscribe to an event, the event handler cannot be null.");
+
             this.EventHandlers.Add(eventHandler);
 
             return this;
@@ -185,6 +200,8 @@
         /// <returns>An awaitable object representing the synchronise operation.</returns>
         public async Task SynchroniseAsync(IPeer peer)
         {
+            Argument.CannotBeNull(peer, "peer", "The peer to synchronise cannot be null.");
+
             var message = this._queueManager.PeersNextMessageOrDefault(peer);
 
             var sendMessageTasks = new List<Task>();
@@ -207,6 +224,8 @@
         /// <returns>The <see cref="IServiceBus"/>.</returns>
         public async Task<IServiceBus> WithPeerAsync(Uri peer)
         {
+            Argument.CannotBeNull(peer, "peer", "When registering a peer, its address cannot be null.");
+
             var newPeer = new Peer(peer);
 
             var registerWithPeerTask = this._queueManager.EnqueueAsync(
@@ -231,6 +250,8 @@
         /// <returns>The <see cref="IServiceBus"/>.</returns>
         public IServiceBus WithLocalEndpoint(IEndpoint endpoint)
         {
+            Argument.CannotBeNull(endpoint, "endpoint", "When registering an endpoint it cannot be null.");
+
             this.LocalEndpoints.Add(endpoint);
 
             return this;

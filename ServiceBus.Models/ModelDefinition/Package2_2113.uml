@@ -1,0 +1,75 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<package xmlns:dm0="http://schemas.microsoft.com/VisualStudio/2008/DslTools/Core" xmlns:dm1="http://schemas.microsoft.com/dsltools/Kernel" xmlns:dm2="http://schemas.microsoft.com/dsltools/Component" xmlns:dm3="http://schemas.microsoft.com/dsltools/UseCase" xmlns:dm4="http://schemas.microsoft.com/dsltools/Activity" xmlns:dm5="http://schemas.microsoft.com/dsltools/Interaction" xmlns:dm6="http://schemas.microsoft.com/dsltools/UmlModelLibrary" xmlns:dm7="http://schemas.microsoft.com/dsltools/UmlDiagrams" xmlns:dm8="http://schemas.microsoft.com/dsltools/LogicalClassDesigner"
+  dslVersion="1.0.0.0"
+  Id="3e6cfe50-e0b5-40d4-a127-36f8403a3269"
+  name="Db4o"
+  visibility="Private" xmlns="http://schemas.microsoft.com/dsltools/ModelStore">
+  <referencesInternal>
+    <reference
+      Id="63a50c2e-d12b-43e4-a85c-9b0711d12f35"
+      handle="viewcode://./CodeSchema_Namespace?Namespace%3DDb4objects.Db4o"
+      tag="ViewCode" />
+  </referencesInternal>
+  <packagedElements>
+    <packageHasNamedElement>
+      <Interface
+        Id="b9d56277-c281-4996-8fd9-5f29155426f3"
+        name="IObjectContainer"
+        isAbstract="false"
+        isLeaf="false">
+        <referencesInternal>
+          <reference
+            Id="2b9c6bf3-196f-417d-afdd-9ee6397916ac"
+            handle="viewcode://./CodeSchema_Interface?Assembly%3D&quot;file:%2F%2F%2FC:%2FGIT%2FService Bus%2Fpackages%2Fdb4o-devel.8.1.184.15492%2Flib%2Fnet40%2FDb4objects.Db4o.dll&quot; Namespace%3DDb4objects.Db4o Type%3DIObjectContainer"
+            tag="ViewCode" />
+        </referencesInternal>
+        <appliedStereotypesInternal>
+          <stereotypeInstance
+            Id="70bdf4b2-92dc-4ab4-84c3-ea90ab6515de"
+            name="interface"
+            profile="CSharpProfile">
+            <propertyInstances>
+              <stereotypeInstanceHasPropertyInstances
+                Id="b8ce5d92-e421-4381-9c41-6dc9857d27e3">
+                <propertyInstance
+                  Id="e8df984e-8fb8-4b2e-a7f2-1c3065b184ad"
+                  name="ClrAttributes" />
+              </stereotypeInstanceHasPropertyInstances>
+              <stereotypeInstanceHasPropertyInstances
+                Id="f6d46d57-1f01-4ef8-8b83-a3f2441966c8">
+                <propertyInstance
+                  Id="0daa6df9-24d0-4146-87c5-ac90c966da91"
+                  name="IsPartial"
+                  value="false" />
+              </stereotypeInstanceHasPropertyInstances>
+              <stereotypeInstanceHasPropertyInstances
+                Id="abacb05f-913c-474c-8e6f-3fd9f189df2e">
+                <propertyInstance
+                  Id="84bdb722-0311-4ec3-a26f-12db619191af"
+                  name="IsUnsafe"
+                  value="false" />
+              </stereotypeInstanceHasPropertyInstances>
+              <stereotypeInstanceHasPropertyInstances
+                Id="7776a820-271f-440e-bd7b-eba592a66c17">
+                <propertyInstance
+                  Id="a95b453a-66e9-4d6b-9f64-bd8dd2f37c9a"
+                  name="PackageVisibility"
+                  value="internal" />
+              </stereotypeInstanceHasPropertyInstances>
+            </propertyInstances>
+          </stereotypeInstance>
+        </appliedStereotypesInternal>
+        <generalsInternal>
+          <generalization
+            Id="65efe36e-139c-4411-9167-7e0e13650fe8"
+            isSubstitutable="false">
+            <interfaceMoniker
+              Id="3594d511-88b1-41ac-b493-86313407f8af"
+              LastKnownName="IDisposable"
+              LastKnownLocation="Package2_1218.uml" />
+          </generalization>
+        </generalsInternal>
+      </Interface>
+    </packageHasNamedElement>
+  </packagedElements>
+</package>

@@ -1,5 +1,6 @@
 ﻿namespace ServiceBus.Web.Mvc.Configuration
 {
+    using System;
     using System.IO;
     using System.Web;
     using System.Web.Mvc;
@@ -21,6 +22,8 @@
         /// <returns>The <see cref="IHostApplicationConfiguration"/>.</returns>
         public static IHostApplicationConfiguration AsMvcServiceBus(this ITransportConfiguration transportConfiguration, RouteCollection routes)
         {
+            Argument.CannotBeNull(routes, "routes", "Route collection must be used to add service bus HTTP methods.");
+
             routes.MapRoute(
                 "MessageReceive", 
                 "service-bus/message", 

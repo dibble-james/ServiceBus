@@ -8,6 +8,7 @@ namespace TestHarness2.EventHandlers
     using System;
     using System.Diagnostics;
     using System.Threading;
+    using System.Threading.Tasks;
 
     using ServiceBus.Event;
 
@@ -23,7 +24,7 @@ namespace TestHarness2.EventHandlers
             }
         }
 
-        public void Handle(HelloEvent @event)
+        public async Task HandleAsync(HelloEvent @event)
         {
             Debug.WriteLine(
                 "HelloEvent Received [{0}], Raised [{1}], ThreadId[{2}]",

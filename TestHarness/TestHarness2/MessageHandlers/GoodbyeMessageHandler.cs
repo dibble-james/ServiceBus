@@ -8,6 +8,7 @@ namespace TestHarness2.MessageHandlers
     using System;
     using System.Diagnostics;
     using System.Threading;
+    using System.Threading.Tasks;
 
     using ServiceBus.Messaging;
 
@@ -15,12 +16,12 @@ namespace TestHarness2.MessageHandlers
 
     public class GoodbyeMessageHandler : IMessageHandler<GoodbyeMessage>
     {
-        public void ProcessMessage(IMessage message)
+        public async Task ProcessMessageAsync(IMessage message)
         {
-            this.ProcessMessage(message as GoodbyeMessage);
+            await this.ProcessMessageAsync(message as GoodbyeMessage);
         }
 
-        public void ProcessMessage(GoodbyeMessage message)
+        public async Task ProcessMessageAsync(GoodbyeMessage message)
         {
             Debug.WriteLine(
                 "Goodbye Message received in GoodbyeMessageHandler [{0}], Thread Id [{1}], Content [{2}]", 

@@ -1,5 +1,7 @@
 ﻿namespace ServiceBus.Event
 {
+    using System.Threading.Tasks;
+
     /// <summary>
     /// DO NOT IMPLEMENT.  Implement the generic IEventHandler so that it can be registered.  This interface exists only to 
     /// be able to store <see cref="IEventHandler{TEvent}"/>s in a collection.
@@ -18,6 +20,7 @@
         /// Invoke services to deal with this <typeparamref name="TEvent"/>.
         /// </summary>
         /// <param name="event">The <typeparamref name="TEvent"/> data.</param>
-        void Handle(TEvent @event);
+        /// <returns>An awaitable object representing the handling operation.</returns>
+        Task HandleAsync(TEvent @event);
     }
 }

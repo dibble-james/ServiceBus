@@ -1,5 +1,6 @@
 ﻿namespace ServiceBus.Transport.Http.Configuration
 {
+    using System;
     using System.Net.Http;
 
     using ServiceBus.Configuration;
@@ -30,6 +31,9 @@
         /// <returns>The <see cref="ITransportConfiguration"/>.</returns>
         public static ITransportConfiguration WithHttpTransport(this IHostAddressConfiguration hostAddressConfiguration, HttpClient client, IMessageSerialiser messageSerialiser)
         {
+            Argument.CannotBeNull(client, "client", "The HTTP transporter cannot accept a null HTTP Client.");
+            Argument.CannotBeNull(messageSerialiser, "messageSerialiser", "A message serialiser to be used by the transporter cannot be null.");
+
             var transporter = new HttpTransporter(client, messageSerialiser);
 
             return new TransportConfiguration(hostAddressConfiguration, transporter);

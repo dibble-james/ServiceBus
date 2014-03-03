@@ -1,15 +1,12 @@
 ﻿namespace ServiceBus.Messaging
 {
+    using System.Threading.Tasks;
+
     /// <summary>
     /// DO NOT IMPLEMENT.  Always implement <see cref="IMessageHandler{TMessage}"/> so that it can be registered.
     /// </summary>
     public interface IMessageHandler
     {
-        /// <summary>
-        /// Invoke the business logic contained by this <see cref="IMessageHandler"/>.
-        /// </summary>
-        /// <param name="message">The message data.</param>
-        void ProcessMessage(IMessage message);
     }
 
     /// <summary>
@@ -22,6 +19,7 @@
         /// Invoke services to deal with this <typeparamref name="TMessage"/>.
         /// </summary>
         /// <param name="message">The <typeparamref name="TMessage"/> data.</param>
-        void ProcessMessage(TMessage message);
+        /// <returns>An awaitable object representing the handling operation.</returns>
+        Task ProcessMessageAsync(TMessage message);
     }
 }

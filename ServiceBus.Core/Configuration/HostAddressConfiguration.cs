@@ -5,7 +5,7 @@
     /// <summary>
     /// The host address configuration.
     /// </summary>
-    public class HostAddressConfiguration : IHostAddressConfiguration
+    internal class HostAddressConfiguration : IHostAddressConfiguration
     {
         /// <summary>
         /// Initialises a new instance of the <see cref="HostAddressConfiguration"/> class.

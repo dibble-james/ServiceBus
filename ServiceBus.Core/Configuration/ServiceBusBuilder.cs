@@ -23,6 +23,8 @@
         /// <returns>The host address configuration.</returns>
         public IHostAddressConfiguration WithHostAddress(Uri address)
         {
+            Argument.CannotBeNull(address, "hostAddress", "The host address for the service bus cannot be null.");
+
             return new HostAddressConfiguration(address);
         }
     }

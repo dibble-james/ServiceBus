@@ -41,6 +41,9 @@
     <Reference Include="Db4objects.Db4o.Linq">
       <HintPath>..\packages\db4o-devel.8.1.184.15492\lib\net40\Db4objects.Db4o.Linq.dll</HintPath>
     </Reference>
+    <Reference Include="JamesDibble.Extensions.System">
+      <HintPath>..\packages\JamesDibble.Extensions.System.1.0.1\lib\JamesDibble.Extensions.System.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="Mono.Reflection">
       <HintPath>..\packages\db4o-devel.8.1.184.15492\lib\net40\Mono.Reflection.dll</HintPath>

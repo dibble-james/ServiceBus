@@ -59,94 +59,6 @@
             </propertyInstances>
           </stereotypeInstance>
         </appliedStereotypesInternal>
-        <ownedOperations>
-          <operation
-            Id="8c4657d1-e99f-4804-b1a5-48f3b3da2630"
-            name="Handle"
-            isLeaf="false"
-            isStatic="false"
-            isAbstract="true"
-            concurrency="Sequential"
-            isQuery="false">
-            <referencesInternal>
-              <reference
-                Id="a01125e3-d7a3-4f4b-9715-ca64e83f65a5"
-                handle="viewcode://./CodeSchema_Method?Assembly%3D&quot;file:%2F%2F%2FC:%2FGIT%2FService Bus%2FDebug%2FServiceBus.Core.dll&quot; Namespace%3DServiceBus.Event Type%3DIEventHandler Member%3D(Name%3DHandle OverloadingParameters%3D[(Assembly%3D&quot;file:%2F%2F%2FC:%2FGIT%2FService Bus%2FDebug%2FServiceBus.Core.dll&quot; Namespace%3DServiceBus.Event Type%3DIEvent)])"
-                tag="ViewCode" />
-            </referencesInternal>
-            <appliedStereotypesInternal>
-              <stereotypeInstance
-                Id="f55d72f6-3928-4a4a-a2d2-4819df217679"
-                name="method"
-                profile="CSharpProfile">
-                <propertyInstances>
-                  <stereotypeInstanceHasPropertyInstances
-                    Id="f63052d4-fc70-4ef1-bd23-c6455bcedcd5">
-                    <propertyInstance
-                      Id="658beca8-a52a-428b-b808-09f46d9e5df2"
-                      name="ClrAttributes" />
-                  </stereotypeInstanceHasPropertyInstances>
-                  <stereotypeInstanceHasPropertyInstances
-                    Id="52c10d21-3972-41ae-a553-d7b0e4311496">
-                    <propertyInstance
-                      Id="71c248d7-822c-4add-a31c-88b185db4f71"
-                      name="IsPartial"
-                      value="false" />
-                  </stereotypeInstanceHasPropertyInstances>
-                  <stereotypeInstanceHasPropertyInstances
-                    Id="658e1963-c2b2-4fb5-9c40-b93a483f98c5">
-                    <propertyInstance
-                      Id="75032ff7-d117-41f8-b78a-faab88eb9442"
-                      name="IsUnsafe"
-                      value="false" />
-                  </stereotypeInstanceHasPropertyInstances>
-                  <stereotypeInstanceHasPropertyInstances
-                    Id="ba4e25f0-51ed-4a6a-9472-21e80096d3b7">
-                    <propertyInstance
-                      Id="7f5dc0f4-f1b6-4439-a280-53820e4e300c"
-                      name="Inheritance"
-                      value="none" />
-                  </stereotypeInstanceHasPropertyInstances>
-                  <stereotypeInstanceHasPropertyInstances
-                    Id="743fa55d-dfb4-4092-b660-a87961eecab1">
-                    <propertyInstance
-                      Id="03354c09-400e-4252-8e5a-d3275177e41c"
-                      name="PackageVisibility"
-                      value="internal" />
-                  </stereotypeInstanceHasPropertyInstances>
-                  <stereotypeInstanceHasPropertyInstances
-                    Id="67adb9d4-fd7e-4fbe-bce3-b95fe9324dd5">
-                    <propertyInstance
-                      Id="4a527e07-ef71-4870-a453-ee3d93f1bd0e"
-                      name="params"
-                      value="false" />
-                  </stereotypeInstanceHasPropertyInstances>
-                </propertyInstances>
-              </stereotypeInstance>
-            </appliedStereotypesInternal>
-            <ownedParameters>
-              <operationHasOwnedParameters>
-                <parameter
-                  Id="34fb8356-3017-4db9-a1a6-ae796316c2b9"
-                  name="event"
-                  direction="In">
-                  <referencesInternal>
-                    <reference
-                      Id="c0dc0c12-ac0f-454e-9b27-78d034d83d40"
-                      handle="viewcode://./CodeSchema_Parameter?Assembly%3D&quot;file:%2F%2F%2FC:%2FGIT%2FService Bus%2FDebug%2FServiceBus.Core.dll&quot; Namespace%3DServiceBus.Event Type%3DIEventHandler Member%3D(Name%3DHandle OverloadingParameters%3D[(Assembly%3D&quot;file:%2F%2F%2FC:%2FGIT%2FService Bus%2FDebug%2FServiceBus.Core.dll&quot; Namespace%3DServiceBus.Event Type%3DIEvent)]) ParameterIdentifier%3Devent"
-                      tag="ViewCode" />
-                  </referencesInternal>
-                  <type_NamedElement>
-                    <interfaceMoniker
-                      Id="c0264521-8b1a-4969-9235-15d53f4501be"
-                      LastKnownName="IEvent"
-                      LastKnownLocation="Package_1637.uml" />
-                  </type_NamedElement>
-                </parameter>
-              </operationHasOwnedParameters>
-            </ownedParameters>
-          </operation>
-        </ownedOperations>
       </Interface>
     </packageHasNamedElement>
     <packageHasNamedElement>
@@ -304,7 +216,7 @@
         </ownedRedefinableTemplateSignatureInternal>
         <ownedOperations>
           <operation
-            Id="69bea0f3-dfed-490e-a8fa-09f75688ce1e"
+            Id="5accd831-dc0f-471a-961b-ef2df00fafa6"
             name="Handle"
             isLeaf="false"
             isStatic="false"
@@ -313,54 +225,54 @@
             isQuery="false">
             <referencesInternal>
               <reference
-                Id="c89e0f27-c562-4e98-8d32-ec4f714bbe79"
+                Id="6aab0fa5-e046-4111-acbd-f33741f82217"
                 handle="viewcode://./CodeSchema_Method?Assembly%3D&quot;file:%2F%2F%2FC:%2FGIT%2FService Bus%2FDebug%2FServiceBus.Core.dll&quot; Namespace%3DServiceBus.Event Type%3D(Name%3DIEventHandler GenericParameterCount%3D1) Member%3D(Name%3DHandle OverloadingParameters%3D[(Assembly%3D&quot;file:%2F%2F%2FC:%2FGIT%2FService Bus%2FDebug%2FServiceBus.Core.dll&quot; Namespace%3DServiceBus.Event Type%3D(Name%3DIEventHandler GenericParameterCount%3D1) ParameterIdentifier%3D0)])"
                 tag="ViewCode" />
             </referencesInternal>
             <appliedStereotypesInternal>
               <stereotypeInstance
-                Id="1fcc56ea-1f8b-4fc0-b9e9-64a6048c4b00"
+                Id="a4eb0298-9750-471b-a42b-57277fa55c5c"
                 name="method"
                 profile="CSharpProfile">
                 <propertyInstances>
                   <stereotypeInstanceHasPropertyInstances
-                    Id="d7b1c2fa-8c4b-48d3-a8f5-c315f98133b2">
+                    Id="0e9fea27-3e32-4bce-bfa5-d051f7b06703">
                     <propertyInstance
-                      Id="9f88d18f-e5c1-48fe-ba90-5a2925b91b5e"
+                      Id="f4834391-7300-42c8-89f5-3d5cef819c6b"
                       name="ClrAttributes" />
                   </stereotypeInstanceHasPropertyInstances>
                   <stereotypeInstanceHasPropertyInstances
-                    Id="8b788a7a-2ef6-4f9f-920c-1395802b7f18">
+                    Id="5092f9f8-73dc-4036-8546-33a67ef808de">
                     <propertyInstance
-                      Id="15017104-c355-4fa5-98ae-699a6debddd3"
+                      Id="b17dc6c1-5a00-42c4-98c8-712df7f36d3e"
                       name="IsPartial"
                       value="false" />
                   </stereotypeInstanceHasPropertyInstances>
                   <stereotypeInstanceHasPropertyInstances
-                    Id="39ca8898-7bf9-44a7-a422-6373137e1b5b">
+                    Id="58be383d-70ee-4976-abff-6802056c6380">
                     <propertyInstance
-                      Id="f585f50f-5807-4248-82a8-25aa375a58b6"
+                      Id="2ecfec86-5fcb-45cb-8d63-a03623ac257a"
                       name="IsUnsafe"
                       value="false" />
                   </stereotypeInstanceHasPropertyInstances>
                   <stereotypeInstanceHasPropertyInstances
-                    Id="93aad7f7-42df-4412-9542-d1c87618c72b">
+                    Id="030554f5-4e12-4929-86a2-e386326f2e2e">
                     <propertyInstance
-                      Id="682d0fce-7099-4291-bd9b-9386c3f1742c"
+                      Id="b703f2fc-d845-4385-86ef-1111da19e8cb"
                       name="Inheritance"
                       value="none" />
                   </stereotypeInstanceHasPropertyInstances>
                   <stereotypeInstanceHasPropertyInstances
-                    Id="f4149edb-f629-4659-97c7-22d081770b05">
+                    Id="3e57f18c-8717-4f3c-bd04-217af484e2b4">
                     <propertyInstance
-                      Id="c40eb5a8-23ac-4f73-80c0-72ad379dfc28"
+                      Id="d9bc1851-7238-4deb-82bf-5723f76c4b20"
                       name="PackageVisibility"
                       value="internal" />
                   </stereotypeInstanceHasPropertyInstances>
                   <stereotypeInstanceHasPropertyInstances
-                    Id="e154ee95-86ce-494f-9762-514d1d10774e">
+                    Id="7c757da2-6e9a-4dd8-aaa8-54e726c159f7">
                     <propertyInstance
-                      Id="5877b762-3fb1-449a-894c-97b710f7f071"
+                      Id="7b498fa5-f3a9-453d-a27c-62e93468bb4d"
                       name="params"
                       value="false" />
                   </stereotypeInstanceHasPropertyInstances>
@@ -370,12 +282,12 @@
             <ownedParameters>
               <operationHasOwnedParameters>
                 <parameter
-                  Id="b24b0692-6aaa-4ed9-8474-f14dba01833b"
+                  Id="a115d59b-efcf-49f5-b0e8-744618c676b1"
                   name="event"
                   direction="In">
                   <referencesInternal>
                     <reference
-                      Id="a59ba3a4-5ffc-4e16-b0ac-b7b739e07226"
+                      Id="c6def0ce-80aa-4026-ad0c-fa203af9f6fe"
                       handle="viewcode://./CodeSchema_Parameter?Assembly%3D&quot;file:%2F%2F%2FC:%2FGIT%2FService Bus%2FDebug%2FServiceBus.Core.dll&quot; Namespace%3DServiceBus.Event Type%3D(Name%3DIEventHandler GenericParameterCount%3D1) Member%3D(Name%3DHandle OverloadingParameters%3D[(Assembly%3D&quot;file:%2F%2F%2FC:%2FGIT%2FService Bus%2FDebug%2FServiceBus.Core.dll&quot; Namespace%3DServiceBus.Event Type%3D(Name%3DIEventHandler GenericParameterCount%3D1) ParameterIdentifier%3D0)]) ParameterIdentifier%3Devent"
                       tag="ViewCode" />
                   </referencesInternal>
@@ -390,6 +302,1012 @@
             </ownedParameters>
           </operation>
         </ownedOperations>
+      </Interface>
+    </packageHasNamedElement>
+    <packageHasNamedElement>
+      <class
+        Id="92362252-22ac-447c-94f1-5018ada19b4d"
+        name="EventBase"
+        isAbstract="true"
+        isLeaf="false"
+        isActiveClass="false">
+        <referencesInternal>
+          <reference
+            Id="8025cd27-cb5e-406c-93b4-b724fb44f10c"
+            handle="viewcode://./CodeSchema_Class?Assembly%3D&quot;file:%2F%2F%2FC:%2FGIT%2FService Bus%2FDebug%2FServiceBus.Core.dll&quot; Namespace%3DServiceBus.Event Type%3D(Name%3DEventBase GenericParameterCount%3D1)"
+            tag="ViewCode" />
+        </referencesInternal>
+        <appliedStereotypesInternal>
+          <stereotypeInstance
+            Id="ceb74dbf-b336-4599-b1aa-d364184bdd18"
+            name="class"
+            profile="CSharpProfile">
+            <propertyInstances>
+              <stereotypeInstanceHasPropertyInstances
+                Id="55f354bd-738f-44e0-a53f-34999f3d56ec">
+                <propertyInstance
+                  Id="cef65a13-99f7-4fa2-9284-c82fc86dcdcd"
+                  name="ClrAttributes" />
+              </stereotypeInstanceHasPropertyInstances>
+              <stereotypeInstanceHasPropertyInstances
+                Id="14b30c42-ec7c-4dab-9887-f9c100cd2b5f">
+                <propertyInstance
+                  Id="5e52a390-d35e-477c-a7b4-15d625e61e47"
+                  name="IsPartial"
+                  value="false" />
+              </stereotypeInstanceHasPropertyInstances>
+              <stereotypeInstanceHasPropertyInstances
+                Id="a564806f-7eec-4b28-96c7-7be4726b95f1">
+                <propertyInstance
+                  Id="3d5f92c9-30ac-471d-934d-9ebbb0245f7a"
+                  name="IsStatic"
+                  value="False" />
+              </stereotypeInstanceHasPropertyInstances>
+              <stereotypeInstanceHasPropertyInstances
+                Id="6f84c5d5-4a98-4b38-ac7c-b5e219e44236">
+                <propertyInstance
+                  Id="d26a544a-b3d6-4734-8a68-d800a6dc935b"
+                  name="IsUnsafe"
+                  value="false" />
+              </stereotypeInstanceHasPropertyInstances>
+              <stereotypeInstanceHasPropertyInstances
+                Id="247d222d-b976-4815-9e67-2491cd1031db">
+                <propertyInstance
+                  Id="1eb39dce-1b9f-4776-94af-81cd1650a310"
+                  name="PackageVisibility"
+                  value="internal" />
+              </stereotypeInstanceHasPropertyInstances>
+            </propertyInstances>
+          </stereotypeInstance>
+        </appliedStereotypesInternal>
+        <suppliersInternal>
+          <interfaceRealization
+            Id="09d90759-970d-412d-a85c-67453c33028b">
+            <interfaceMoniker
+              Id="f588cd5a-ad6e-49f1-9b23-1c8dacef11ab"
+              LastKnownName="IEvent&lt;TEvent‎&gt;"
+              LastKnownLocation="Package_1637.uml" />
+          </interfaceRealization>
+          <interfaceRealization
+            Id="a22006ee-7aff-4296-b706-480c463ee62e">
+            <interfaceMoniker
+              Id="35f86cee-ee23-487f-9ac8-7ac35a6e16c2"
+              LastKnownName="IEvent"
+              LastKnownLocation="Package_1637.uml" />
+          </interfaceRealization>
+        </suppliersInternal>
+        <generalsInternal>
+          <generalization
+            Id="f6803b2d-e112-4e99-b0a3-9b3a899b2541"
+            isSubstitutable="false">
+            <classMoniker
+              Id="fb285f19-667c-4c6a-bffe-c03fc8bcd53a"
+              LastKnownName="MessageBase"
+              LastKnownLocation="Package5_1219.uml" />
+          </generalization>
+        </generalsInternal>
+        <ownedRedefinableTemplateSignatureInternal>
+          <redefinableTemplateSignature
+            Id="81ee25d2-1189-4ad8-a86c-42fc70a1e494"
+            parameters=""
+            name="RedefinableTemplateSignature1"
+            isLeaf="false">
+            <ownedParameters>
+              <classifierTemplateParameter
+                Id="faef9af3-1ec0-4552-84b5-7882267c067f">
+                <referencesInternal>
+                  <reference
+                    Id="31627283-2e5f-4c56-aa58-318e4270fc5e"
+                    handle="viewcode://./CodeSchema_GenericParameter?Assembly%3D&quot;file:%2F%2F%2FC:%2FGIT%2FService Bus%2FDebug%2FServiceBus.Core.dll&quot; Namespace%3DServiceBus.Event Type%3D(Name%3DEventBase GenericParameterCount%3D1) ParameterIdentifier%3D0"
+                    tag="ViewCode" />
+                </referencesInternal>
+                <ownedParameterableElement>
+                  <class
+                    Id="9f7a44ed-aea1-43c5-8237-b6cd9cce0b47"
+                    name="TEvent"
+                    isAbstract="false"
+                    isLeaf="false"
+                    isActiveClass="false" />
+                </ownedParameterableElement>
+              </classifierTemplateParameter>
+            </ownedParameters>
+          </redefinableTemplateSignature>
+        </ownedRedefinableTemplateSignatureInternal>
+        <ownedAttributesInternal>
+          <property
+            Id="b99944bc-5d91-4b71-8298-aba4bfeb3a14"
+            name="EventRaised"
+            isLeaf="false"
+            isStatic="false"
+            isReadOnly="false"
+            isDerived="false"
+            isDerivedUnion="false"
+            aggregation="None"
+            isComposite="false">
+            <referencesInternal>
+              <reference
+                Id="f1847950-2e97-4f2c-bce1-49aebb51b31c"
+                handle="viewcode://./CodeSchema_Event?Assembly%3D&quot;file:%2F%2F%2FC:%2FGIT%2FService Bus%2FDebug%2FServiceBus.Core.dll&quot; Namespace%3DServiceBus.Event Type%3D(Name%3DEventBase GenericParameterCount%3D1) Member%3DEventRaised"
+                tag="ViewCode" />
+            </referencesInternal>
+            <appliedStereotypesInternal>
+              <stereotypeInstance
+                Id="471ed1e2-85e5-4b37-a3af-cf135f6246d0"
+                name="event"
+                profile="CSharpProfile">
+                <propertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="c0bee6b6-9a7d-43c0-9fa2-feab1213a107">
+                    <propertyInstance
+                      Id="95f72bd5-ee2e-44ec-8f85-a81606d60fba"
+                      name="Add"
+                      value="false" />
+                  </stereotypeInstanceHasPropertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="b2e4cff1-ac62-4c23-8f68-61c7787741bd">
+                    <propertyInstance
+                      Id="8acbcf7d-c7a5-4004-86a3-b295b3ab983f"
+                      name="ClrAttributes" />
+                  </stereotypeInstanceHasPropertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="f50b1999-d86a-40fc-9848-ac42e061a0a7">
+                    <propertyInstance
+                      Id="b825b3c0-f1c2-44e0-bd5e-56a9577ccd41"
+                      name="IsUnsafe"
+                      value="false" />
+                  </stereotypeInstanceHasPropertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="9fe9568a-9a4b-413e-ae4f-e0b0f49c0533">
+                    <propertyInstance
+                      Id="340fb203-98f7-48c0-811d-98c65ce835ef"
+                      name="PackageVisibility"
+                      value="internal" />
+                  </stereotypeInstanceHasPropertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="97c88580-270b-4df5-bad7-e527227816ca">
+                    <propertyInstance
+                      Id="a4b37f91-7c96-4ace-b4da-f43c73b6bb27"
+                      name="Remove"
+                      value="false" />
+                  </stereotypeInstanceHasPropertyInstances>
+                </propertyInstances>
+              </stereotypeInstance>
+            </appliedStereotypesInternal>
+            <type_NamedElement>
+              <classMoniker
+                Id="20d858b4-badc-4485-b584-1d721ee73edc"
+                LastKnownName="Action&lt;TEvent‎&gt;"
+                LastKnownLocation="Package2_1218.uml" />
+            </type_NamedElement>
+          </property>
+        </ownedAttributesInternal>
+        <ownedOperationsInternal>
+          <operation
+            Id="42985ed3-f615-40e7-868c-751701ff6634"
+            name="EventBase"
+            visibility="Protected"
+            isLeaf="false"
+            isStatic="false"
+            isAbstract="false"
+            concurrency="Sequential"
+            isQuery="false">
+            <referencesInternal>
+              <reference
+                Id="5d360de3-03c6-49dd-8736-4b64d7d01c00"
+                handle="viewcode://./CodeSchema_Method?Assembly%3D&quot;file:%2F%2F%2FC:%2FGIT%2FService Bus%2FDebug%2FServiceBus.Core.dll&quot; Namespace%3DServiceBus.Event Type%3D(Name%3DEventBase GenericParameterCount%3D1) Member%3D.ctor"
+                tag="ViewCode" />
+            </referencesInternal>
+            <appliedStereotypesInternal>
+              <stereotypeInstance
+                Id="c12fc1bc-ceec-4fe0-a3c8-beae28b30ae9"
+                name="method"
+                profile="CSharpProfile">
+                <propertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="2b5ed9ce-2a0a-4d7f-b37d-85cf3627f671">
+                    <propertyInstance
+                      Id="ad70991b-c9fa-4d82-a11b-3138f49213ae"
+                      name="ClrAttributes" />
+                  </stereotypeInstanceHasPropertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="752b25b2-e602-40e4-be3c-4df6c498e226">
+                    <propertyInstance
+                      Id="7fa68ae9-e2cd-4c94-b563-6ed49a985f72"
+                      name="IsPartial"
+                      value="false" />
+                  </stereotypeInstanceHasPropertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="03e16b52-93c8-4bbe-a5ff-9609ab1d10d4">
+                    <propertyInstance
+                      Id="d09a151c-cc3f-4887-b1e6-c4cd3ec0b378"
+                      name="IsUnsafe"
+                      value="false" />
+                  </stereotypeInstanceHasPropertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="7e733c92-40b5-4610-bd6a-6a2b331295f6">
+                    <propertyInstance
+                      Id="4042db71-de51-4f8d-8000-102d7c9c2161"
+                      name="Inheritance"
+                      value="none" />
+                  </stereotypeInstanceHasPropertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="d2865a3d-24fe-4f3e-866a-b690d496c9b9">
+                    <propertyInstance
+                      Id="86de4883-3b17-4c8b-a2ea-e8d7894e83ad"
+                      name="PackageVisibility"
+                      value="internal" />
+                  </stereotypeInstanceHasPropertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="c006fe08-c493-4a34-9b5b-022e1e837a01">
+                    <propertyInstance
+                      Id="e0bfabd3-7e48-4839-ba5e-c3f4d3974e32"
+                      name="params"
+                      value="false" />
+                  </stereotypeInstanceHasPropertyInstances>
+                </propertyInstances>
+              </stereotypeInstance>
+            </appliedStereotypesInternal>
+          </operation>
+          <operation
+            Id="efc0a21a-45b9-45c5-8839-a5f27f5a3a60"
+            name="EventBase"
+            visibility="Protected"
+            isLeaf="false"
+            isStatic="false"
+            isAbstract="false"
+            concurrency="Sequential"
+            isQuery="false">
+            <referencesInternal>
+              <reference
+                Id="5f48e269-418a-42b7-a2a4-f1166696efe2"
+                handle="viewcode://./CodeSchema_Method?Assembly%3D&quot;file:%2F%2F%2FC:%2FGIT%2FService Bus%2FDebug%2FServiceBus.Core.dll&quot; Namespace%3DServiceBus.Event Type%3D(Name%3DEventBase GenericParameterCount%3D1) Member%3D(Name%3D.ctor OverloadingParameters%3D[(Assembly%3D&quot;file:%2F%2F%2FC:%2FProgram Files (x86)%2FReference Assemblies%2FMicrosoft%2FFramework%2F.NETFramework%2Fv4.5%2Fmscorlib.dll&quot; Namespace%3DSystem.Runtime.Serialization Type%3DSerializationInfo)%2C(Assembly%3D&quot;file:%2F%2F%2FC:%2FProgram Files (x86)%2FReference Assemblies%2FMicrosoft%2FFramework%2F.NETFramework%2Fv4.5%2Fmscorlib.dll&quot; Namespace%3DSystem.Runtime.Serialization Type%3DStreamingContext)])"
+                tag="ViewCode" />
+            </referencesInternal>
+            <appliedStereotypesInternal>
+              <stereotypeInstance
+                Id="f44c3253-b92c-4baa-ad13-0db2ee322a2f"
+                name="method"
+                profile="CSharpProfile">
+                <propertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="ab78ad75-512b-4a7d-8492-4290a087c478">
+                    <propertyInstance
+                      Id="c0c53e04-7d2b-46e1-ae5a-b0462ffac12c"
+                      name="ClrAttributes" />
+                  </stereotypeInstanceHasPropertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="4b38653b-8615-44a8-a2df-781609c53eb0">
+                    <propertyInstance
+                      Id="3447fc59-99fa-4484-98a4-e79d1270ab1d"
+                      name="IsPartial"
+                      value="false" />
+                  </stereotypeInstanceHasPropertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="89815a30-897a-4efe-a4ea-d69f0bf500d8">
+                    <propertyInstance
+                      Id="7f84543c-1455-4131-b429-3833b21c021d"
+                      name="IsUnsafe"
+                      value="false" />
+                  </stereotypeInstanceHasPropertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="357e5448-3312-43e8-9a21-7df560663731">
+                    <propertyInstance
+                      Id="9e253615-8c67-4426-ac10-6630f3704cf0"
+                      name="Inheritance"
+                      value="none" />
+                  </stereotypeInstanceHasPropertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="36936113-ebc1-4242-ba3e-4fbe0b1e3d03">
+                    <propertyInstance
+                      Id="4c005c4f-15bc-4e61-b3ae-7eeb578432d8"
+                      name="PackageVisibility"
+                      value="internal" />
+                  </stereotypeInstanceHasPropertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="30145940-4b07-44f9-a71a-8cddec34c370">
+                    <propertyInstance
+                      Id="ae697d4d-aacd-4d30-a647-4928af9f2ac6"
+                      name="params"
+                      value="false" />
+                  </stereotypeInstanceHasPropertyInstances>
+                </propertyInstances>
+              </stereotypeInstance>
+            </appliedStereotypesInternal>
+            <ownedParameters>
+              <operationHasOwnedParameters>
+                <parameter
+                  Id="c0dcd908-a595-4596-b028-6f1306492ad7"
+                  name="info"
+                  direction="In">
+                  <referencesInternal>
+                    <reference
+                      Id="e448176c-0e46-4dcc-a477-0e0b100c4ed2"
+                      handle="viewcode://./CodeSchema_Parameter?Assembly%3D&quot;file:%2F%2F%2FC:%2FGIT%2FService Bus%2FDebug%2FServiceBus.Core.dll&quot; Namespace%3DServiceBus.Event Type%3D(Name%3DEventBase GenericParameterCount%3D1) Member%3D(Name%3D.ctor OverloadingParameters%3D[(Assembly%3D&quot;file:%2F%2F%2FC:%2FProgram Files (x86)%2FReference Assemblies%2FMicrosoft%2FFramework%2F.NETFramework%2Fv4.5%2Fmscorlib.dll&quot; Namespace%3DSystem.Runtime.Serialization Type%3DSerializationInfo)%2C(Assembly%3D&quot;file:%2F%2F%2FC:%2FProgram Files (x86)%2FReference Assemblies%2FMicrosoft%2FFramework%2F.NETFramework%2Fv4.5%2Fmscorlib.dll&quot; Namespace%3DSystem.Runtime.Serialization Type%3DStreamingContext)]) ParameterIdentifier%3Dinfo"
+                      tag="ViewCode" />
+                  </referencesInternal>
+                  <type_NamedElement>
+                    <classMoniker
+                      Id="e0eb9255-b464-42a5-8c81-c927decad99d"
+                      LastKnownName="SerializationInfo"
+                      LastKnownLocation="Package2_1219.uml" />
+                  </type_NamedElement>
+                </parameter>
+              </operationHasOwnedParameters>
+              <operationHasOwnedParameters>
+                <parameter
+                  Id="c1361716-d075-4582-8ed2-a0b25f8536a2"
+                  name="context"
+                  direction="In">
+                  <referencesInternal>
+                    <reference
+                      Id="23f01d5a-1c70-4caa-b905-e5557b034052"
+                      handle="viewcode://./CodeSchema_Parameter?Assembly%3D&quot;file:%2F%2F%2FC:%2FGIT%2FService Bus%2FDebug%2FServiceBus.Core.dll&quot; Namespace%3DServiceBus.Event Type%3D(Name%3DEventBase GenericParameterCount%3D1) Member%3D(Name%3D.ctor OverloadingParameters%3D[(Assembly%3D&quot;file:%2F%2F%2FC:%2FProgram Files (x86)%2FReference Assemblies%2FMicrosoft%2FFramework%2F.NETFramework%2Fv4.5%2Fmscorlib.dll&quot; Namespace%3DSystem.Runtime.Serialization Type%3DSerializationInfo)%2C(Assembly%3D&quot;file:%2F%2F%2FC:%2FProgram Files (x86)%2FReference Assemblies%2FMicrosoft%2FFramework%2F.NETFramework%2Fv4.5%2Fmscorlib.dll&quot; Namespace%3DSystem.Runtime.Serialization Type%3DStreamingContext)]) ParameterIdentifier%3Dcontext"
+                      tag="ViewCode" />
+                  </referencesInternal>
+                  <type_NamedElement>
+                    <classMoniker
+                      Id="60ee3577-c1b2-4bca-b182-09821d0dd2f1"
+                      LastKnownName="StreamingContext"
+                      LastKnownLocation="Package2_1219.uml" />
+                  </type_NamedElement>
+                </parameter>
+              </operationHasOwnedParameters>
+            </ownedParameters>
+          </operation>
+          <operation
+            Id="92ac836b-8b13-4897-8688-5d1d112ae0ae"
+            name="RaiseLocalAsync"
+            isLeaf="false"
+            isStatic="false"
+            isAbstract="false"
+            concurrency="Sequential"
+            isQuery="false">
+            <referencesInternal>
+              <reference
+                Id="960f80ec-54fe-4d49-9b55-115e548dc070"
+                handle="viewcode://./CodeSchema_Method?Assembly%3D&quot;file:%2F%2F%2FC:%2FGIT%2FService Bus%2FDebug%2FServiceBus.Core.dll&quot; Namespace%3DServiceBus.Event Type%3D(Name%3DEventBase GenericParameterCount%3D1) Member%3DRaiseLocalAsync"
+                tag="ViewCode" />
+            </referencesInternal>
+            <appliedStereotypesInternal>
+              <stereotypeInstance
+                Id="83379261-1ec3-4cee-a0d4-177d81cea99b"
+                name="method"
+                profile="CSharpProfile">
+                <propertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="9909649b-42e0-4d63-baed-961244cd18aa">
+                    <propertyInstance
+                      Id="e43c938d-d096-4234-aa93-a49bc6d08f4b"
+                      name="ClrAttributes" />
+                  </stereotypeInstanceHasPropertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="4cc75a7f-12a4-4bda-a518-be90f3f4c861">
+                    <propertyInstance
+                      Id="40251921-4cf9-4b58-8abd-6a0f54c31a03"
+                      name="IsPartial"
+                      value="false" />
+                  </stereotypeInstanceHasPropertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="cf67200a-a136-4aa4-98d1-ee18081dcc3b">
+                    <propertyInstance
+                      Id="255ee435-cc9c-4a1a-a0d4-29f819ecf17c"
+                      name="IsUnsafe"
+                      value="false" />
+                  </stereotypeInstanceHasPropertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="f72c7a5c-d50b-45be-b755-2cf8e1d74086">
+                    <propertyInstance
+                      Id="f3f76e27-278a-4f09-a60f-9aa94169d3e1"
+                      name="Inheritance"
+                      value="none" />
+                  </stereotypeInstanceHasPropertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="9a84b860-6714-43c2-9a14-09d84180f4b4">
+                    <propertyInstance
+                      Id="76cc0f3a-6601-482c-8a63-dc683f3fe10e"
+                      name="PackageVisibility"
+                      value="internal" />
+                  </stereotypeInstanceHasPropertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="f7bad852-33cd-490c-ab6e-1afd6ede7b02">
+                    <propertyInstance
+                      Id="0e1d0482-5863-46b1-aa91-155cc3086e15"
+                      name="params"
+                      value="false" />
+                  </stereotypeInstanceHasPropertyInstances>
+                </propertyInstances>
+              </stereotypeInstance>
+            </appliedStereotypesInternal>
+            <ownedParameters>
+              <operationHasOwnedParameters>
+                <parameter
+                  Id="b6a2cd2c-cfa7-4824-b58b-e8c77953fd7e"
+                  direction="Return">
+                  <type_NamedElement>
+                    <classMoniker
+                      Id="01502229-2b0e-48a9-a2a6-d8d84030bb90"
+                      LastKnownName="Task"
+                      LastKnownLocation="Package13_1219.uml" />
+                  </type_NamedElement>
+                </parameter>
+              </operationHasOwnedParameters>
+            </ownedParameters>
+          </operation>
+        </ownedOperationsInternal>
+      </class>
+    </packageHasNamedElement>
+    <packageHasNamedElement>
+      <Interface
+        Id="f588cd5a-ad6e-49f1-9b23-1c8dacef11ab"
+        name="IEvent&lt;TEvent‎&gt;"
+        isAbstract="false"
+        isLeaf="false">
+        <appliedStereotypesInternal>
+          <stereotypeInstance
+            Id="bb243b0a-6905-439f-a061-1a57c1885d39"
+            name="interface"
+            profile="CSharpProfile">
+            <propertyInstances>
+              <stereotypeInstanceHasPropertyInstances
+                Id="5448e5a2-ed5c-441b-869b-0631798f71b9">
+                <propertyInstance
+                  Id="8d42c010-6fca-469b-854b-164ebcb8f3c4"
+                  name="ClrAttributes" />
+              </stereotypeInstanceHasPropertyInstances>
+              <stereotypeInstanceHasPropertyInstances
+                Id="c473a09b-cb74-4b80-973f-889eb79e4cc9">
+                <propertyInstance
+                  Id="9a10c565-452b-4afa-894f-19d15edfa224"
+                  name="IsPartial"
+                  value="false" />
+              </stereotypeInstanceHasPropertyInstances>
+              <stereotypeInstanceHasPropertyInstances
+                Id="8e171238-53b7-4477-8cdd-b19c109273d7">
+                <propertyInstance
+                  Id="50ba9289-f9cf-4a3a-92ff-d8545c7670b6"
+                  name="IsUnsafe"
+                  value="false" />
+              </stereotypeInstanceHasPropertyInstances>
+              <stereotypeInstanceHasPropertyInstances
+                Id="07a2b4e2-92f9-48b7-bc00-483761295654">
+                <propertyInstance
+                  Id="b7dd3d5e-adc4-4a10-a6de-b0bfd7bc3808"
+                  name="PackageVisibility"
+                  value="internal" />
+              </stereotypeInstanceHasPropertyInstances>
+            </propertyInstances>
+          </stereotypeInstance>
+        </appliedStereotypesInternal>
+        <signatures>
+          <templateBinding
+            Id="f1ec6b9d-f123-4924-8315-5b17bbf13e3a">
+            <redefinableTemplateSignatureMoniker
+              Id="4422851a-5f3e-4226-aadc-dac13cf06dcb"
+              LastKnownLocation="Package_1637.uml" />
+            <relationshipOwnedElementsInternal>
+              <templateBindingHasTemplateParameterSubstitution>
+                <templateParameterSubstitution
+                  Id="6a88c616-e1de-4dc4-bab3-5f768b1885e5">
+                  <actuals>
+                    <classMoniker
+                      Id="9f7a44ed-aea1-43c5-8237-b6cd9cce0b47"
+                      LastKnownName="TEvent"
+                      LastKnownLocation="Package_1637.uml" />
+                  </actuals>
+                  <formal>
+                    <classifierTemplateParameterMoniker
+                      Id="c6d7828f-dcee-4fe1-9cfa-fb057754986c"
+                      LastKnownLocation="Package_1637.uml" />
+                  </formal>
+                </templateParameterSubstitution>
+              </templateBindingHasTemplateParameterSubstitution>
+            </relationshipOwnedElementsInternal>
+          </templateBinding>
+        </signatures>
+        <generalsInternal>
+          <generalization
+            Id="4191886e-1ecb-42e5-9a2c-e392e67a0190"
+            isSubstitutable="false">
+            <interfaceMoniker
+              Id="c0264521-8b1a-4969-9235-15d53f4501be"
+              LastKnownName="IEvent"
+              LastKnownLocation="Package_1637.uml" />
+          </generalization>
+        </generalsInternal>
+      </Interface>
+    </packageHasNamedElement>
+    <packageHasNamedElement>
+      <Interface
+        Id="35f86cee-ee23-487f-9ac8-7ac35a6e16c2"
+        name="IEvent"
+        isAbstract="false"
+        isLeaf="false">
+        <referencesInternal>
+          <reference
+            Id="c7c04df0-f0d8-4b28-98ab-427a314e6cc5"
+            handle="viewcode://./CodeSchema_Interface?Assembly%3D&quot;file:%2F%2F%2FC:%2FGIT%2FService Bus%2FDebug%2FServiceBus.Core.dll&quot; Namespace%3DServiceBus.Event Type%3D(Name%3DIEvent GenericParameterCount%3D1)"
+            tag="ViewCode" />
+        </referencesInternal>
+        <appliedStereotypesInternal>
+          <stereotypeInstance
+            Id="8d203bc1-0425-4334-963c-a4a540c39aea"
+            name="interface"
+            profile="CSharpProfile">
+            <propertyInstances>
+              <stereotypeInstanceHasPropertyInstances
+                Id="a4d9362b-5a99-4748-939b-e9e00c54d2d0">
+                <propertyInstance
+                  Id="ff5e6811-2a11-4279-9b23-7c7832c67141"
+                  name="ClrAttributes" />
+              </stereotypeInstanceHasPropertyInstances>
+              <stereotypeInstanceHasPropertyInstances
+                Id="c33d74dd-8d34-4244-bd9d-4372ada252df">
+                <propertyInstance
+                  Id="57d139fc-385a-4d47-905a-25f1d40a72ab"
+                  name="IsPartial"
+                  value="false" />
+              </stereotypeInstanceHasPropertyInstances>
+              <stereotypeInstanceHasPropertyInstances
+                Id="d9a01362-fb46-4be7-a7a8-23ec9f84efe3">
+                <propertyInstance
+                  Id="dee29135-1888-45f8-9535-4464cf68caf0"
+                  name="IsUnsafe"
+                  value="false" />
+              </stereotypeInstanceHasPropertyInstances>
+              <stereotypeInstanceHasPropertyInstances
+                Id="c5cd72bf-ee3d-4d22-a7a2-f377dbe31904">
+                <propertyInstance
+                  Id="907ce6ee-824a-43bb-8f42-cd796d708603"
+                  name="PackageVisibility"
+                  value="internal" />
+              </stereotypeInstanceHasPropertyInstances>
+            </propertyInstances>
+          </stereotypeInstance>
+        </appliedStereotypesInternal>
+        <generalsInternal>
+          <generalization
+            Id="54791ff6-0589-4a8d-b6bb-44aab1161c98"
+            isSubstitutable="false">
+            <interfaceMoniker
+              Id="c0264521-8b1a-4969-9235-15d53f4501be"
+              LastKnownName="IEvent"
+              LastKnownLocation="Package_1637.uml" />
+          </generalization>
+        </generalsInternal>
+        <ownedRedefinableTemplateSignatureInternal>
+          <redefinableTemplateSignature
+            Id="4422851a-5f3e-4226-aadc-dac13cf06dcb"
+            parameters=""
+            name="RedefinableTemplateSignature1"
+            isLeaf="false">
+            <ownedParameters>
+              <classifierTemplateParameter
+                Id="c6d7828f-dcee-4fe1-9cfa-fb057754986c">
+                <referencesInternal>
+                  <reference
+                    Id="862a0807-b404-4d75-b922-9717ce8537b1"
+                    handle="viewcode://./CodeSchema_GenericParameter?Assembly%3D&quot;file:%2F%2F%2FC:%2FGIT%2FService Bus%2FDebug%2FServiceBus.Core.dll&quot; Namespace%3DServiceBus.Event Type%3D(Name%3DIEvent GenericParameterCount%3D1) ParameterIdentifier%3D0"
+                    tag="ViewCode" />
+                </referencesInternal>
+                <ownedParameterableElement>
+                  <class
+                    Id="b1ba1a2e-4564-4127-8403-7a989fb5a8ad"
+                    name="TEvent"
+                    isAbstract="false"
+                    isLeaf="false"
+                    isActiveClass="false" />
+                </ownedParameterableElement>
+              </classifierTemplateParameter>
+            </ownedParameters>
+          </redefinableTemplateSignature>
+        </ownedRedefinableTemplateSignatureInternal>
+        <ownedAttributes>
+          <property
+            Id="a07e8761-4c5e-488f-9fa6-9c2d4d5291ea"
+            name="EventRaised"
+            isLeaf="false"
+            isStatic="false"
+            isReadOnly="false"
+            isDerived="false"
+            isDerivedUnion="false"
+            aggregation="None"
+            isComposite="false">
+            <referencesInternal>
+              <reference
+                Id="a7e12f28-c16a-4066-aff8-47f870ffe2f2"
+                handle="viewcode://./CodeSchema_Event?Assembly%3D&quot;file:%2F%2F%2FC:%2FGIT%2FService Bus%2FDebug%2FServiceBus.Core.dll&quot; Namespace%3DServiceBus.Event Type%3D(Name%3DIEvent GenericParameterCount%3D1) Member%3DEventRaised"
+                tag="ViewCode" />
+            </referencesInternal>
+            <appliedStereotypesInternal>
+              <stereotypeInstance
+                Id="e8f20281-6fe4-4eec-85e2-e1d5ee48918e"
+                name="event"
+                profile="CSharpProfile">
+                <propertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="a4dd5931-7b39-492d-ab42-c40f9339b640">
+                    <propertyInstance
+                      Id="af5ebadb-f3d0-43cc-89fa-31385ac8a075"
+                      name="Add"
+                      value="false" />
+                  </stereotypeInstanceHasPropertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="6667fb80-7778-4eed-b110-6af82ef84488">
+                    <propertyInstance
+                      Id="c00bf603-4e74-4de0-b2cf-60a63ae022e5"
+                      name="ClrAttributes" />
+                  </stereotypeInstanceHasPropertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="285fdf6a-23e4-4b94-b321-8c7ae4b7a0a4">
+                    <propertyInstance
+                      Id="8b56bb58-9ccb-4833-a8dd-da64873edd68"
+                      name="IsUnsafe"
+                      value="false" />
+                  </stereotypeInstanceHasPropertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="012286ab-b611-48c8-b5ce-f541e42c3f0a">
+                    <propertyInstance
+                      Id="225139a4-e35b-4bfa-92f8-fdd097b73d01"
+                      name="PackageVisibility"
+                      value="internal" />
+                  </stereotypeInstanceHasPropertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="003e6a39-221f-4a37-a934-26fc49347d2d">
+                    <propertyInstance
+                      Id="7455bb23-b913-4703-a61e-0ed5c1571441"
+                      name="Remove"
+                      value="false" />
+                  </stereotypeInstanceHasPropertyInstances>
+                </propertyInstances>
+              </stereotypeInstance>
+            </appliedStereotypesInternal>
+            <type_NamedElement>
+              <classMoniker
+                Id="20d858b4-badc-4485-b584-1d721ee73edc"
+                LastKnownName="Action&lt;TEvent‎&gt;"
+                LastKnownLocation="Package2_1218.uml" />
+            </type_NamedElement>
+          </property>
+        </ownedAttributes>
+        <ownedOperations>
+          <operation
+            Id="94f2861f-033a-4d36-89a0-33dc124c42df"
+            name="RaiseLocalAsync"
+            isLeaf="false"
+            isStatic="false"
+            isAbstract="true"
+            concurrency="Sequential"
+            isQuery="false">
+            <referencesInternal>
+              <reference
+                Id="8fdd827f-f782-454b-a9df-fdec0bbb0529"
+                handle="viewcode://./CodeSchema_Method?Assembly%3D&quot;file:%2F%2F%2FC:%2FGIT%2FService Bus%2FDebug%2FServiceBus.Core.dll&quot; Namespace%3DServiceBus.Event Type%3D(Name%3DIEvent GenericParameterCount%3D1) Member%3DRaiseLocalAsync"
+                tag="ViewCode" />
+            </referencesInternal>
+            <appliedStereotypesInternal>
+              <stereotypeInstance
+                Id="36aa4298-b316-4f7a-ab6c-1304ec36bea1"
+                name="method"
+                profile="CSharpProfile">
+                <propertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="55e16a5d-c413-4c24-88fa-1fdaedaec0ab">
+                    <propertyInstance
+                      Id="eef1f470-c744-4171-a671-c961b717e0a9"
+                      name="ClrAttributes" />
+                  </stereotypeInstanceHasPropertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="134c4d2f-b732-4c21-8116-eb98c865ce40">
+                    <propertyInstance
+                      Id="bfcdc11f-d187-4f08-88eb-5d3b09deaafd"
+                      name="IsPartial"
+                      value="false" />
+                  </stereotypeInstanceHasPropertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="7b4c557f-4265-41b9-81e7-8292c0084a7b">
+                    <propertyInstance
+                      Id="60d9c625-b01d-4d4a-92ea-6337877a1f9c"
+                      name="IsUnsafe"
+                      value="false" />
+                  </stereotypeInstanceHasPropertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="e73476a9-3534-46dc-b56f-4fd6a193a363">
+                    <propertyInstance
+                      Id="58a98cbd-df61-4b45-abe1-8974cb7bd902"
+                      name="Inheritance"
+                      value="none" />
+                  </stereotypeInstanceHasPropertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="0f7ff8e4-d127-46e4-9024-43c4ab46012b">
+                    <propertyInstance
+                      Id="103fb9e4-802b-4ab5-8860-ff6197b29700"
+                      name="PackageVisibility"
+                      value="internal" />
+                  </stereotypeInstanceHasPropertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="b52fdb5e-14df-4b69-b119-61f2e558ba6d">
+                    <propertyInstance
+                      Id="fab38644-4c2c-4be9-a046-5f3c5150369f"
+                      name="params"
+                      value="false" />
+                  </stereotypeInstanceHasPropertyInstances>
+                </propertyInstances>
+              </stereotypeInstance>
+            </appliedStereotypesInternal>
+            <ownedParameters>
+              <operationHasOwnedParameters>
+                <parameter
+                  Id="2a824bc4-05a9-4092-9458-498d9cf78546"
+                  direction="Return">
+                  <type_NamedElement>
+                    <classMoniker
+                      Id="01502229-2b0e-48a9-a2a6-d8d84030bb90"
+                      LastKnownName="Task"
+                      LastKnownLocation="Package13_1219.uml" />
+                  </type_NamedElement>
+                </parameter>
+              </operationHasOwnedParameters>
+            </ownedParameters>
+          </operation>
+        </ownedOperations>
+      </Interface>
+    </packageHasNamedElement>
+    <packageHasNamedElement>
+      <class
+        Id="f99ef0b1-dbf8-405b-aa33-72ad4fed474c"
+        name="EventBase&lt;PeerConnectedEvent‎&gt;"
+        isAbstract="true"
+        isLeaf="false"
+        isActiveClass="false">
+        <appliedStereotypesInternal>
+          <stereotypeInstance
+            Id="62b794ad-54b5-4a75-8ca7-06b633b0f0dc"
+            name="class"
+            profile="CSharpProfile">
+            <propertyInstances>
+              <stereotypeInstanceHasPropertyInstances
+                Id="1bb477f0-9411-4df2-b4f4-5295e9df0da6">
+                <propertyInstance
+                  Id="9f829002-53d2-4151-9fd0-847503bb6f23"
+                  name="ClrAttributes" />
+              </stereotypeInstanceHasPropertyInstances>
+              <stereotypeInstanceHasPropertyInstances
+                Id="6db5c2da-afb8-4480-b0ce-4dfe0e84ee3c">
+                <propertyInstance
+                  Id="4e6a3fb7-20c4-4577-a41e-7a3c9978e561"
+                  name="IsPartial"
+                  value="false" />
+              </stereotypeInstanceHasPropertyInstances>
+              <stereotypeInstanceHasPropertyInstances
+                Id="61f6f0b7-0cfd-43bf-a835-a90110e8a9c6">
+                <propertyInstance
+                  Id="c7cb53f6-6f2a-421e-b577-6420eafd116e"
+                  name="IsStatic"
+                  value="False" />
+              </stereotypeInstanceHasPropertyInstances>
+              <stereotypeInstanceHasPropertyInstances
+                Id="e59c9369-5255-471c-be07-18baf80c2b18">
+                <propertyInstance
+                  Id="a126fc6f-eb8c-4638-b8f7-d892b8ddb80f"
+                  name="IsUnsafe"
+                  value="false" />
+              </stereotypeInstanceHasPropertyInstances>
+              <stereotypeInstanceHasPropertyInstances
+                Id="d5cdb99c-3a47-47ff-86c0-de7e959b1b51">
+                <propertyInstance
+                  Id="92fd1a66-175a-4264-8754-84b638802357"
+                  name="PackageVisibility"
+                  value="internal" />
+              </stereotypeInstanceHasPropertyInstances>
+            </propertyInstances>
+          </stereotypeInstance>
+        </appliedStereotypesInternal>
+        <signatures>
+          <templateBinding
+            Id="03735502-0f2b-463b-b2c8-d7cccec7e806">
+            <redefinableTemplateSignatureMoniker
+              Id="81ee25d2-1189-4ad8-a86c-42fc70a1e494"
+              LastKnownLocation="Package_1637.uml" />
+            <relationshipOwnedElementsInternal>
+              <templateBindingHasTemplateParameterSubstitution>
+                <templateParameterSubstitution
+                  Id="f0cc1448-1a7a-4579-87e2-23c2d7272eec">
+                  <actuals>
+                    <classMoniker
+                      Id="bc2e1abd-447f-459e-a4dd-29d6082dd954"
+                      LastKnownName="PeerConnectedEvent"
+                      LastKnownLocation="Package4_2113.uml" />
+                  </actuals>
+                  <formal>
+                    <classifierTemplateParameterMoniker
+                      Id="faef9af3-1ec0-4552-84b5-7882267c067f"
+                      LastKnownLocation="Package_1637.uml" />
+                  </formal>
+                </templateParameterSubstitution>
+              </templateBindingHasTemplateParameterSubstitution>
+            </relationshipOwnedElementsInternal>
+          </templateBinding>
+        </signatures>
+        <generalsInternal>
+          <generalization
+            Id="29460042-f521-4e08-b54d-cf9fbb43e18b"
+            isSubstitutable="false">
+            <classMoniker
+              Id="fb285f19-667c-4c6a-bffe-c03fc8bcd53a"
+              LastKnownName="MessageBase"
+              LastKnownLocation="Package5_1219.uml" />
+          </generalization>
+        </generalsInternal>
+      </class>
+    </packageHasNamedElement>
+    <packageHasNamedElement>
+      <Interface
+        Id="6fe0483e-5e08-406c-a998-e664f1bf9774"
+        name="IEventHandler&lt;TEvent‎&gt;"
+        isAbstract="false"
+        isLeaf="false">
+        <appliedStereotypesInternal>
+          <stereotypeInstance
+            Id="d4135b66-e651-487e-b80c-5ff7b641abe7"
+            name="interface"
+            profile="CSharpProfile">
+            <propertyInstances>
+              <stereotypeInstanceHasPropertyInstances
+                Id="9fe4b872-1f3c-475c-bfe3-6a124a7aa4b2">
+                <propertyInstance
+                  Id="33a6232b-f4fe-4bd1-9066-cce15e4be99a"
+                  name="ClrAttributes" />
+              </stereotypeInstanceHasPropertyInstances>
+              <stereotypeInstanceHasPropertyInstances
+                Id="728ca312-7f86-41bb-8226-f0b5e89fe3ad">
+                <propertyInstance
+                  Id="62bbfdc4-df36-4c00-8c1c-bd0b526f380a"
+                  name="IsPartial"
+                  value="false" />
+              </stereotypeInstanceHasPropertyInstances>
+              <stereotypeInstanceHasPropertyInstances
+                Id="18a471b5-4cf8-4752-ab29-3ffec97a568b">
+                <propertyInstance
+                  Id="11d97c73-2f49-45d4-bb5f-3eb9f5940ef8"
+                  name="IsUnsafe"
+                  value="false" />
+              </stereotypeInstanceHasPropertyInstances>
+              <stereotypeInstanceHasPropertyInstances
+                Id="47090e8c-aaab-4421-9928-d552fc2d7f72">
+                <propertyInstance
+                  Id="e1dd68f7-a827-45b9-b56d-5899103c65ae"
+                  name="PackageVisibility"
+                  value="internal" />
+              </stereotypeInstanceHasPropertyInstances>
+            </propertyInstances>
+          </stereotypeInstance>
+        </appliedStereotypesInternal>
+        <signatures>
+          <templateBinding
+            Id="ff10ee72-bd7a-4133-9199-1be527d3a77c">
+            <redefinableTemplateSignatureMoniker
+              Id="f94fa85b-70f0-4a20-a3c2-f6e8124d7749"
+              LastKnownLocation="Package_1637.uml" />
+            <relationshipOwnedElementsInternal>
+              <templateBindingHasTemplateParameterSubstitution>
+                <templateParameterSubstitution
+                  Id="74d02ca9-180c-42d3-be4e-42071c09eb18">
+                  <formal>
+                    <classifierTemplateParameterMoniker
+                      Id="63201a67-92a5-479d-8317-44b0412057a3"
+                      LastKnownLocation="Package_1637.uml" />
+                  </formal>
+                </templateParameterSubstitution>
+              </templateBindingHasTemplateParameterSubstitution>
+            </relationshipOwnedElementsInternal>
+          </templateBinding>
+        </signatures>
+        <generalsInternal>
+          <generalization
+            Id="ec63b49e-a67e-4c4f-9729-494c342c2f93"
+            isSubstitutable="false">
+            <interfaceMoniker
+              Id="cbfeefc3-67b2-41e6-a6f2-08e3aded1d00"
+              LastKnownName="IEndpoint"
+              LastKnownLocation="Package_1218.uml" />
+          </generalization>
+          <generalization
+            Id="a8112021-9155-4150-a31e-822e90d310cd"
+            isSubstitutable="false">
+            <interfaceMoniker
+              Id="5cf259de-517e-48f3-a81d-145f0f1976f8"
+              LastKnownName="IEventHandler"
+              LastKnownLocation="Package_1637.uml" />
+          </generalization>
+        </generalsInternal>
+      </Interface>
+    </packageHasNamedElement>
+    <packageHasNamedElement>
+      <Interface
+        Id="1877094c-05db-4ded-b7ff-0d972fed8537"
+        name="IEventHandler&lt;PeerConnectedEvent‎&gt;"
+        isAbstract="false"
+        isLeaf="false">
+        <appliedStereotypesInternal>
+          <stereotypeInstance
+            Id="b210006e-849e-4dc2-a640-67b5432f397b"
+            name="interface"
+            profile="CSharpProfile">
+            <propertyInstances>
+              <stereotypeInstanceHasPropertyInstances
+                Id="dd797fbe-9c1e-48b9-a31d-94fb3ee5c19d">
+                <propertyInstance
+                  Id="d8c946b9-0b0a-4f5f-96f4-758d7f866676"
+                  name="ClrAttributes" />
+              </stereotypeInstanceHasPropertyInstances>
+              <stereotypeInstanceHasPropertyInstances
+                Id="c83154ec-5a69-4017-8a4c-fce41e127657">
+                <propertyInstance
+                  Id="a4e0383a-9234-4510-ad0c-9495efd91686"
+                  name="IsPartial"
+                  value="false" />
+              </stereotypeInstanceHasPropertyInstances>
+              <stereotypeInstanceHasPropertyInstances
+                Id="f6c440ef-fe9c-4462-9bd9-775a5da5dfe1">
+                <propertyInstance
+                  Id="afb6f45f-8950-41a8-877e-a77fa2f70ec8"
+                  name="IsUnsafe"
+                  value="false" />
+              </stereotypeInstanceHasPropertyInstances>
+              <stereotypeInstanceHasPropertyInstances
+                Id="047f2122-87d5-483d-bdb1-1e8e67d50339">
+                <propertyInstance
+                  Id="765b7b8d-0593-4aca-be64-27b5ffe5dca4"
+                  name="PackageVisibility"
+                  value="internal" />
+              </stereotypeInstanceHasPropertyInstances>
+            </propertyInstances>
+          </stereotypeInstance>
+        </appliedStereotypesInternal>
+        <signatures>
+          <templateBinding
+            Id="c425450a-23c4-487c-8956-64fa118343d7">
+            <redefinableTemplateSignatureMoniker
+              Id="f94fa85b-70f0-4a20-a3c2-f6e8124d7749"
+              LastKnownLocation="Package_1637.uml" />
+            <relationshipOwnedElementsInternal>
+              <templateBindingHasTemplateParameterSubstitution>
+                <templateParameterSubstitution
+                  Id="21f92f1f-7ae5-422c-9cca-45c7e69f1c42">
+                  <actuals>
+                    <classMoniker
+                      Id="bc2e1abd-447f-459e-a4dd-29d6082dd954"
+                      LastKnownName="PeerConnectedEvent"
+                      LastKnownLocation="Package4_2113.uml" />
+                  </actuals>
+                  <formal>
+                    <classifierTemplateParameterMoniker
+                      Id="63201a67-92a5-479d-8317-44b0412057a3"
+                      LastKnownLocation="Package_1637.uml" />
+                  </formal>
+                </templateParameterSubstitution>
+              </templateBindingHasTemplateParameterSubstitution>
+            </relationshipOwnedElementsInternal>
+          </templateBinding>
+        </signatures>
+        <generalsInternal>
+          <generalization
+            Id="fb244a8f-3f7e-4b12-bd1e-dd554b2cae23"
+            isSubstitutable="false">
+            <interfaceMoniker
+              Id="cbfeefc3-67b2-41e6-a6f2-08e3aded1d00"
+              LastKnownName="IEndpoint"
+              LastKnownLocation="Package_1218.uml" />
+          </generalization>
+          <generalization
+            Id="66848ffa-d749-4a04-917e-031cde2a1e15"
+            isSubstitutable="false">
+            <interfaceMoniker
+              Id="5cf259de-517e-48f3-a81d-145f0f1976f8"
+              LastKnownName="IEventHandler"
+              LastKnownLocation="Package_1637.uml" />
+          </generalization>
+        </generalsInternal>
       </Interface>
     </packageHasNamedElement>
   </packagedElements>

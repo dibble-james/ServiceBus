@@ -12,7 +12,7 @@
     /// <summary>
     /// An <see cref="ITransporter"/> that uses the HTTP protocol.
     /// </summary>
-    public class HttpTransporter : ITransporter
+    internal class HttpTransporter : ITransporter
     {
         private const string ActionBase = "service-bus";
 
@@ -26,7 +26,7 @@
         /// </summary>
         /// <param name="client">The <see cref="HttpClient"/> to use.</param>
         /// <param name="serialiser">The <see cref="IMessageSerialiser"/> to use.</param>
-        public HttpTransporter(HttpClient client, IMessageSerialiser serialiser)
+        internal HttpTransporter(HttpClient client, IMessageSerialiser serialiser)
         {
             this._disposed = false;
 
