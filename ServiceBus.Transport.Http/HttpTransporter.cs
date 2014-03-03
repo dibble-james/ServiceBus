@@ -61,7 +61,7 @@
         /// <typeparam name="TMessage">The type of <see cref="IMessage"/> to transport.</typeparam>
         /// <param name="peerToRecieve">The <see cref="IPeer"/> that should receive the <paramref name="message"/>.</param>
         /// <param name="message">The <see cref="IMessage"/> to transport.</param>
-        public void SendMessage<TMessage>(IPeer peerToRecieve, TMessage message) where TMessage : QueuedMessage
+        public async Task SendMessage<TMessage>(IPeer peerToRecieve, TMessage message) where TMessage : QueuedMessage
         {
             const string action = "message";
 
@@ -69,7 +69,7 @@
 
             try
             {
-                var result = this.ExecutePostRequest(fullActionPath, message.Message);
+                var result = await this.ExecutePostRequest(fullActionPath, message.Message);
 
                 if (result.IsSuccessStatusCode && this.MessageSent != null)
                 {
@@ -111,16 +111,14 @@
             this._disposed = true;
         }
 
-        private HttpResponseMessage ExecutePostRequest<TMessageOut>(Uri address, TMessageOut messageToPost)
+        private Task<HttpResponseMessage> ExecutePostRequest<TMessageOut>(Uri address, TMessageOut messageToPost)
             where TMessageOut : class, IMessage
         {
             var serialisedMessage = this.Serialiser.Serialise(messageToPost);
 
             var content = new FormUrlEncodedContent(new Dictionary<string, string> { { "message", serialisedMessage } });
 
-            var postResult = this._client.PostAsync(address, content);
-
-            return postResult.Result;
+            return this._client.PostAsync(address, content);
         }
 
         private void Dispose(bool disposing)

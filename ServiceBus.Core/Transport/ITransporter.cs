@@ -39,6 +39,7 @@
         /// <typeparam name="TMessage">The type of <see cref="IMessage"/> to transport.</typeparam>
         /// <param name="peerToRecieve">The <see cref="IPeer"/> that should receive the <paramref name="message"/>.</param>
         /// <param name="message">The <see cref="IMessage"/> to transport.</param>
-        void SendMessage<TMessage>(IPeer peerToRecieve, TMessage message) where TMessage : QueuedMessage;
+        /// <returns>An awaitable object representing the send operation.</returns>
+        Task SendMessageAsync<TMessage>(IPeer peerToRecieve, TMessage message) where TMessage : QueuedMessage;
     }
 }
