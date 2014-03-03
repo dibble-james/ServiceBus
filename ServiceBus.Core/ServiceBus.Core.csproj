@@ -44,6 +44,9 @@
     <Reference Include="JamesDibble.Extensions.System">
       <HintPath>..\packages\JamesDibble.Extensions.System.1.0.1\lib\JamesDibble.Extensions.System.dll</HintPath>
     </Reference>
+    <Reference Include="log4net">
+      <HintPath>..\packages\log4net.2.0.3\lib\net40-full\log4net.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="Mono.Reflection">
       <HintPath>..\packages\db4o-devel.8.1.184.15492\lib\net40\Mono.Reflection.dll</HintPath>
@@ -57,12 +60,15 @@
     <Reference Include="System.Runtime.Serialization" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Configuration\CommonConfigurationExtensionMethods.cs" />
     <Compile Include="Configuration\HostAddressConfiguration.cs" />
     <Compile Include="Configuration\HostApplicationConfiguration.cs" />
     <Compile Include="Configuration\IHostAddressConfiguration.cs" />
     <Compile Include="Configuration\IHostApplicationConfiguration.cs" />
+    <Compile Include="Configuration\ILoggingConfiguration.cs" />
     <Compile Include="Configuration\IServiceBusBuilder.cs" />
     <Compile Include="Configuration\ITransportConfiguration.cs" />
+    <Compile Include="Configuration\LoggingConfiguration.cs" />
     <Compile Include="Configuration\ServiceBusBuilder.cs" />
     <Compile Include="Configuration\TransportConfiguration.cs" />
     <Compile Include="Core\EventHandlers\PeerConnectedEventHandler.cs" />

@@ -35,6 +35,7 @@ namespace TestHarness1
             
             var serviceBus =
                 ServiceBusBuilder.Configure()
+                    .WithLogger(null)
                     .WithHostAddress(new Uri("http://localhost:55001"))
                     .WithHttpTransport(new JsonMessageSerialiser(messageDictionary))
                     .AsMvcServiceBus(RouteTable.Routes)

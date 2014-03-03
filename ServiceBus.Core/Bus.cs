@@ -6,6 +6,8 @@
     using System.Linq;
     using System.Threading.Tasks;
 
+    using log4net;
+
     using ServiceBus.Core.EventHandlers;
     using ServiceBus.Core.Events;
     using ServiceBus.Event;
@@ -28,6 +30,7 @@
         private readonly object _eventHandlersLock;
         private readonly IQueueManager _queueManager;
         private readonly MessageRouter _messageRouter;
+        private readonly ILog _logger;
 
         private bool _disposed;
 
@@ -37,10 +40,12 @@
         /// <param name="hostAddress">The address this service bus can be reached.</param>
         /// <param name="transporter">The protocol to use to communicate with other <see cref="IServiceBus"/>es.</param>
         /// <param name="queueManager">The message persistence service to use.</param>
+        /// <param name="log">The <see cref="log4net.ILog"/> to use with this service bus instance.</param>
         internal Bus(
             Uri hostAddress,
             ITransporter transporter,
-            IQueueManager queueManager)
+            IQueueManager queueManager,
+            ILog log)
         {
             this._disposed = false;
 
@@ -58,9 +63,11 @@
             this._queueManager = queueManager;
             this._messageRouter = new MessageRouter(this.LocalEndpoints, this.EventHandlers);
 
+            this._logger = log;
+
             this.RegisterSystemEventHandlers();
 
-            this._queueManager.MessageQueued += m => this._transport.SendMessage(m.Peer, m);
+            this._queueManager.MessageQueued += m => this._transport.SendMessageAsync(m.Peer, m);
             this._transport.MessageSent += this._queueManager.Dequeue;
             this._transport.MessageRecieved += this._messageRouter.RouteMessageAsync;
         }
@@ -100,6 +107,17 @@
             get
             {
                 return this._transport;
+            }
+        }
+
+        /// <summary>
+        /// Gets the <see cref="log4net.ILog"/> instance registered to the <see cref="IServiceBus"/>.
+        /// </summary>
+        public ILog Log
+        {
+            get
+            {
+                return this._logger;
             }
         }
 
@@ -209,7 +227,7 @@
             while (message != null)
             {
                 var messagePointer = message;
-                sendMessageTasks.Add(Task.Factory.StartNew(() => this._transport.SendMessage(peer, messagePointer)));
+                sendMessageTasks.Add(Task.Factory.StartNew(() => this._transport.SendMessageAsync(peer, messagePointer)));
 
                 message = this._queueManager.PeersNextMessageOrDefault(peer, message.QueuedAt);
             }

@@ -1,6 +1,6 @@
 ﻿namespace ServiceBus.Configuration
 {
-    using System;
+    using log4net;
 
     /// <summary>
     /// A fluid <see cref="IServiceBus"/> factory.
@@ -16,16 +16,9 @@
             return new ServiceBusBuilder();
         }
 
-        /// <summary>
-        /// Sets the address the <see cref="IServiceBus"/> will be accessible from.
-        /// </summary>
-        /// <param name="address">The address the <see cref="IServiceBus"/> will be accessible from.</param>
-        /// <returns>The host address configuration.</returns>
-        public IHostAddressConfiguration WithHostAddress(Uri address)
+        public ILoggingConfiguration WithLogger(ILog logger)
         {
-            Argument.CannotBeNull(address, "hostAddress", "The host address for the service bus cannot be null.");
-
-            return new HostAddressConfiguration(address);
+            return new LoggingConfiguration(logger);
         }
     }
 }

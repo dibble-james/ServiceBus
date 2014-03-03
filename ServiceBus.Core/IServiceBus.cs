@@ -4,6 +4,8 @@
     using System.Collections.Generic;
     using System.Threading.Tasks;
 
+    using log4net;
+
     using ServiceBus.Event;
     using ServiceBus.Messaging;
     using ServiceBus.Transport;
@@ -27,6 +29,11 @@
         /// Gets the <see cref="ITransporter"/> that is registered to the <see cref="IServiceBus"/>.
         /// </summary>
         ITransporter Transporter { get; }
+
+        /// <summary>
+        /// Gets the <see cref="log4net.ILog"/> instance registered to the <see cref="IServiceBus"/>.
+        /// </summary>
+        ILog Log { get; }
 
         /// <summary>
         /// Directly send an <paramref name="message"/> to a given <paramref name="peer"/>.

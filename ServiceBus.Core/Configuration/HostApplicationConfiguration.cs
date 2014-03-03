@@ -30,7 +30,8 @@
             return new Bus(
                 this._transportConfiguration.HostAddressConfiguration.HostAddress,
                 this._transportConfiguration.Transporter,
-                this._queueManager);
+                this._queueManager,
+                this._transportConfiguration.HostAddressConfiguration.LoggingConfiguration.Logger);
         }
 
         /// <summary>
