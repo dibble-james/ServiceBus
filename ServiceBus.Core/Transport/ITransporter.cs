@@ -22,6 +22,11 @@
         event Action<QueuedMessage> MessageSent;
 
         /// <summary>
+        /// An event raised when an <see cref="IMessage"/> could not be sent.
+        /// </summary>
+        event Action<Exception, QueuedMessage> MessageFailedToSend;
+
+        /// <summary>
         /// Gets the <see cref="IMessageSerialiser"/> that is registered to this <see cref="ITransporter"/>.
         /// </summary>
         IMessageSerialiser Serialiser { get; }

@@ -16,6 +16,12 @@
     public interface IServiceBus : IPeer, IDisposable
     {
         /// <summary>
+        /// An event raised when a publicly accessible <see cref="IServiceBus"/> method
+        /// receives a exception not previously dealt with.
+        /// </summary>
+        event Action<Exception, string> UnhandledExceptionOccurs;
+
+        /// <summary>
         /// Gets the <see cref="IPeer"/>s that are known to the <see cref="IServiceBus"/>.
         /// </summary>
         IEnumerable<IPeer> Peers { get; }

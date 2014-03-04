@@ -45,6 +45,11 @@
         public event Action<QueuedMessage> MessageSent;
 
         /// <summary>
+        /// An event raised when an <see cref="IMessage"/> could not be sent.
+        /// </summary>
+        public event Action<Exception, QueuedMessage> MessageFailedToSend;
+
+        /// <summary>
         /// Gets the <see cref="IMessageSerialiser"/> that is registered to this <see cref="ITransporter"/>.
         /// </summary>
         public IMessageSerialiser Serialiser
@@ -61,6 +66,7 @@
         /// <typeparam name="TMessage">The type of <see cref="IMessage"/> to transport.</typeparam>
         /// <param name="peerToRecieve">The <see cref="IPeer"/> that should receive the <paramref name="message"/>.</param>
         /// <param name="message">The <see cref="IMessage"/> to transport.</param>
+        /// <returns>An awaitable object representing the send operation.</returns>
         public async Task SendMessageAsync<TMessage>(IPeer peerToRecieve, TMessage message) where TMessage : QueuedMessage
         {
             const string action = "message";
@@ -76,9 +82,12 @@
                     this.MessageSent(message);
                 }
             }
-            catch
+            catch (Exception exception)
             {
-                // For now just swallow exceptions.  TODO: Log a failed send attempt
+                if (this.MessageFailedToSend != null)
+                {
+                    this.MessageFailedToSend(exception, message);
+                }
             }
         }
 

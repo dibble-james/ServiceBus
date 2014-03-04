@@ -31,6 +31,7 @@
         private readonly IQueueManager _queueManager;
         private readonly MessageRouter _messageRouter;
         private readonly ILog _logger;
+        private readonly LoggingEventHandler _loggingEventHandler;
 
         private bool _disposed;
 
@@ -64,19 +65,34 @@
             this._messageRouter = new MessageRouter(this.LocalEndpoints, this.EventHandlers);
 
             this._logger = log;
+            this._loggingEventHandler = new LoggingEventHandler(this);
 
             this.RegisterSystemEventHandlers();
 
             this._queueManager.MessageQueued += m => this._transport.SendMessageAsync(m.Peer, m);
+
             this._transport.MessageSent += this._queueManager.Dequeue;
+            this._transport.MessageSent += this._loggingEventHandler.LogMessageSent;
+
             this._transport.MessageRecieved += this._messageRouter.RouteMessageAsync;
+            this._transport.MessageRecieved += this._loggingEventHandler.LogMessageRecieved;
+
+            this._transport.MessageFailedToSend += this._loggingEventHandler.LogMessageFailedToSend;
+
+            this.UnhandledExceptionOccurs += this._loggingEventHandler.LogGeneralFailure;
         }
+
+        /// <summary>
+        /// An event raised when a publicly accessible <see cref="IServiceBus"/> method
+        /// receives a exception not previously dealt with.
+        /// </summary>
+        public event Action<Exception, string> UnhandledExceptionOccurs;
 
         /// <summary>
         /// Gets the <see cref="System.Uri"/> of the location of the <see cref="IPeer"/>.
         /// </summary>
         public Uri PeerAddress { get; private set; }
-
+        
         /// <summary>
         /// Gets the <see cref="IPeer"/>s that are known to the <see cref="IServiceBus"/>.
         /// </summary>
@@ -166,7 +182,15 @@
             Argument.CannotBeNull(peer, "peer", "The peer to send to cannot be null.");
             Argument.CannotBeNull(message, "message", "The message to send cannot be null.");
 
-            await this._queueManager.EnqueueAsync(peer, message);
+            try
+            {
+                await this._queueManager.EnqueueAsync(peer, message);
+            }
+            catch (Exception ex)
+            {   
+                this.RaiseUnahndledExceptionEvent(ex, ExpressionExtensions.MethodName(() => this.SendAsync<TMessage>(null, null)));
+                throw;
+            }
         }
 
         /// <summary>
@@ -179,21 +203,29 @@
         {
             Argument.CannotBeNull(@event, "event", "The event to publish cannot be null");
 
-            foreach (var eventHandler in this.EventHandlers.OfType<IEventHandler<TEvent>>())
+            try
             {
-                var eventHandlerPointer = eventHandler;
+                foreach (var eventHandler in this.EventHandlers.OfType<IEventHandler<TEvent>>())
+                {
+                    var eventHandlerPointer = eventHandler;
 
-                @event.EventRaised += e => eventHandlerPointer.HandleAsync(e);
+                    @event.EventRaised += e => eventHandlerPointer.HandleAsync(e);
+                }
+
+                var handleEventLocallyTask = @event.RaiseLocalAsync();
+
+                var raiseEventToPeerTasks =
+                    this.RegisteredPeers.Select(p => this._queueManager.EnqueueAsync(p, @event));
+
+                await Task.WhenAll(raiseEventToPeerTasks);
+
+                await handleEventLocallyTask;
             }
-
-            var handleEventLocallyTask = @event.RaiseLocalAsync();
-
-            var raiseEventToPeerTasks =
-                this.RegisteredPeers.Select(p => this._queueManager.EnqueueAsync(p, @event));
-
-            await Task.WhenAll(raiseEventToPeerTasks);
-
-            await handleEventLocallyTask;
+            catch (Exception ex)
+            {
+                this.RaiseUnahndledExceptionEvent(ex, ExpressionExtensions.MethodName(() => this.PublishAsync<TEvent>(null)));
+                throw;
+            }
         }
 
         /// <summary>
@@ -206,9 +238,17 @@
         {
             Argument.CannotBeNull(eventHandler, "eventHandler", "To subscribe to an event, the event handler cannot be null.");
 
-            this.EventHandlers.Add(eventHandler);
+            try
+            {
+                this.EventHandlers.Add(eventHandler);
 
-            return this;
+                return this;
+            }
+            catch (Exception ex)
+            {
+                this.RaiseUnahndledExceptionEvent(ex, ExpressionExtensions.MethodName(() => this.Subscribe<TEvent>(null)));
+                throw;
+            }
         }
 
         /// <summary>
@@ -220,19 +260,27 @@
         {
             Argument.CannotBeNull(peer, "peer", "The peer to synchronise cannot be null.");
 
-            var message = this._queueManager.PeersNextMessageOrDefault(peer);
-
-            var sendMessageTasks = new List<Task>();
-
-            while (message != null)
+            try
             {
-                var messagePointer = message;
-                sendMessageTasks.Add(Task.Factory.StartNew(() => this._transport.SendMessageAsync(peer, messagePointer)));
+                var message = this._queueManager.PeersNextMessageOrDefault(peer);
 
-                message = this._queueManager.PeersNextMessageOrDefault(peer, message.QueuedAt);
+                var sendMessageTasks = new List<Task>();
+
+                while (message != null)
+                {
+                    var messagePointer = message;
+                    sendMessageTasks.Add(Task.Factory.StartNew(() => this._transport.SendMessageAsync(peer, messagePointer)));
+
+                    message = this._queueManager.PeersNextMessageOrDefault(peer, message.QueuedAt);
+                }
+
+                await Task.WhenAll(sendMessageTasks);
             }
-
-            await Task.WhenAll(sendMessageTasks);
+            catch (Exception ex)
+            {
+                this.RaiseUnahndledExceptionEvent(ex, ExpressionExtensions.MethodName(() => this.SynchroniseAsync(null)));
+                throw;
+            }
         }
 
         /// <summary>
@@ -244,21 +292,29 @@
         {
             Argument.CannotBeNull(peer, "peer", "When registering a peer, its address cannot be null.");
 
-            var newPeer = new Peer(peer);
+            try
+            {
+                var newPeer = new Peer(peer);
 
-            var registerWithPeerTask = this._queueManager.EnqueueAsync(
-                newPeer,
-                new PeerConnectedEvent
-                {
-                    ConnectedPeer =
-                    new Peer(this.PeerAddress)
-                });
+                var registerWithPeerTask = this._queueManager.EnqueueAsync(
+                    newPeer,
+                    new PeerConnectedEvent
+                    {
+                        ConnectedPeer =
+                        new Peer(this.PeerAddress)
+                    });
 
-            this.RegisteredPeers.Add(newPeer);
+                this.RegisteredPeers.Add(newPeer);
 
-            await registerWithPeerTask;
+                await registerWithPeerTask;
 
-            return this;
+                return this;
+            }
+            catch (Exception ex)
+            {
+                this.RaiseUnahndledExceptionEvent(ex, ExpressionExtensions.MethodName(() => this.WithPeerAsync(null)));
+                throw;
+            }
         }
 
         /// <summary>
@@ -270,9 +326,17 @@
         {
             Argument.CannotBeNull(endpoint, "endpoint", "When registering an endpoint it cannot be null.");
 
-            this.LocalEndpoints.Add(endpoint);
+            try
+            {
+                this.LocalEndpoints.Add(endpoint);
 
-            return this;
+                return this;
+            }
+            catch (Exception ex)
+            {
+                this.RaiseUnahndledExceptionEvent(ex, ExpressionExtensions.MethodName(() => this.WithLocalEndpoint(null)));
+                throw;
+            }
         }
 
         /// <summary>
@@ -289,6 +353,15 @@
         private void RegisterSystemEventHandlers()
         {
             this.Subscribe(new PeerConnectedEventHandler(this));
+            this.Subscribe(this._loggingEventHandler);
+        }
+
+        private void RaiseUnahndledExceptionEvent(Exception ex, string methodName)
+        {
+            if (this.UnhandledExceptionOccurs != null)
+            {
+                this.UnhandledExceptionOccurs(ex, methodName);
+            }
         }
 
         private void Dispose(bool disposing)

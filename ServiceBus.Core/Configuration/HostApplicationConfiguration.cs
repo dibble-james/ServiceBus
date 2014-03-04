@@ -5,9 +5,8 @@
     /// <summary>
     /// The configuration for the host application type.
     /// </summary>
-    public class HostApplicationConfiguration : IHostApplicationConfiguration
+    public class HostApplicationConfiguration : TransportConfiguration, IHostApplicationConfiguration
     {
-        private readonly ITransportConfiguration _transportConfiguration;
         private readonly IQueueManager _queueManager;
 
         /// <summary>
@@ -16,8 +15,8 @@
         /// <param name="transportConfiguration">The <see cref="ITransportConfiguration"/>.</param>
         /// <param name="queueStoreDirectory">The path of the directory where the queued will be placed.</param>
         public HostApplicationConfiguration(ITransportConfiguration transportConfiguration, string queueStoreDirectory)
+            : base(transportConfiguration)
         {
-            this._transportConfiguration = transportConfiguration;
             this._queueManager = new QueueManager(queueStoreDirectory);
         }
 
@@ -28,10 +27,10 @@
         public IServiceBus Build()
         {
             return new Bus(
-                this._transportConfiguration.HostAddressConfiguration.HostAddress,
-                this._transportConfiguration.Transporter,
+                this.HostAddress,
+                this.Transporter,
                 this._queueManager,
-                this._transportConfiguration.HostAddressConfiguration.LoggingConfiguration.Logger);
+                this.Logger);
         }
 
         /// <summary>

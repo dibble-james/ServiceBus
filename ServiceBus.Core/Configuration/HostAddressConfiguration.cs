@@ -5,16 +5,27 @@
     /// <summary>
     /// The host address configuration.
     /// </summary>
-    internal class HostAddressConfiguration : IHostAddressConfiguration
+    public class HostAddressConfiguration : LoggingConfiguration, IHostAddressConfiguration
     {
         /// <summary>
         /// Initialises a new instance of the <see cref="HostAddressConfiguration"/> class.
         /// </summary>
+        /// <param name="hostAddressConfiguration">The previously set configuration of the host address.</param>
+        public HostAddressConfiguration(IHostAddressConfiguration hostAddressConfiguration) 
+            : base(hostAddressConfiguration.LoggingConfigurationInstance)
+        {
+            this.HostAddressConfigurationInstance = hostAddressConfiguration;
+        }
+
+        /// <summary>
+        /// Initialises a new instance of the <see cref="HostAddressConfiguration"/> class.
+        /// </summary>
+        /// <param name="loggingConfiguration">Previously set logging information.</param>
         /// <param name="hostAddress">The address the <see cref="IServiceBus"/> will be accessible from.</param>
-        public HostAddressConfiguration(ILoggingConfiguration loggingConfiguration, Uri hostAddress)
+        public HostAddressConfiguration(ILoggingConfiguration loggingConfiguration, Uri hostAddress) 
+            : base(loggingConfiguration)
         {
             this.HostAddress = hostAddress;
-            this.LoggingConfiguration = loggingConfiguration;
         }
 
         /// <summary>
@@ -25,6 +36,9 @@
             get; private set;
         }
 
-        public ILoggingConfiguration LoggingConfiguration { get; private set; }
+        /// <summary>
+        /// Gets the previously set configuration for the host address.
+        /// </summary>
+        public IHostAddressConfiguration HostAddressConfigurationInstance { get; private set; }
     }
 }

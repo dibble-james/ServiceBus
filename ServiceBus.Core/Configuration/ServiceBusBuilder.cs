@@ -16,6 +16,11 @@
             return new ServiceBusBuilder();
         }
 
+        /// <summary>
+        /// Set the <see cref="log4net.ILog"/> for use by the <see cref="IServiceBus"/>.
+        /// </summary>
+        /// <param name="logger">The <see cref="log4net.ILog"/> instance to use.</param>
+        /// <returns>Configuration settings.</returns>
         public ILoggingConfiguration WithLogger(ILog logger)
         {
             return new LoggingConfiguration(logger);

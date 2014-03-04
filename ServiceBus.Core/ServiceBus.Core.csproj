@@ -72,6 +72,7 @@
     <Compile Include="Configuration\ServiceBusBuilder.cs" />
     <Compile Include="Configuration\TransportConfiguration.cs" />
     <Compile Include="Core\EventHandlers\PeerConnectedEventHandler.cs" />
+    <Compile Include="Core\EventHandlers\LoggingEventHandler.cs" />
     <Compile Include="Event\EventBase.cs" />
     <Compile Include="Event\IEvent.cs" />
     <Compile Include="Event\IEventHandler.cs" />
