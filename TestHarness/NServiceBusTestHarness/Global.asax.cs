@@ -1,11 +1,13 @@
-﻿using Microsoft.AspNet.SignalR;
-using Microsoft.AspNet.SignalR.Hubs;
-using System;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Web;
 using System.Web.Http;
 using System.Web.Mvc;
 using System.Web.Routing;
+using NServiceBus;
 
-namespace TestHarness2
+namespace NServiceBusTestHarness
 {
     // Note: For instructions on enabling IIS6 or IIS7 classic mode, 
     // visit http://go.microsoft.com/?LinkId=9394801
@@ -17,17 +19,9 @@ namespace TestHarness2
 
             WebApiConfig.Register(GlobalConfiguration.Configuration);
             FilterConfig.RegisterGlobalFilters(GlobalFilters.Filters);
-            
-            Bootstrapper.Initialise();
-
             RouteConfig.RegisterRoutes(RouteTable.Routes);
 
-            GlobalHost.DependencyResolver.Register(typeof(IHubActivator), () => new UnityHubActivator());
-        }
-
-        protected void Application_Error(object sender, EventArgs e)
-        {
-            var thing = Server.GetLastError();
+            
         }
     }
 }

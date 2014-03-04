@@ -25,6 +25,8 @@ namespace TestHarness2
     using TestHarness2.Events;
     using TestHarness2.MessageHandlers;
     using TestHarness2.Messages;
+    using TestHarness2.Controllers;
+    using Microsoft.AspNet.SignalR.Hubs;
 
     public static class Bootstrapper
     {
@@ -87,7 +89,17 @@ namespace TestHarness2
                         .Subscribe(new HelloEventHandler())
                         .WithPeerAsync(new Uri("http://localhost:55001"));
 
-            container.RegisterInstance(serviceBus.Result);
+            container.RegisterInstance<IServiceBus>(serviceBus.Result, new ContainerControlledLifetimeManager());
+
+            container.RegisterType<ServiceBusHub>(new ContainerControlledLifetimeManager());
+        }
+    }
+
+    public class UnityHubActivator : IHubActivator
+    {
+        public IHub Create(HubDescriptor descriptor)
+        {
+            return DependencyResolver.Current.GetService(descriptor.HubType) as IHub;
         }
     }
 }

@@ -1,0 +1,85 @@
+﻿@{
+    this.ViewBag.Title = "Service Bus Demo - Test Harness 2";
+}
+<section data-ng-controller="indexController">
+    <div class="col-lg-12 col-md-12">
+        <div class="page-header">
+            <h1>Service Bus Host Address: {{serviceBusHostAddress}}</h1>
+        </div>
+    </div>
+    <div class="col-lg-3 col-md-4">
+        <div class="panel panel-default">
+            <div class="panel-heading">Event Handlers</div>
+            <div class="panel-body">
+            </div>
+        </div>
+    </div>
+    <div class="col-lg-3 col-md-4">
+        <div class="panel panel-default">
+            <div class="panel-heading">Message Handlers</div>
+            <div class="panel-body">
+            </div>
+        </div>
+    </div>
+    <div class="col-lg-3 col-md-4">
+        <div class="panel panel-default">
+            <div class="panel-heading">Peers</div>
+            <div class="panel-body">
+                <ul class="list-unstyled">
+                    <li data-ng-repeat="peer in peers">{{peer.PeerAddress}}
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <div class="col-lg-12 col-md-12">
+        <div class="panel panel-default">
+            <div class="panel-heading">Debug Log</div>
+            <div class="panel-body">
+                <div class="alert alert-{{logEntry.Type}}" data-ng-repeat="logEntry in logEntries">
+                    <strong>{{logEntry.Time}}</strong>&nbsp;{{logEntry.Message}}
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+@section Script
+{
+    <script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/angularjs/1.2.3/angular.min.js"></script>
+    <script src="@this.Url.Content("~/Scripts/jquery.signalR-2.0.2.min.js")"></script>
+    <script src="@this.Url.Content("~/signalr/hubs")"></script>
+    <script>
+        var serviceBus = angular.module('serviceBus', []);
+
+        function indexController($scope) {
+            var hub = $.connection.ServiceBusHub;
+
+            var scope = $scope;
+
+            scope.serviceBusHostAddress = '';
+            scope.peers = [];
+            scope.logEntries = [];
+
+            var init = function () {
+
+
+                hub.server.getHostAddress().done(function (hostAddress) {
+                    scope.serviceBusHostAddress = hostAddress;
+                    scope.$apply();
+                });
+
+                hub.server.getAllPeers().done(function (peers) {
+                    scope.peers = peers;
+                    scope.$apply();
+                });
+            };
+
+            hub.client.updateLog = function (newLogEntry) {
+                scope.logEntries.push(newLogEntry);
+                scope.$apply();
+            };
+
+            $.connection.hub.start().done(init);
+        }
+    </script>
+}

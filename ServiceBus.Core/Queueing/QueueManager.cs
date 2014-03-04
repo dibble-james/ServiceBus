@@ -13,7 +13,8 @@
 
     internal class QueueManager : IQueueManager
     {
-        private readonly IObjectContainer _queuePersistence;
+        private readonly string _databasePath;
+        private Lazy<IObjectContainer> _queuePersistence;
 
         private bool _disposed;
                 
@@ -21,9 +22,11 @@
         {
             this._disposed = false;
 
-            var databasePath = Path.Combine(storeDirectory, "queue.db40");
+            this._databasePath = Path.Combine(storeDirectory, "queue.db40");
 
-            this._queuePersistence = Db4oEmbedded.OpenFile(databasePath);
+            this._queuePersistence = new Lazy<IObjectContainer>(() => {
+                return Db4oEmbedded.OpenFile(this._databasePath);
+            });
         }
 
         public event Action<QueuedMessage> MessageQueued;
@@ -32,9 +35,11 @@
         {
             var queuedMessage = new QueuedMessage { QueuedAt = DateTime.Now, Peer = peer, Message = message, HasSent = false };
 
-            this._queuePersistence.Store(queuedMessage);
+            this._queuePersistence.Value.Store(queuedMessage);
 
-            await Task.Factory.StartNew(() => this._queuePersistence.Commit());
+            await Task.Factory.StartNew(() => this._queuePersistence.Value.Commit());
+
+            this.RecreateQueuePersistence();
 
             if (this.MessageQueued != null)
             {
@@ -44,7 +49,7 @@
 
         public void Dequeue(QueuedMessage message)
         {
-            var queuedMessage = this._queuePersistence.AsQueryable<QueuedMessage>()
+            var queuedMessage = this._queuePersistence.Value.AsQueryable<QueuedMessage>()
                             .FirstOrDefault(qm => qm.QueuedAt == message.QueuedAt && qm.Peer == message.Peer && !message.HasSent);
 
             if (queuedMessage == null)
@@ -59,15 +64,17 @@
 
             queuedMessage.HasSent = true;
 
-            this._queuePersistence.Store(queuedMessage);
+            this._queuePersistence.Value.Store(queuedMessage);
 
-            this._queuePersistence.Commit();
+            this._queuePersistence.Value.Commit();
+
+            this.RecreateQueuePersistence();
         }
 
         public QueuedMessage PeersNextMessageOrDefault(IPeer peer)
         {
             var nextMessage =
-                this._queuePersistence.AsQueryable<QueuedMessage>()
+                this._queuePersistence.Value.AsQueryable<QueuedMessage>()
                     .OrderByDescending(qm => qm.HasSent)
                     .ThenBy(qm => qm.QueuedAt)
                     .FirstOrDefault(
@@ -76,13 +83,15 @@
                         && qm.Peer.PeerAddress == peer.PeerAddress
                         && !(qm.Message is PeerConnectedEvent));
 
+            this.RecreateQueuePersistence();
+
             return nextMessage;
         }
 
         public QueuedMessage PeersNextMessageOrDefault(IPeer peer, DateTime messageQueuedBefore)
         {
             var nextMessage =
-                this._queuePersistence.AsQueryable<QueuedMessage>()
+                this._queuePersistence.Value.AsQueryable<QueuedMessage>()
                     .OrderByDescending(qm => qm.HasSent)
                     .ThenBy(qm => qm.QueuedAt)
                     .FirstOrDefault(
@@ -90,6 +99,8 @@
                               && qm.Peer.PeerAddress == peer.PeerAddress
                               && qm.QueuedAt < messageQueuedBefore
                               && !(qm.Message is PeerConnectedEvent));
+
+            this.RecreateQueuePersistence();
 
             return nextMessage;
         }
@@ -99,12 +110,27 @@
         /// </summary>
         public void Dispose()
         {
-            if (!this._disposed)
+            if (!this._disposed && this._queuePersistence.IsValueCreated)
             {
-                this._queuePersistence.Dispose();
+                this._queuePersistence.Value.Dispose();
             }
 
             this._disposed = true;
+        }
+
+        private void RecreateQueuePersistence()
+        {
+            if (this._queuePersistence.IsValueCreated)
+            {
+                this._queuePersistence.Value.Close();
+
+                this._queuePersistence.Value.Dispose();
+
+                this._queuePersistence = new Lazy<IObjectContainer>(() =>
+                {
+                    return Db4oEmbedded.OpenFile(this._databasePath);
+                });
+            }
         }
     }
 }
