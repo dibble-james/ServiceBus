@@ -12,7 +12,7 @@
         /// </summary>
         /// <param name="transportConfiguration">The previously set configuration for the transporter.</param>
         public TransportConfiguration(ITransportConfiguration transportConfiguration)
-            : base(transportConfiguration.HostAddressConfigurationInstance)
+            : this(transportConfiguration.HostAddressConfigurationInstance, transportConfiguration.Transporter)
         {
             this.TransportConfigurationInstance = transportConfiguration;
         }

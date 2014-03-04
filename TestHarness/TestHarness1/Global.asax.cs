@@ -28,23 +28,9 @@ namespace TestHarness1
             WebApiConfig.Register(GlobalConfiguration.Configuration);
             FilterConfig.RegisterGlobalFilters(GlobalFilters.Filters);
 
-            var messageDictionary = new MessageTypeDictionary
-                                    {
-                                        { HelloMessage.HelloMessageType, typeof(HelloMessage) }
-                                    };
+            Bootstrapper.Initialise(); 
             
-            var serviceBus =
-                ServiceBusBuilder.Configure()
-                    .WithLogger(null)
-                    .WithHostAddress(new Uri("http://localhost:55001"))
-                    .WithHttpTransport(new JsonMessageSerialiser(messageDictionary))
-                    .AsMvcServiceBus(RouteTable.Routes)
-                    .Build()
-                        .WithPeerAsync(new Uri("http://localhost:55033"));
-
             RouteConfig.RegisterRoutes(RouteTable.Routes);
-
-            Bootstrapper.Initialise(serviceBus.Result);
         }
     }
 }

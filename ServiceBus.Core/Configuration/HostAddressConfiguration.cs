@@ -12,7 +12,7 @@
         /// </summary>
         /// <param name="hostAddressConfiguration">The previously set configuration of the host address.</param>
         public HostAddressConfiguration(IHostAddressConfiguration hostAddressConfiguration) 
-            : base(hostAddressConfiguration.LoggingConfigurationInstance)
+            : this(hostAddressConfiguration.LoggingConfigurationInstance, hostAddressConfiguration.HostAddress)
         {
             this.HostAddressConfigurationInstance = hostAddressConfiguration;
         }

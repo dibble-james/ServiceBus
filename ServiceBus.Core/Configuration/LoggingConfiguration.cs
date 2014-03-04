@@ -16,7 +16,7 @@ namespace ServiceBus.Configuration
         /// Initialises a new instance of the <see cref="LoggingConfiguration"/> class.
         /// </summary>
         /// <param name="logger">The previously set <see cref="ILoggingConfiguration"/>.</param>
-        public LoggingConfiguration(ILoggingConfiguration logger)
+        public LoggingConfiguration(ILoggingConfiguration logger) : this(logger.Logger)
         {
             this.LoggingConfigurationInstance = logger;
         }

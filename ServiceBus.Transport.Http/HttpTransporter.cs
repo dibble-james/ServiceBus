@@ -81,6 +81,10 @@
                 {
                     this.MessageSent(message);
                 }
+                else
+                {
+                    throw new HttpRequestException(result.Content.ReadAsStringAsync().Result);
+                }
             }
             catch (Exception exception)
             {
