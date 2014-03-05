@@ -36,6 +36,27 @@
       <SubType>Content</SubType>
       <DependentUpon>Event.classdiagram</DependentUpon>
     </Content>
+    <Content Include="Queue.sequencediagram">
+      <SubType>Content</SubType>
+    </Content>
+    <Content Include="Queue.sequencediagram.layout">
+      <SubType>Content</SubType>
+      <DependentUpon>Queue.sequencediagram</DependentUpon>
+    </Content>
+    <Content Include="RaiseEvent.sequencediagram">
+      <SubType>Content</SubType>
+    </Content>
+    <Content Include="RaiseEvent.sequencediagram.layout">
+      <SubType>Content</SubType>
+      <DependentUpon>RaiseEvent.sequencediagram</DependentUpon>
+    </Content>
+    <Content Include="ReieveEvents.sequencediagram">
+      <SubType>Content</SubType>
+    </Content>
+    <Content Include="ReieveEvents.sequencediagram.layout">
+      <SubType>Content</SubType>
+      <DependentUpon>ReieveEvents.sequencediagram</DependentUpon>
+    </Content>
     <Content Include="ModelDefinition\Package10_1219.uml">
       <SubType>Content</SubType>
     </Content>
@@ -72,6 +93,9 @@
     <Content Include="ModelDefinition\Package1_1219.uml">
       <SubType>Content</SubType>
     </Content>
+    <Content Include="ModelDefinition\Package1_1348.uml">
+      <SubType>Content</SubType>
+    </Content>
     <Content Include="ModelDefinition\Package1_2113.uml">
       <SubType>Content</SubType>
     </Content>
@@ -82,6 +106,9 @@
       <SubType>Content</SubType>
     </Content>
     <Content Include="ModelDefinition\Package2_1219.uml">
+      <SubType>Content</SubType>
+    </Content>
+    <Content Include="ModelDefinition\Package2_1348.uml">
       <SubType>Content</SubType>
     </Content>
     <Content Include="ModelDefinition\Package2_2113.uml">
@@ -123,6 +150,9 @@
     <Content Include="ModelDefinition\Package_1219.uml">
       <SubType>Content</SubType>
     </Content>
+    <Content Include="ModelDefinition\Package_1348.uml">
+      <SubType>Content</SubType>
+    </Content>
     <Content Include="ModelDefinition\Package_1637.uml">
       <SubType>Content</SubType>
     </Content>
@@ -138,6 +168,13 @@
     <Content Include="Routing.classdiagram.layout">
       <SubType>Content</SubType>
       <DependentUpon>Routing.classdiagram</DependentUpon>
+    </Content>
+    <Content Include="Routing.sequencediagram">
+      <SubType>Content</SubType>
+    </Content>
+    <Content Include="Routing.sequencediagram.layout">
+      <SubType>Content</SubType>
+      <DependentUpon>Routing.sequencediagram</DependentUpon>
     </Content>
     <Content Include="Serialisation.classdiagram">
       <SubType>Content</SubType>

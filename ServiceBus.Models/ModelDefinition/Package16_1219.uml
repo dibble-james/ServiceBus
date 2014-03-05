@@ -23,5 +23,11 @@
         LastKnownName="Routing"
         LastKnownLocation="Package20_1219.uml" />
     </packageHasNamedElement>
+    <packageHasNamedElement>
+      <packageMoniker
+        Id="f9cdfb2e-4061-4e17-a8ef-a2cbf66b3574"
+        LastKnownName="Mvc"
+        LastKnownLocation="Package2_1348.uml" />
+    </packageHasNamedElement>
   </packagedElements>
 </package>

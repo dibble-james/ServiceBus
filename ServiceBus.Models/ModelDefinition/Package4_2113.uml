@@ -77,7 +77,7 @@
               LastKnownLocation="Package_1637.uml" />
           </generalization>
           <generalization
-            Id="52bc96e2-f00f-4911-9fff-6992325b2c30"
+            Id="a0fb3a11-3445-4ddb-a88c-ac7d49d7b201"
             isSubstitutable="false">
             <classMoniker
               Id="92362252-22ac-447c-94f1-5018ada19b4d"
@@ -377,71 +377,6 @@
         </ownedAttributesInternal>
         <ownedOperationsInternal>
           <operation
-            Id="6774919e-c3ff-451c-8799-c6b8b579f843"
-            name="PeerConnectedEvent"
-            isLeaf="false"
-            isStatic="false"
-            isAbstract="false"
-            concurrency="Sequential"
-            isQuery="false">
-            <referencesInternal>
-              <reference
-                Id="3d761aaf-0401-4990-9cf5-a14baf4d5f07"
-                handle="viewcode://./CodeSchema_Method?Assembly%3D&quot;file:%2F%2F%2FC:%2FGIT%2FService Bus%2FDebug%2FServiceBus.Core.dll&quot; Namespace%3DServiceBus.Core.Events Type%3DPeerConnectedEvent Member%3D.ctor"
-                tag="ViewCode" />
-            </referencesInternal>
-            <appliedStereotypesInternal>
-              <stereotypeInstance
-                Id="61baeee0-a0ac-42e0-baee-9dbb991546a8"
-                name="method"
-                profile="CSharpProfile">
-                <propertyInstances>
-                  <stereotypeInstanceHasPropertyInstances
-                    Id="c82bae86-483d-4009-bdf9-e76ebdf7b57d">
-                    <propertyInstance
-                      Id="d1db6d46-863e-4f54-b99b-61da1575826c"
-                      name="ClrAttributes" />
-                  </stereotypeInstanceHasPropertyInstances>
-                  <stereotypeInstanceHasPropertyInstances
-                    Id="2e859de3-09e5-4607-9056-a2162412a585">
-                    <propertyInstance
-                      Id="e53fa06b-0d03-453a-80e7-44cb2d4b8597"
-                      name="IsPartial"
-                      value="false" />
-                  </stereotypeInstanceHasPropertyInstances>
-                  <stereotypeInstanceHasPropertyInstances
-                    Id="670783a8-392b-438f-a13f-98e7ff3539fb">
-                    <propertyInstance
-                      Id="84cea7a8-e216-4b19-b7b2-f49a7b4365b2"
-                      name="IsUnsafe"
-                      value="false" />
-                  </stereotypeInstanceHasPropertyInstances>
-                  <stereotypeInstanceHasPropertyInstances
-                    Id="d16e39bd-4376-4cd2-8b9f-9d98471f299a">
-                    <propertyInstance
-                      Id="669bd995-90fa-434e-b473-870f5dcefecd"
-                      name="Inheritance"
-                      value="none" />
-                  </stereotypeInstanceHasPropertyInstances>
-                  <stereotypeInstanceHasPropertyInstances
-                    Id="27c8dd0d-1f59-4861-a126-a24f5ee79136">
-                    <propertyInstance
-                      Id="9fb0b379-2a1f-4369-b279-4745f84d44ea"
-                      name="PackageVisibility"
-                      value="internal" />
-                  </stereotypeInstanceHasPropertyInstances>
-                  <stereotypeInstanceHasPropertyInstances
-                    Id="62a21f29-9c2a-403e-b960-524af832e019">
-                    <propertyInstance
-                      Id="e8a82041-8cbf-4a62-ae92-109a5f6d0acd"
-                      name="params"
-                      value="false" />
-                  </stereotypeInstanceHasPropertyInstances>
-                </propertyInstances>
-              </stereotypeInstance>
-            </appliedStereotypesInternal>
-          </operation>
-          <operation
             Id="0f9b397c-4994-4f4c-8ba4-2562d49b5688"
             name="PeerConnectedEvent"
             visibility="Private"
@@ -651,6 +586,71 @@
                 </parameter>
               </operationHasOwnedParameters>
             </ownedParameters>
+          </operation>
+          <operation
+            Id="3e126230-396b-437a-a1ba-c62685ee9320"
+            name="PeerConnectedEvent"
+            isLeaf="false"
+            isStatic="false"
+            isAbstract="false"
+            concurrency="Sequential"
+            isQuery="false">
+            <referencesInternal>
+              <reference
+                Id="0fcc6f77-fe5b-4d24-8a40-469f0276bfca"
+                handle="viewcode://./CodeSchema_Method?Assembly%3D&quot;file:%2F%2F%2FC:%2FGIT%2FService Bus%2FDebug%2FServiceBus.Core.dll&quot; Namespace%3DServiceBus.Core.Events Type%3DPeerConnectedEvent Member%3D.ctor"
+                tag="ViewCode" />
+            </referencesInternal>
+            <appliedStereotypesInternal>
+              <stereotypeInstance
+                Id="0b6ff482-18e6-4ccf-949f-3d17df1b8af1"
+                name="method"
+                profile="CSharpProfile">
+                <propertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="a23d454a-6c29-4d64-b9de-d04a639718ce">
+                    <propertyInstance
+                      Id="a6698932-3756-4763-b9a0-c8afb215aa4b"
+                      name="ClrAttributes" />
+                  </stereotypeInstanceHasPropertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="4e3c0458-6c33-4a5c-a59f-0b8ca05b2e63">
+                    <propertyInstance
+                      Id="1fa543b0-e199-4a5e-a372-a9f25bd647eb"
+                      name="IsPartial"
+                      value="false" />
+                  </stereotypeInstanceHasPropertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="544e2f98-2b38-4564-a2d7-96fc80c3a2fc">
+                    <propertyInstance
+                      Id="5ff46052-6db0-4002-b83f-4afcb6815889"
+                      name="IsUnsafe"
+                      value="false" />
+                  </stereotypeInstanceHasPropertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="8c87a73d-d1b1-42ee-9695-6b76f1e4a33a">
+                    <propertyInstance
+                      Id="dc362026-8964-43cf-8eb0-c7db497b8b81"
+                      name="Inheritance"
+                      value="none" />
+                  </stereotypeInstanceHasPropertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="5cb45ff1-4a9c-4c6f-938d-25df4abce102">
+                    <propertyInstance
+                      Id="6823999d-1f03-4e8c-b86e-1257bdd4b701"
+                      name="PackageVisibility"
+                      value="internal" />
+                  </stereotypeInstanceHasPropertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="6c94352d-7e3a-4f22-b7ac-792a2b55efe4">
+                    <propertyInstance
+                      Id="86b1812b-6133-4e89-8d50-b6fd2f7e89d6"
+                      name="params"
+                      value="false" />
+                  </stereotypeInstanceHasPropertyInstances>
+                </propertyInstances>
+              </stereotypeInstance>
+            </appliedStereotypesInternal>
           </operation>
         </ownedOperationsInternal>
       </class>

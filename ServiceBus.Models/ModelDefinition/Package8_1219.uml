@@ -356,6 +356,72 @@
                 LastKnownLocation="Package2_1218.uml" />
             </type_NamedElement>
           </property>
+          <property
+            Id="2e8c74f3-34e6-4cd0-afd3-d053ddaf2337"
+            name="MessageFailedToSend"
+            isLeaf="false"
+            isStatic="false"
+            isReadOnly="false"
+            isDerived="false"
+            isDerivedUnion="false"
+            aggregation="None"
+            isComposite="false">
+            <referencesInternal>
+              <reference
+                Id="659883f9-368a-43fc-aa50-cf05924040c5"
+                handle="viewcode://./CodeSchema_Event?Assembly%3D&quot;file:%2F%2F%2FC:%2FGIT%2FService Bus%2FDebug%2FServiceBus.Core.dll&quot; Namespace%3DServiceBus.Transport Type%3DITransporter Member%3DMessageFailedToSend"
+                tag="ViewCode" />
+            </referencesInternal>
+            <appliedStereotypesInternal>
+              <stereotypeInstance
+                Id="fd8ddaea-3359-4a8d-a15b-179b922101af"
+                name="event"
+                profile="CSharpProfile">
+                <propertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="0a35a4a3-3401-48d4-b2db-631aa0beb5ff">
+                    <propertyInstance
+                      Id="e5c94897-abe8-42ad-9c7e-32d1e0c1f421"
+                      name="Add"
+                      value="false" />
+                  </stereotypeInstanceHasPropertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="2c677ce0-4204-493f-97f3-df0344a96421">
+                    <propertyInstance
+                      Id="b4393581-8aca-4a8e-a911-fed0a98f5c16"
+                      name="ClrAttributes" />
+                  </stereotypeInstanceHasPropertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="bc9d50e0-5560-4230-96ad-c2d9b19a40bf">
+                    <propertyInstance
+                      Id="bcf16357-894f-4315-b4b8-13ff48d7e8da"
+                      name="IsUnsafe"
+                      value="false" />
+                  </stereotypeInstanceHasPropertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="1867f114-737d-4f6a-b9eb-7d1b8f21bfaf">
+                    <propertyInstance
+                      Id="657c999d-927d-4e6d-b589-0712f7dc1320"
+                      name="PackageVisibility"
+                      value="internal" />
+                  </stereotypeInstanceHasPropertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="99384231-9eb1-45d0-bdb1-1e952bad9180">
+                    <propertyInstance
+                      Id="8ed805a1-1b71-43bb-9ed4-aaa05d037dcd"
+                      name="Remove"
+                      value="false" />
+                  </stereotypeInstanceHasPropertyInstances>
+                </propertyInstances>
+              </stereotypeInstance>
+            </appliedStereotypesInternal>
+            <type_NamedElement>
+              <classMoniker
+                Id="7b814b74-fe0c-42d1-bdc7-1171921fe55d"
+                LastKnownName="Action&lt;Exception‎, QueuedMessage‎&gt;"
+                LastKnownLocation="Package2_1218.uml" />
+            </type_NamedElement>
+          </property>
         </ownedAttributes>
         <ownedOperations>
           <operation
@@ -363,7 +429,7 @@
             name="ReceiveAsync"
             isLeaf="false"
             isStatic="false"
-            isAbstract="true"
+            isAbstract="false"
             concurrency="Sequential"
             isQuery="false">
             <referencesInternal>
@@ -457,8 +523,8 @@
             </ownedParameters>
           </operation>
           <operation
-            Id="e90fc70a-40c7-49f7-ba11-46e169bd7518"
-            name="SendMessage‎&lt;TMessage‎&gt;"
+            Id="d3eaeff9-4a52-48df-a98a-470194a92daf"
+            name="SendMessageAsync‎&lt;TMessage‎&gt;"
             isLeaf="false"
             isStatic="false"
             isAbstract="true"
@@ -466,54 +532,54 @@
             isQuery="false">
             <referencesInternal>
               <reference
-                Id="05fa4e95-c70d-446f-9f85-f04cdf9958fc"
-                handle="viewcode://./CodeSchema_Method?Assembly%3D&quot;file:%2F%2F%2FC:%2FGIT%2FService Bus%2FDebug%2FServiceBus.Core.dll&quot; Namespace%3DServiceBus.Transport Type%3DITransporter Member%3D(Name%3DSendMessage GenericParameterCount%3D1 OverloadingParameters%3D[(Assembly%3D&quot;file:%2F%2F%2FC:%2FGIT%2FService Bus%2FDebug%2FServiceBus.Core.dll&quot; Namespace%3DServiceBus Type%3DIPeer)%2C(ParameterIdentifier%3D0)])"
+                Id="56462573-6a19-4b79-9f92-ab2c72c44ab2"
+                handle="viewcode://./CodeSchema_Method?Assembly%3D&quot;file:%2F%2F%2FC:%2FGIT%2FService Bus%2FDebug%2FServiceBus.Core.dll&quot; Namespace%3DServiceBus.Transport Type%3DITransporter Member%3D(Name%3DSendMessageAsync GenericParameterCount%3D1 OverloadingParameters%3D[(Assembly%3D&quot;file:%2F%2F%2FC:%2FGIT%2FService Bus%2FDebug%2FServiceBus.Core.dll&quot; Namespace%3DServiceBus Type%3DIPeer)%2C(ParameterIdentifier%3D0)])"
                 tag="ViewCode" />
             </referencesInternal>
             <appliedStereotypesInternal>
               <stereotypeInstance
-                Id="ffb45932-e721-434c-aeb6-0f635788d392"
+                Id="44e4a4ca-067b-423d-9f27-da00c9b51592"
                 name="method"
                 profile="CSharpProfile">
                 <propertyInstances>
                   <stereotypeInstanceHasPropertyInstances
-                    Id="506a5d26-d12d-4c25-a3d9-b2e0778bc871">
+                    Id="bdc342fc-99c8-4b61-89e6-eeac6d4c2411">
                     <propertyInstance
-                      Id="fa715547-b21f-4399-9f18-0643493ee738"
+                      Id="abb56957-3177-4b90-94b9-77cd95a669bd"
                       name="ClrAttributes" />
                   </stereotypeInstanceHasPropertyInstances>
                   <stereotypeInstanceHasPropertyInstances
-                    Id="ca3b8d2e-e4b2-443a-8414-42e21c0f6947">
+                    Id="20358e10-1740-41f6-b6b0-2157634382fd">
                     <propertyInstance
-                      Id="2b62c81f-f458-44b8-8b4b-ec76e124437d"
+                      Id="a4ee7bff-8a08-438e-b419-31f6891cf088"
                       name="IsPartial"
                       value="false" />
                   </stereotypeInstanceHasPropertyInstances>
                   <stereotypeInstanceHasPropertyInstances
-                    Id="93010769-ee07-4ec2-89b9-835eb8f70b4a">
+                    Id="00b091f3-5742-4b56-b897-029522a4ea13">
                     <propertyInstance
-                      Id="20b0c390-1f7f-41d4-b9c3-569b0ad57111"
+                      Id="898c1879-eb20-4102-983a-450d3ce33ddb"
                       name="IsUnsafe"
                       value="false" />
                   </stereotypeInstanceHasPropertyInstances>
                   <stereotypeInstanceHasPropertyInstances
-                    Id="9c9731e3-cf8a-470b-99cd-49460c646b46">
+                    Id="4330d2b1-f177-4be6-afe4-6146d3cf0254">
                     <propertyInstance
-                      Id="e32d1667-4c32-476e-bed7-dd94ca81f2c2"
+                      Id="8fb9eaa9-5ead-4844-898f-42797b763064"
                       name="Inheritance"
                       value="none" />
                   </stereotypeInstanceHasPropertyInstances>
                   <stereotypeInstanceHasPropertyInstances
-                    Id="e31ffbce-7a90-4d4a-98b7-8cb4eb8197ab">
+                    Id="8b7b2b49-b7db-4d99-b72b-77ac095332a5">
                     <propertyInstance
-                      Id="b648e6d2-f1a9-4bd9-9203-c2b6133a06e2"
+                      Id="f7e82496-82b3-44d0-81a8-6a58ef3b68ca"
                       name="PackageVisibility"
                       value="internal" />
                   </stereotypeInstanceHasPropertyInstances>
                   <stereotypeInstanceHasPropertyInstances
-                    Id="193d77af-fbd6-4b34-91c6-33b585da23e3">
+                    Id="480c3415-444f-4375-875a-5ba13bca3eef">
                     <propertyInstance
-                      Id="b59cec70-fd30-4c4a-b549-76dacad56668"
+                      Id="8b3862be-4887-4f42-8164-25917d34efc2"
                       name="params"
                       value="false" />
                   </stereotypeInstanceHasPropertyInstances>
@@ -523,13 +589,25 @@
             <ownedParameters>
               <operationHasOwnedParameters>
                 <parameter
-                  Id="df6f799b-418d-46a9-838d-96ca0cb818e3"
+                  Id="a0be27d6-815d-47a3-9498-6b1d2d5750e7"
+                  direction="Return">
+                  <type_NamedElement>
+                    <classMoniker
+                      Id="01502229-2b0e-48a9-a2a6-d8d84030bb90"
+                      LastKnownName="Task"
+                      LastKnownLocation="Package13_1219.uml" />
+                  </type_NamedElement>
+                </parameter>
+              </operationHasOwnedParameters>
+              <operationHasOwnedParameters>
+                <parameter
+                  Id="8614c5a3-e374-4695-b8da-74496a7f6b19"
                   name="peerToRecieve"
                   direction="In">
                   <referencesInternal>
                     <reference
-                      Id="dae31be6-32dc-4b7a-ade2-87a9e97b7652"
-                      handle="viewcode://./CodeSchema_Parameter?Assembly%3D&quot;file:%2F%2F%2FC:%2FGIT%2FService Bus%2FDebug%2FServiceBus.Core.dll&quot; Namespace%3DServiceBus.Transport Type%3DITransporter Member%3D(Name%3DSendMessage GenericParameterCount%3D1 OverloadingParameters%3D[(Assembly%3D&quot;file:%2F%2F%2FC:%2FGIT%2FService Bus%2FDebug%2FServiceBus.Core.dll&quot; Namespace%3DServiceBus Type%3DIPeer)%2C(ParameterIdentifier%3D0)]) ParameterIdentifier%3DpeerToRecieve"
+                      Id="83aad48e-9964-457e-bb57-a4c92f3d62e3"
+                      handle="viewcode://./CodeSchema_Parameter?Assembly%3D&quot;file:%2F%2F%2FC:%2FGIT%2FService Bus%2FDebug%2FServiceBus.Core.dll&quot; Namespace%3DServiceBus.Transport Type%3DITransporter Member%3D(Name%3DSendMessageAsync GenericParameterCount%3D1 OverloadingParameters%3D[(Assembly%3D&quot;file:%2F%2F%2FC:%2FGIT%2FService Bus%2FDebug%2FServiceBus.Core.dll&quot; Namespace%3DServiceBus Type%3DIPeer)%2C(ParameterIdentifier%3D0)]) ParameterIdentifier%3DpeerToRecieve"
                       tag="ViewCode" />
                   </referencesInternal>
                   <type_NamedElement>
@@ -542,13 +620,13 @@
               </operationHasOwnedParameters>
               <operationHasOwnedParameters>
                 <parameter
-                  Id="80cfdb14-0d4b-449e-9e83-c4289a88a0c9"
+                  Id="2ee8eba2-5987-41c0-8049-5b0f124b030e"
                   name="message"
                   direction="In">
                   <referencesInternal>
                     <reference
-                      Id="ef9e6b45-09f7-4de4-970d-e537ec3b3844"
-                      handle="viewcode://./CodeSchema_Parameter?Assembly%3D&quot;file:%2F%2F%2FC:%2FGIT%2FService Bus%2FDebug%2FServiceBus.Core.dll&quot; Namespace%3DServiceBus.Transport Type%3DITransporter Member%3D(Name%3DSendMessage GenericParameterCount%3D1 OverloadingParameters%3D[(Assembly%3D&quot;file:%2F%2F%2FC:%2FGIT%2FService Bus%2FDebug%2FServiceBus.Core.dll&quot; Namespace%3DServiceBus Type%3DIPeer)%2C(ParameterIdentifier%3D0)]) ParameterIdentifier%3Dmessage"
+                      Id="70b9eb84-81a5-46c8-a1a6-3217bba63141"
+                      handle="viewcode://./CodeSchema_Parameter?Assembly%3D&quot;file:%2F%2F%2FC:%2FGIT%2FService Bus%2FDebug%2FServiceBus.Core.dll&quot; Namespace%3DServiceBus.Transport Type%3DITransporter Member%3D(Name%3DSendMessageAsync GenericParameterCount%3D1 OverloadingParameters%3D[(Assembly%3D&quot;file:%2F%2F%2FC:%2FGIT%2FService Bus%2FDebug%2FServiceBus.Core.dll&quot; Namespace%3DServiceBus Type%3DIPeer)%2C(ParameterIdentifier%3D0)]) ParameterIdentifier%3Dmessage"
                       tag="ViewCode" />
                   </referencesInternal>
                   <type_NamedElement>
@@ -571,7 +649,7 @@
         <referencesInternal>
           <reference
             Id="1670b981-c88c-415e-af98-1161fec714cf"
-            handle="viewcode://./CodeSchema_GenericParameter?Assembly%3D&quot;file:%2F%2F%2FC:%2FGIT%2FService Bus%2FDebug%2FServiceBus.Core.dll&quot; Namespace%3DServiceBus.Transport Type%3DITransporter Member%3D(Name%3DSendMessage GenericParameterCount%3D1 OverloadingParameters%3D[(Assembly%3D&quot;file:%2F%2F%2FC:%2FGIT%2FService Bus%2FDebug%2FServiceBus.Core.dll&quot; Namespace%3DServiceBus Type%3DIPeer)%2C(ParameterIdentifier%3D0)]) ParameterIdentifier%3D0"
+            handle="viewcode://./CodeSchema_GenericParameter?Assembly%3D&quot;file:%2F%2F%2FC:%2FGIT%2FService Bus%2FDebug%2FServiceBus.Core.dll&quot; Namespace%3DServiceBus.Transport Type%3DITransporter Member%3D(Name%3DSendMessageAsync GenericParameterCount%3D1 OverloadingParameters%3D[(Assembly%3D&quot;file:%2F%2F%2FC:%2FGIT%2FService Bus%2FDebug%2FServiceBus.Core.dll&quot; Namespace%3DServiceBus Type%3DIPeer)%2C(ParameterIdentifier%3D0)]) ParameterIdentifier%3D0"
             tag="ViewCode" />
         </referencesInternal>
       </undefinedType>
