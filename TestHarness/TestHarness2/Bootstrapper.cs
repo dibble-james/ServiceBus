@@ -89,7 +89,7 @@ namespace TestHarness2
                         .Subscribe(new HelloEventHandler())
                         .WithPeerAsync(new Uri("http://localhost:55001"));
 
-            container.RegisterInstance<IServiceBus>(serviceBus.Result, new ContainerControlledLifetimeManager());
+            container.RegisterInstance(serviceBus.Result, new ContainerControlledLifetimeManager());
 
             container.RegisterType<ServiceBusHub>(new ContainerControlledLifetimeManager());
         }

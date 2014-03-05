@@ -19,59 +19,47 @@ namespace TestHarness2.Controllers
         {
             this._serviceBus = serviceBus;
 
-            this._serviceBus.UnhandledExceptionOccurs += (error, method) => 
-            {
-                this.BroadCastLogEntry(new { 
-                    Time = DateTime.Now.ToString("hh:mm:ss:fff"),
-                    Type = "danger",
-                    Message = string.Format(
-                        CultureInfo.CurrentCulture,
-                        "Method [{0}] caused error [{1}]",
-                        method,
-                        error.Message)
-                });
-            };
+            this._serviceBus.UnhandledExceptionOccurs += (error, method) => this.BroadCastLogEntry(new { 
+                                                                                                           Time = DateTime.Now.ToString("hh:mm:ss:fff"),
+                                                                                                           Type = "danger",
+                                                                                                           Message = string.Format(
+                                                                                                               CultureInfo.CurrentCulture,
+                                                                                                               "Method [{0}] caused error [{1}]",
+                                                                                                               method,
+                                                                                                               error.Message)
+                                                                                                       });
 
-            this._serviceBus.Transporter.MessageFailedToSend += (error, message) => 
-            {
-                this.BroadCastLogEntry(new 
-                {
-                    Time = DateTime.Now.ToString("hh:mm:ss:fff"),
-                    Type = "danger",
-                    Message = string.Format(
-                        CultureInfo.CurrentCulture,
-                        "A [{0}] message could not be sent to [{1}]",
-                        message.Message.MessageType,
-                        message.Peer.PeerAddress.ToString())
-                });
-            };
+            this._serviceBus.Transporter.MessageFailedToSend += (error, message) => this.BroadCastLogEntry(new 
+                                                                                                           {
+                                                                                                               Time = DateTime.Now.ToString("hh:mm:ss:fff"),
+                                                                                                               Type = "danger",
+                                                                                                               Message = string.Format(
+                                                                                                                   CultureInfo.CurrentCulture,
+                                                                                                                   "A [{0}] message could not be sent to [{1}]",
+                                                                                                                   message.Message.MessageType,
+                                                                                                                   message.Peer.PeerAddress.ToString())
+                                                                                                           });
 
-            this._serviceBus.Transporter.MessageSent += message => 
-            {
-                this.BroadCastLogEntry(new
-                {
-                    Time = DateTime.Now.ToString("hh:mm:ss:fff"),
-                    Type = "info",
-                    Message = string.Format(
-                        CultureInfo.CurrentCulture,
-                        "A [{0}] message has been sucessfully sent to [{1}]",
-                        message.Message.MessageType,
-                        message.Peer.PeerAddress.ToString())
-                });
-            };
+            this._serviceBus.Transporter.MessageSent += message => this.BroadCastLogEntry(new
+                                                                                          {
+                                                                                              Time = DateTime.Now.ToString("hh:mm:ss:fff"),
+                                                                                              Type = "info",
+                                                                                              Message = string.Format(
+                                                                                                  CultureInfo.CurrentCulture,
+                                                                                                  "A [{0}] message has been sucessfully sent to [{1}]",
+                                                                                                  message.Message.MessageType,
+                                                                                                  message.Peer.PeerAddress.ToString())
+                                                                                          });
 
-            this._serviceBus.Transporter.MessageRecieved += message =>
-            {
-                    this.BroadCastLogEntry(new
-                    {
-                        Time = DateTime.Now.ToString("hh:mm:ss:fff"),
-                        Type = "info",
-                        Message = string.Format(
-                            CultureInfo.CurrentCulture,
-                            "A [{0}] message has been recieved",
-                            message.MessageType)
-                    });
-            };
+            this._serviceBus.Transporter.MessageRecieved += message => this.BroadCastLogEntry(new
+                                                                                              {
+                                                                                                  Time = DateTime.Now.ToString("hh:mm:ss:fff"),
+                                                                                                  Type = "info",
+                                                                                                  Message = string.Format(
+                                                                                                      CultureInfo.CurrentCulture,
+                                                                                                      "A [{0}] message has been recieved",
+                                                                                                      message.MessageType)
+                                                                                              });
         }
 
         public string GetHostAddress()
