@@ -14,7 +14,7 @@
     /// Implementing classes can be used to subscribe to <see cref="IEvent"/>s of <typeparamref name="TEvent"/> type.
     /// </summary>
     /// <typeparam name="TEvent">The type of <see cref="IEvent"/> this <see cref="IEventHandler{TEvent}"/> can subscribe to.</typeparam>
-    public interface IEventHandler<in TEvent> : IEndpoint, IEventHandler where TEvent : class, IEvent<TEvent>
+    public interface IEventHandler<in TEvent> : IEventHandler where TEvent : class, IEvent, new()
     {
         /// <summary>
         /// Invoke services to deal with this <typeparamref name="TEvent"/>.

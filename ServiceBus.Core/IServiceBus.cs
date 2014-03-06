@@ -22,6 +22,11 @@
         event Action<Exception, string> UnhandledExceptionOccurs;
 
         /// <summary>
+        /// An event raised when an <see cref="IEvent"/> is published on the <see cref="IServiceBus"/>.
+        /// </summary>
+        event Action<IEvent> EventPublished;
+
+        /// <summary>
         /// Gets the <see cref="IPeer"/>s that are known to the <see cref="IServiceBus"/>.
         /// </summary>
         IEnumerable<IPeer> Peers { get; }
@@ -42,6 +47,11 @@
         ILog Log { get; }
 
         /// <summary>
+        /// Gets the <see cref="IEventHandler"/>s subscriptions.
+        /// </summary>
+        EventSubscriptionDictionary Subscriptions { get; }
+
+        /// <summary>
         /// Directly send an <paramref name="message"/> to a given <paramref name="peer"/>.
         /// </summary>
         /// <typeparam name="TMessage">The type of the <see cref="IMessage"/> to send.</typeparam>
@@ -56,7 +66,7 @@
         /// <typeparam name="TEvent">The type of <see cref="IEvent"/> to raise.</typeparam>
         /// <param name="event">The event data to publish.</param>
         /// <returns>An awaitable object representing the publish operation.</returns>
-        Task PublishAsync<TEvent>(TEvent @event) where TEvent : class, IEvent<TEvent>, new();
+        Task PublishAsync<TEvent>(TEvent @event) where TEvent : class, IEvent, new();
 
         /// <summary>
         /// Register an instance of an <see cref="IEventHandler{TEvent}"/> to the <see cref="IServiceBus"/> so it can handle a <typeparamref name="TEvent"/>.
@@ -64,7 +74,7 @@
         /// <typeparam name="TEvent">The type of event the <paramref name="eventHandler"/> handles.</typeparam>
         /// <param name="eventHandler">The <see cref="IEventHandler{TEvent}"/> to register.</param>
         /// <returns>The <see cref="IServiceBus"/>.</returns>
-        IServiceBus Subscribe<TEvent>(IEventHandler<TEvent> eventHandler) where TEvent : class, IEvent<TEvent>, new();
+        IServiceBus Subscribe<TEvent>(IEventHandler<TEvent> eventHandler) where TEvent : class, IEvent, new();
 
         /// <summary>
         /// Transmit all queued messages to the given <paramref name="peer"/>.
@@ -81,10 +91,14 @@
         Task<IServiceBus> WithPeerAsync(Uri peer);
 
         /// <summary>
-        /// Register an <see cref="IEndpoint"/> to the <see cref="IServiceBus"/>.
+        /// Register an <see cref="IMessageHandler"/> to the <see cref="IServiceBus"/>.
         /// </summary>
-        /// <param name="endpoint">The <see cref="IEndpoint"/> to register.</param>
+        /// <param name="messageHandler">The <see cref="IMessageHandler"/> to register.</param>
         /// <returns>The <see cref="IServiceBus"/>.</returns>
-        IServiceBus WithLocalEndpoint(IEndpoint endpoint);
+        /// <typeparam name="TMessage">
+        /// The type of <see cref="IMessage"/> the <see cref="IMessageHandler"/> is being registered too.
+        /// </typeparam>
+        IServiceBus WithMessageHandler<TMessage>(IMessageHandler<TMessage> messageHandler) 
+            where TMessage : class, IMessage, new();
     }
 }

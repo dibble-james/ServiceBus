@@ -10,7 +10,7 @@
     /// A service bus system event to register a peer to it's own known peer network.  This class cannot be inherited.
     /// </summary>
     [Serializable]
-    public sealed class PeerConnectedEvent : EventBase<PeerConnectedEvent>
+    public sealed class PeerConnectedEvent : EventBase
     {
         /// <summary>
         /// A signature for the <see cref="PeerConnectedEvent"/>.

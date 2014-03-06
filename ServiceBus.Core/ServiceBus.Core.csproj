@@ -74,10 +74,12 @@
     <Compile Include="Core\EventHandlers\PeerConnectedEventHandler.cs" />
     <Compile Include="Core\EventHandlers\LoggingEventHandler.cs" />
     <Compile Include="Event\EventBase.cs" />
+    <Compile Include="Event\EventSubscriptionDictionary.cs" />
+    <Compile Include="Event\EventSubscrption.cs" />
     <Compile Include="Event\IEvent.cs" />
     <Compile Include="Event\IEventHandler.cs" />
+    <Compile Include="Event\IEventSubscrption.cs" />
     <Compile Include="GlobalSuppressions.cs" />
-    <Compile Include="IEndpoint.cs" />
     <Compile Include="IPeer.cs" />
     <Compile Include="IServiceBus.cs" />
     <Compile Include="Messaging\IMessage.cs" />

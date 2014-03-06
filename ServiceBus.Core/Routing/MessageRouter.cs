@@ -2,24 +2,74 @@
 {
     using System;
     using System.Collections.Generic;
+    using System.Collections.ObjectModel;
     using System.Linq;
     using System.Reflection;
     using System.Threading.Tasks;
     using ServiceBus.Event;
     using ServiceBus.Messaging;
+    using ServiceBus.Queueing;
 
     internal class MessageRouter
     {
-        private readonly IEnumerable<IEndpoint> _endpoints;
-        private readonly IEnumerable<IEventHandler> _eventHandlers;
+        private readonly ICollection<IPeer> _peers;
+        private readonly object _peersLock;
 
-        internal MessageRouter(IEnumerable<IEndpoint> endpoints, IEnumerable<IEventHandler> eventHandlers)
+        private readonly ICollection<IMessageHandler> _messageHandlers;
+        private readonly object _messageHandlersLock;
+
+        private readonly EventSubscriptionDictionary _subscriptionDictionary;
+        private readonly IQueueManager _queueManager;
+
+        internal MessageRouter(IQueueManager queueManager)
         {
-            this._endpoints = endpoints;
-            this._eventHandlers = eventHandlers;
+            this._queueManager = queueManager;
+            this._subscriptionDictionary = new EventSubscriptionDictionary();
+
+            this._messageHandlers = new Collection<IMessageHandler>();
+            this._messageHandlersLock = new object();
+
+            this._peersLock = new object();
+            this._peers = new Collection<IPeer>();
+        }
+        
+        internal ICollection<IPeer> Peers
+        {
+            get
+            {
+                lock (this._peersLock)
+                {
+                    return this._peers;   
+                }
+            }
         }
 
-        internal async void RouteMessageAsync(IMessage message)
+        internal ICollection<IMessageHandler> MessageHandlers
+        {
+            get
+            {
+                lock (this._messageHandlersLock)
+                {
+                    return this._messageHandlers;
+                }
+            }
+        }
+
+        internal EventSubscriptionDictionary Subscriptions
+        {
+            get
+            {
+                return this._subscriptionDictionary;
+            }
+        }
+
+        internal async Task PublishEvent<TEvent>(TEvent @event) 
+            where TEvent : class, IEvent
+        {
+            await Task.WhenAll(this.Peers.Select(p => this._queueManager.EnqueueAsync(p, @event)));
+        }
+
+        internal async Task RouteMessageAsync(IMessage message)
         {
             if (message is IEvent)
             {
@@ -42,7 +92,7 @@
 
         private async Task HandleMessage<TMessage>(TMessage message) where TMessage : class, IMessage
         {
-            var handlingTasks = this._endpoints
+            var handlingTasks = this.MessageHandlers
                     .OfType<IMessageHandler<TMessage>>()
                     .Select(mh => mh.ProcessMessageAsync(message));
 
@@ -59,15 +109,11 @@
             await Task.Factory.StartNew(() => handleEventGeneric.Invoke(this, new object[] { @event }));
         }
 
-        private async Task HandleEvent<TEvent>(TEvent @event) where TEvent : class, IEvent<TEvent>
+        private async Task HandleEvent<TEvent>(TEvent @event) where TEvent : class, IEvent
         {
-            foreach (var eventHandler in this._eventHandlers.OfType<IEventHandler<TEvent>>())
-            {
-                var handlerPointer = eventHandler;
-                @event.EventRaised += e => handlerPointer.HandleAsync(e);
-            }
+            var subscription = this._subscriptionDictionary.GetEventSubscrption<TEvent>();
 
-            await @event.RaiseLocalAsync();
+            await subscription.RaiseLocalAsync(@event);
         }
     }
 }

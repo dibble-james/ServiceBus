@@ -77,6 +77,8 @@ namespace TestHarness2
                                         { HelloEvent.HelloEventType, typeof(HelloEvent) }
                                     };
 
+            var messageHandler = new HelloMessageHandler();
+
             var serviceBus =
                 ServiceBusBuilder.Configure()
                     .WithLogger(logger)
@@ -84,8 +86,9 @@ namespace TestHarness2
                     .WithHttpTransport(new JsonMessageSerialiser(messageDictionary))
                     .AsMvcServiceBus(RouteTable.Routes)
                     .Build()
-                        .WithLocalEndpoint(new HelloMessageHandler())
-                        .WithLocalEndpoint(new GoodbyeMessageHandler())
+                        .WithMessageHandler<HelloMessage>(messageHandler)
+                        .WithMessageHandler<GoodbyeMessage>(messageHandler)
+                        .WithMessageHandler(new GoodbyeMessageHandler())
                         .Subscribe(new HelloEventHandler())
                         .WithPeerAsync(new Uri("http://localhost:55001"));
 

@@ -19,8 +19,6 @@
         public MessageTypeDictionary()
         {
             this._types = new Dictionary<string, Type>();
-
-            this.RegisterSystemEvents();
         }
 
         /// <summary>
@@ -235,11 +233,6 @@
         public bool TryGetValue(string key, out Type value)
         {
             return this._types.TryGetValue(key, out value);
-        }
-
-        private void RegisterSystemEvents()
-        {
-            this._types.Add(PeerConnectedEvent.PeerConnectedEventMessageType, typeof(PeerConnectedEvent));
         }
     }
 }

@@ -2,8 +2,6 @@
 {
     using System;
     using System.Collections.Generic;
-    using System.Collections.ObjectModel;
-    using System.Linq;
     using System.Threading.Tasks;
 
     using log4net;
@@ -21,13 +19,7 @@
     /// </summary>
     internal sealed class Bus : IServiceBus
     {
-        private readonly ICollection<IPeer> _peers;
-        private readonly object _peersLock;
-        private readonly ICollection<IEndpoint> _endpoints;
-        private readonly object _endpointsLock;
         private readonly ITransporter _transport;
-        private readonly ICollection<IEventHandler> _eventHandlers;
-        private readonly object _eventHandlersLock;
         private readonly IQueueManager _queueManager;
         private readonly MessageRouter _messageRouter;
         private readonly ILog _logger;
@@ -49,37 +41,19 @@
             ILog log)
         {
             this._disposed = false;
-
-            this._peersLock = new object();
-            this._endpointsLock = new object();
-            this._eventHandlersLock = new object();
-
+            
             this.PeerAddress = hostAddress;
-
-            this._endpoints = new Collection<IEndpoint>();
-            this._eventHandlers = new Collection<IEventHandler>();
-            this._peers = new Collection<IPeer>();
 
             this._transport = transporter;
             this._queueManager = queueManager;
-            this._messageRouter = new MessageRouter(this.LocalEndpoints, this.EventHandlers);
+            this._messageRouter = new MessageRouter(this._queueManager);
 
             this._logger = log;
             this._loggingEventHandler = new LoggingEventHandler(this);
 
             this.RegisterSystemEventHandlers();
 
-            this._queueManager.MessageQueued += m => this._transport.SendMessageAsync(m.Peer, m);
-
-            this._transport.MessageSent += this._queueManager.Dequeue;
-            this._transport.MessageSent += this._loggingEventHandler.LogMessageSent;
-
-            this._transport.MessageRecieved += this._messageRouter.RouteMessageAsync;
-            this._transport.MessageRecieved += this._loggingEventHandler.LogMessageRecieved;
-
-            this._transport.MessageFailedToSend += this._loggingEventHandler.LogMessageFailedToSend;
-
-            this.UnhandledExceptionOccurs += this._loggingEventHandler.LogGeneralFailure;
+            this.RegisterInternalEvents();
         }
 
         /// <summary>
@@ -89,10 +63,15 @@
         public event Action<Exception, string> UnhandledExceptionOccurs;
 
         /// <summary>
+        /// An event raised when an <see cref="IEvent"/> is published on the <see cref="IServiceBus"/>.
+        /// </summary>
+        public event Action<IEvent> EventPublished;
+
+        /// <summary>
         /// Gets the <see cref="System.Uri"/> of the location of the <see cref="IPeer"/>.
         /// </summary>
         public Uri PeerAddress { get; private set; }
-        
+
         /// <summary>
         /// Gets the <see cref="IPeer"/>s that are known to the <see cref="IServiceBus"/>.
         /// </summary>
@@ -100,7 +79,7 @@
         {
             get
             {
-                return this.RegisteredPeers;
+                return this._messageRouter.Peers;
             }
         }
 
@@ -137,36 +116,14 @@
             }
         }
 
-        private ICollection<IPeer> RegisteredPeers
+        /// <summary>
+        /// Gets the <see cref="IEventHandler"/>s subscriptions.
+        /// </summary>
+        public EventSubscriptionDictionary Subscriptions
         {
             get
             {
-                lock (this._peersLock)
-                {
-                    return this._peers;
-                }
-            }
-        }
-
-        private ICollection<IEndpoint> LocalEndpoints
-        {
-            get
-            {
-                lock (this._endpointsLock)
-                {
-                    return this._endpoints;
-                }
-            }
-        }
-
-        private ICollection<IEventHandler> EventHandlers
-        {
-            get
-            {
-                lock (this._eventHandlersLock)
-                {
-                    return this._eventHandlers;
-                }
+                return this._messageRouter.Subscriptions;
             }
         }
 
@@ -187,7 +144,7 @@
                 await this._queueManager.EnqueueAsync(peer, message);
             }
             catch (Exception ex)
-            {   
+            {
                 this.RaiseUnahndledExceptionEvent(ex, ExpressionExtensions.MethodName(() => this.SendAsync<TMessage>(null, null)));
                 throw;
             }
@@ -199,27 +156,13 @@
         /// <typeparam name="TEvent">The type of <see cref="IEvent"/> to raise.</typeparam>
         /// <param name="event">The event data to publish.</param>
         /// <returns>An awaitable object representing the publish operation.</returns>
-        public async Task PublishAsync<TEvent>(TEvent @event) where TEvent : class, IEvent<TEvent>, new()
+        public async Task PublishAsync<TEvent>(TEvent @event) where TEvent : class, IEvent, new()
         {
             Argument.CannotBeNull(@event, "event", "The event to publish cannot be null");
 
             try
             {
-                foreach (var eventHandler in this.EventHandlers.OfType<IEventHandler<TEvent>>())
-                {
-                    var eventHandlerPointer = eventHandler;
-
-                    @event.EventRaised += e => eventHandlerPointer.HandleAsync(e);
-                }
-
-                var handleEventLocallyTask = @event.RaiseLocalAsync();
-
-                var raiseEventToPeerTasks =
-                    this.RegisteredPeers.Select(p => this._queueManager.EnqueueAsync(p, @event));
-
-                await Task.WhenAll(raiseEventToPeerTasks);
-
-                await handleEventLocallyTask;
+                await Task.Factory.StartNew(() => this.EventPublished(@event));
             }
             catch (Exception ex)
             {
@@ -234,13 +177,13 @@
         /// <typeparam name="TEvent">The type of event the <paramref name="eventHandler"/> handles.</typeparam>
         /// <param name="eventHandler">The <see cref="IEventHandler{TEvent}"/> to register.</param>
         /// <returns>The <see cref="IServiceBus"/>.</returns>
-        public IServiceBus Subscribe<TEvent>(IEventHandler<TEvent> eventHandler) where TEvent : class, IEvent<TEvent>, new()
+        public IServiceBus Subscribe<TEvent>(IEventHandler<TEvent> eventHandler) where TEvent : class, IEvent, new()
         {
             Argument.CannotBeNull(eventHandler, "eventHandler", "To subscribe to an event, the event handler cannot be null.");
 
             try
             {
-                this.EventHandlers.Add(eventHandler);
+                this.Subscriptions.Subscribe(eventHandler);
 
                 return this;
             }
@@ -300,11 +243,10 @@
                     newPeer,
                     new PeerConnectedEvent
                     {
-                        ConnectedPeer =
-                        new Peer(this.PeerAddress)
+                        ConnectedPeer = new Peer(this.PeerAddress)
                     });
 
-                this.RegisteredPeers.Add(newPeer);
+                this._messageRouter.Peers.Add(newPeer);
 
                 await registerWithPeerTask;
 
@@ -318,23 +260,27 @@
         }
 
         /// <summary>
-        /// Register an <see cref="IEndpoint"/> to the <see cref="IServiceBus"/>.
+        /// Register an <see cref="IMessageHandler"/> to the <see cref="IServiceBus"/>.
         /// </summary>
-        /// <param name="endpoint">The <see cref="IEndpoint"/> to register.</param>
+        /// <param name="messageHandler">The <see cref="IMessageHandler"/> to register.</param>
         /// <returns>The <see cref="IServiceBus"/>.</returns>
-        public IServiceBus WithLocalEndpoint(IEndpoint endpoint)
+        /// <typeparam name="TMessage">
+        /// The type of <see cref="IMessage"/> the <see cref="IMessageHandler"/> is being registered too.
+        /// </typeparam>
+        public IServiceBus WithMessageHandler<TMessage>(IMessageHandler<TMessage> messageHandler) 
+            where TMessage : class, IMessage, new()
         {
-            Argument.CannotBeNull(endpoint, "endpoint", "When registering an endpoint it cannot be null.");
+            Argument.CannotBeNull(messageHandler, "messageHandler", "When registering an message handler cannot be null.");
 
             try
             {
-                this.LocalEndpoints.Add(endpoint);
+                this._messageRouter.MessageHandlers.Add(messageHandler);
 
                 return this;
             }
             catch (Exception ex)
             {
-                this.RaiseUnahndledExceptionEvent(ex, ExpressionExtensions.MethodName(() => this.WithLocalEndpoint(null)));
+                this.RaiseUnahndledExceptionEvent(ex, ExpressionExtensions.MethodName(() => this.WithMessageHandler<TMessage>(null)));
                 throw;
             }
         }
@@ -356,6 +302,26 @@
             this.Subscribe(this._loggingEventHandler);
         }
 
+        private void RegisterInternalEvents()
+        {
+            this.EventPublished += async e => await this._messageRouter.RouteMessageAsync(e);
+            this.EventPublished += async e => await this._messageRouter.PublishEvent(e);
+
+            this._queueManager.MessageQueued += async m => await this._transport.SendMessageAsync(m.Peer, m);
+
+            this._transport.MessageSent += this._queueManager.Dequeue;
+            this._transport.MessageSent += this._loggingEventHandler.LogMessageSent;
+
+            this._transport.MessageRecieved += async m => await this._messageRouter.RouteMessageAsync(m);
+            this._transport.MessageRecieved += this._loggingEventHandler.LogMessageRecieved;
+
+            this._transport.MessageFailedToSend += this._loggingEventHandler.LogMessageFailedToSend;
+
+            this.Serialiser.UnrecognisedMessageReceived += this._loggingEventHandler.LogUnrecognisedMessage;
+
+            this.UnhandledExceptionOccurs += this._loggingEventHandler.LogGeneralFailure;
+        }
+
         private void RaiseUnahndledExceptionEvent(Exception ex, string methodName)
         {
             if (this.UnhandledExceptionOccurs != null)
@@ -374,16 +340,6 @@
             this._queueManager.Dispose();
 
             this._transport.Dispose();
-
-            foreach (var eventHandler in this.EventHandlers.OfType<IDisposable>())
-            {
-                eventHandler.Dispose();
-            }
-
-            foreach (var localEndpoint in this.LocalEndpoints.OfType<IDisposable>())
-            {
-                localEndpoint.Dispose();
-            }
 
             this._disposed = true;
         }

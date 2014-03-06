@@ -24,14 +24,12 @@
 
             this._databasePath = Path.Combine(storeDirectory, "queue.db40");
 
-            this._queuePersistence = new Lazy<IObjectContainer>(() => {
-                return Db4oEmbedded.OpenFile(this._databasePath);
-            });
+            this._queuePersistence = new Lazy<IObjectContainer>(() => Db4oEmbedded.OpenFile(this._databasePath));
         }
 
         public event Action<QueuedMessage> MessageQueued;
 
-        public async Task EnqueueAsync<TMessage>(IPeer peer, TMessage message) where TMessage : class, IMessage, new()
+        public async Task EnqueueAsync<TMessage>(IPeer peer, TMessage message) where TMessage : class, IMessage
         {
             var queuedMessage = new QueuedMessage { QueuedAt = DateTime.Now, Peer = peer, Message = message, HasSent = false };
 
@@ -126,10 +124,7 @@
 
                 this._queuePersistence.Value.Dispose();
 
-                this._queuePersistence = new Lazy<IObjectContainer>(() =>
-                {
-                    return Db4oEmbedded.OpenFile(this._databasePath);
-                });
+                this._queuePersistence = new Lazy<IObjectContainer>(() => Db4oEmbedded.OpenFile(this._databasePath));
             }
         }
     }

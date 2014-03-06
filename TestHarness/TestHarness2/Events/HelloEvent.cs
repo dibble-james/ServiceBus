@@ -10,7 +10,7 @@ namespace TestHarness2.Events
 
     using ServiceBus.Event;
 
-    public class HelloEvent : EventBase<HelloEvent>
+    public class HelloEvent : EventBase
     {
         public const string HelloEventType = "HelloEvent";
 

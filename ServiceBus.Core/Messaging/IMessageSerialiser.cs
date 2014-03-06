@@ -1,10 +1,18 @@
 ﻿namespace ServiceBus.Messaging
 {
+    using System;
+
     /// <summary>
     /// Implementing classes define methods to transform message data to or from raw strings.
     /// </summary>
     public interface IMessageSerialiser
     {
+        /// <summary>
+        /// An event raised when the <see cref="IMessageSerialiser"/> encounters a message
+        /// not registered to the <see cref="MessageTypeDictionary"/>.
+        /// </summary>
+        event Action<string> UnrecognisedMessageReceived;
+
         /// <summary>
         /// Gets the message type mappings.
         /// </summary>

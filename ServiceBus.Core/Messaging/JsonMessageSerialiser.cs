@@ -23,6 +23,12 @@
         }
 
         /// <summary>
+        /// An event raised when the <see cref="IMessageSerialiser"/> encounters a message
+        /// not registered to the <see cref="IMessageSerialiser.MessageTypeDictionary"/>.
+        /// </summary>
+        public event Action<string> UnrecognisedMessageReceived;
+
+        /// <summary>
         /// Gets the message type mappings.
         /// </summary>
         public MessageTypeDictionary MessageTypeDictionary
@@ -46,7 +52,10 @@
 
             if (!this._messageTypeDictionary.ContainsKey(messageTypeName))
             {
-                return null;
+                if (this.UnrecognisedMessageReceived != null)
+                {
+                    this.UnrecognisedMessageReceived(messageTypeName);
+                }
             }
 
             var messageType = this._messageTypeDictionary[messageTypeName];

@@ -98,6 +98,17 @@ namespace ServiceBus.Core.EventHandlers
             this._serviceBus.Log.Error(message);
         }
 
+        internal void LogUnrecognisedMessage(string messageTypeName)
+        {
+            var message = string.Format(
+                CultureInfo.CurrentCulture,
+                "A message of type [{0}] was received at [{1}].",
+                messageTypeName,
+                DateTime.Now);
+
+            this._serviceBus.Log.Error(message);
+        }
+
         private Exception GetInnerMostException(Exception ex)
         {
             return ex.InnerException == null ? ex : this.GetInnerMostException(ex.InnerException);
