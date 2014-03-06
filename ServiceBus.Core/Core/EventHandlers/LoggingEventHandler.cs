@@ -109,6 +109,17 @@ namespace ServiceBus.Core.EventHandlers
             this._serviceBus.Log.Error(message);
         }
 
+        internal void LogEventPublished(IEvent @event)
+        {
+            var message = string.Format(
+                CultureInfo.CurrentCulture,
+                "A event of type [{0}] was published at [{1}].",
+                @event.MessageType,
+                DateTime.Now);
+
+            this._serviceBus.Log.Info(message);
+        }
+
         private Exception GetInnerMostException(Exception ex)
         {
             return ex.InnerException == null ? ex : this.GetInnerMostException(ex.InnerException);

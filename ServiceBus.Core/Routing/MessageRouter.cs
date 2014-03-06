@@ -63,7 +63,7 @@
             }
         }
 
-        internal async Task PublishEvent<TEvent>(TEvent @event) 
+        internal async Task PublishEventAsync<TEvent>(TEvent @event) 
             where TEvent : class, IEvent
         {
             await Task.WhenAll(this.Peers.Select(p => this._queueManager.EnqueueAsync(p, @event)));

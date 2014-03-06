@@ -304,8 +304,9 @@
 
         private void RegisterInternalEvents()
         {
+            this.EventPublished += this._loggingEventHandler.LogEventPublished;
             this.EventPublished += async e => await this._messageRouter.RouteMessageAsync(e);
-            this.EventPublished += async e => await this._messageRouter.PublishEvent(e);
+            this.EventPublished += async e => await this._messageRouter.PublishEventAsync(e);
 
             this._queueManager.MessageQueued += async m => await this._transport.SendMessageAsync(m.Peer, m);
 
