@@ -29,9 +29,9 @@
 
         public event Action<QueuedMessage> MessageQueued;
 
-        public async Task EnqueueAsync<TMessage>(IPeer peer, TMessage message) where TMessage : class, IMessage
+        public async Task EnqueueAsync<TMessage>(Envelope<TMessage> envelope) where TMessage : class, IMessage
         {
-            var queuedMessage = new QueuedMessage { QueuedAt = DateTime.Now, Peer = peer, Message = message, HasSent = false };
+            var queuedMessage = new QueuedMessage { QueuedAt = DateTime.Now, Envelope = envelope, HasSent = false };
 
             this._queuePersistence.Value.Store(queuedMessage);
 
@@ -48,16 +48,19 @@
         public void Dequeue(QueuedMessage message)
         {
             var queuedMessage = this._queuePersistence.Value.AsQueryable<QueuedMessage>()
-                            .FirstOrDefault(qm => qm.QueuedAt == message.QueuedAt && qm.Peer == message.Peer && !message.HasSent);
+                            .FirstOrDefault(
+                                qm => qm.QueuedAt == message.QueuedAt 
+                                   && qm.Envelope.Recipient == message.Envelope.Recipient 
+                                   && !message.HasSent);
 
             if (queuedMessage == null)
             {
                 throw new InvalidOperationException(
                     string.Format(
                         "Message for peer [{0}] queued at [{1}] with message type [{2}] has already been dequeued",
-                        message.Peer.PeerAddress.AbsoluteUri,
+                        message.Envelope.Recipient.PeerAddress.AbsoluteUri,
                         message.QueuedAt,
-                        message.Message.MessageType));
+                        message.Envelope.Message.MessageType));
             }
 
             queuedMessage.HasSent = true;
@@ -78,8 +81,8 @@
                     .FirstOrDefault(
                     qm => 
                            !qm.HasSent 
-                        && qm.Peer.PeerAddress == peer.PeerAddress
-                        && !(qm.Message is PeerConnectedEvent));
+                        && qm.Envelope.Recipient.PeerAddress == peer.PeerAddress
+                        && !(qm.Envelope.Message is PeerConnectedEvent));
 
             this.RecreateQueuePersistence();
 
@@ -94,9 +97,9 @@
                     .ThenBy(qm => qm.QueuedAt)
                     .FirstOrDefault(
                         qm =>    !qm.HasSent 
-                              && qm.Peer.PeerAddress == peer.PeerAddress
+                              && qm.Envelope.Recipient.PeerAddress == peer.PeerAddress
                               && qm.QueuedAt < messageQueuedBefore
-                              && !(qm.Message is PeerConnectedEvent));
+                              && !(qm.Envelope.Message is PeerConnectedEvent));
 
             this.RecreateQueuePersistence();
 

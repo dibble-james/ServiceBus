@@ -37,7 +37,7 @@
         /// <summary>
         /// An event raised when an <see cref="IMessage"/> is received by the <see cref="ITransporter"/>.
         /// </summary>
-        public event Action<IMessage> MessageRecieved;
+        public event Action<Envelope> MessageRecieved;
 
         /// <summary>
         /// An event raised when an <see cref="IMessage"/> is successfully exported.
@@ -63,19 +63,17 @@
         /// <summary>
         /// Transport a <see cref="QueuedMessage"/>.
         /// </summary>
-        /// <typeparam name="TMessage">The type of <see cref="IMessage"/> to transport.</typeparam>
-        /// <param name="peerToRecieve">The <see cref="IPeer"/> that should receive the <paramref name="message"/>.</param>
         /// <param name="message">The <see cref="IMessage"/> to transport.</param>
         /// <returns>An awaitable object representing the send operation.</returns>
-        public async Task SendMessageAsync<TMessage>(IPeer peerToRecieve, TMessage message) where TMessage : QueuedMessage
+        public async Task SendMessageAsync(QueuedMessage message)
         {
             const string action = "message";
 
-            var fullActionPath = new Uri(peerToRecieve.PeerAddress, Path.Combine(ActionBase, action));
+            var fullActionPath = new Uri(message.Envelope.Recipient.PeerAddress, Path.Combine(ActionBase, action));
 
             try
             {
-                var result = await this.ExecutePostRequest(fullActionPath, message.Message);
+                var result = await this.ExecutePostRequest(fullActionPath, message.Envelope);
 
                 if (result.IsSuccessStatusCode && this.MessageSent != null)
                 {
@@ -124,8 +122,7 @@
             this._disposed = true;
         }
 
-        private Task<HttpResponseMessage> ExecutePostRequest<TMessageOut>(Uri address, TMessageOut messageToPost)
-            where TMessageOut : class, IMessage
+        private Task<HttpResponseMessage> ExecutePostRequest(Uri address, Envelope messageToPost)
         {
             var serialisedMessage = this.Serialiser.Serialise(messageToPost);
 

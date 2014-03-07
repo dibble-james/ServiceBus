@@ -50,13 +50,14 @@ namespace ServiceBus.Core.EventHandlers
            this._serviceBus.Log.Info(message);
         }
 
-        internal void LogMessageRecieved(IMessage messageRecieved)
+        internal void LogMessageRecieved(Envelope envelope)
         {
             var message = string.Format(
                 CultureInfo.CurrentCulture, 
-                "Message of type [{0}] Received at [{1}]", 
-                messageRecieved.MessageType, 
-                DateTime.Now);
+                "Message of type [{0}] Received at [{1}] from [{2}]", 
+                envelope.Message.MessageType, 
+                DateTime.Now,
+                envelope.Sender.PeerAddress);
 
             this._serviceBus.Log.Info(message);
         }
@@ -66,8 +67,8 @@ namespace ServiceBus.Core.EventHandlers
             var message = string.Format(
                 CultureInfo.CurrentCulture,
                 "Message of type [{0}] was sent to [{1}] at [{2}]",
-                messageSent.Message.MessageType,
-                messageSent.Peer.PeerAddress,
+                messageSent.Envelope.Message.MessageType,
+                messageSent.Envelope.Recipient.PeerAddress,
                 DateTime.Now);
 
             this._serviceBus.Log.Info(message);
@@ -78,8 +79,8 @@ namespace ServiceBus.Core.EventHandlers
             var message = string.Format(
                 CultureInfo.CurrentCulture,
                 "Message of type [{0}] could not be sent to [{1}] at [{2}].  Reason [{3}]",
-                failedMessage.Message.MessageType,
-                failedMessage.Peer.PeerAddress,
+                failedMessage.Envelope.Message.MessageType,
+                failedMessage.Envelope.Recipient.PeerAddress,
                 DateTime.Now,
                 this.GetInnerMostException(ex).Message);
 
@@ -98,13 +99,14 @@ namespace ServiceBus.Core.EventHandlers
             this._serviceBus.Log.Error(message);
         }
 
-        internal void LogUnrecognisedMessage(string messageTypeName)
+        internal void LogUnrecognisedMessage(string messageTypeName, string sender)
         {
             var message = string.Format(
                 CultureInfo.CurrentCulture,
-                "A message of type [{0}] was received at [{1}].",
+                "A message of type [{0}] was received at [{1}] from [{2}].",
                 messageTypeName,
-                DateTime.Now);
+                DateTime.Now,
+                sender);
 
             this._serviceBus.Log.Error(message);
         }

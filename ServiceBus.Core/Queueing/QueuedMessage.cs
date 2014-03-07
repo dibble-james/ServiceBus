@@ -14,14 +14,9 @@
         public DateTime QueuedAt { get; set; }
 
         /// <summary>
-        /// Gets or sets the recipient of the <see cref="IMessage"/>.
-        /// </summary>
-        public IPeer Peer { get; set; }
-
-        /// <summary>
         /// Gets or sets the message data that was queued.
         /// </summary>
-        public IMessage Message { get; set; }
+        public Envelope Envelope { get; set; }
 
         /// <summary>
         /// Gets or sets a value indicating whether the <see cref="QueuedMessage"/> has been

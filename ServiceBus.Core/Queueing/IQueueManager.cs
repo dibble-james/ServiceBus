@@ -19,10 +19,9 @@
         /// Persist an <see cref="IMessage"/> and raise <see cref="E:IQueueManager.MessageQueue"/>.
         /// </summary>
         /// <typeparam name="TMessage">The type of <see cref="IMessage"/> to queue.</typeparam>
-        /// <param name="peer">The peer that will receive the <see cref="IMessage"/>.</param>
-        /// <param name="message">The message to place into the queue.</param>
+        /// <param name="envelope">The message to place into the queue.</param>
         /// <returns>An awaitable object representing the enqueue operation.</returns>
-        Task EnqueueAsync<TMessage>(IPeer peer, TMessage message) where TMessage : class, IMessage;
+        Task EnqueueAsync<TMessage>(Envelope<TMessage> envelope) where TMessage : class, IMessage;
 
         /// <summary>
         /// Mark a message as sent.

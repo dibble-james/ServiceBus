@@ -60,7 +60,12 @@ namespace ServiceBus.Event
         {
             lock (this._subscriptionsLock)
             {
-                var subscription = this._subscrptions[typeof(TEvent)] as IEventSubscription<TEvent> ?? new EventSubscription<TEvent>();
+                if (!this._subscrptions.ContainsKey(typeof(TEvent)))
+                {
+                    this._subscrptions.Add(typeof(TEvent), new EventSubscription<TEvent>());
+                }
+
+                var subscription = (IEventSubscription<TEvent>)this._subscrptions[typeof(TEvent)];
 
                 subscription.EventRaised += e => eventHandler.HandleAsync(e);
             }

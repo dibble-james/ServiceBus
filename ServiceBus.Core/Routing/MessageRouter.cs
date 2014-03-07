@@ -12,6 +12,7 @@
 
     internal class MessageRouter
     {
+        private readonly IPeer _self;
         private readonly ICollection<IPeer> _peers;
         private readonly object _peersLock;
 
@@ -21,7 +22,7 @@
         private readonly EventSubscriptionDictionary _subscriptionDictionary;
         private readonly IQueueManager _queueManager;
 
-        internal MessageRouter(IQueueManager queueManager)
+        internal MessageRouter(IQueueManager queueManager, IPeer self)
         {
             this._queueManager = queueManager;
             this._subscriptionDictionary = new EventSubscriptionDictionary();
@@ -31,6 +32,8 @@
 
             this._peersLock = new object();
             this._peers = new Collection<IPeer>();
+
+            this._self = self;
         }
         
         internal ICollection<IPeer> Peers
@@ -66,18 +69,28 @@
         internal async Task PublishEventAsync<TEvent>(TEvent @event) 
             where TEvent : class, IEvent
         {
-            await Task.WhenAll(this.Peers.Select(p => this._queueManager.EnqueueAsync(p, @event)));
+            var routeMessageTask =
+                this.RouteMessageAsync(new Envelope<TEvent> { Message = @event, Recipient = this._self, Sender = this._self });
+
+            await Task.WhenAll(this.Peers.Select(peer => this._queueManager.EnqueueAsync(new Envelope<TEvent>
+                                                                                      {
+                                                                                          Message = @event, 
+                                                                                          Recipient = peer, 
+                                                                                          Sender = this._self
+                                                                                      })));
+
+            await routeMessageTask;
         }
 
-        internal async Task RouteMessageAsync(IMessage message)
+        internal async Task RouteMessageAsync(Envelope envelope)
         {
-            if (message is IEvent)
+            if (envelope.Message is IEvent)
             {
-                await this.HandleEvent(message as IEvent);
+                await this.HandleEvent(envelope.Message as IEvent);
                 return;
             }
 
-            await this.HandleMessage(message);
+            await this.HandleMessage(envelope.Message);
         }
 
         private async Task HandleMessage(IMessage message)
@@ -90,11 +103,11 @@
             await Task.Factory.StartNew(() => handleMessageGeneric.Invoke(this, new object[] { message }));
         }
 
-        private async Task HandleMessage<TMessage>(TMessage message) where TMessage : class, IMessage
+        private async Task HandleMessage<TMessage>(Envelope<TMessage> message) where TMessage : class, IMessage
         {
             var handlingTasks = this.MessageHandlers
                     .OfType<IMessageHandler<TMessage>>()
-                    .Select(mh => mh.ProcessMessageAsync(message));
+                    .Select(mh => mh.ProcessMessageAsync(message.Message));
 
             await Task.WhenAll(handlingTasks);
         }

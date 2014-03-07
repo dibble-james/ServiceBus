@@ -2,6 +2,7 @@
 {
     using System;
     using System.Collections.Generic;
+    using System.Runtime.Serialization;
     using System.Threading.Tasks;
 
     using log4net;
@@ -41,12 +42,12 @@
             ILog log)
         {
             this._disposed = false;
-            
+
             this.PeerAddress = hostAddress;
 
             this._transport = transporter;
             this._queueManager = queueManager;
-            this._messageRouter = new MessageRouter(this._queueManager);
+            this._messageRouter = new MessageRouter(this._queueManager, this);
 
             this._logger = log;
             this._loggingEventHandler = new LoggingEventHandler(this);
@@ -141,7 +142,12 @@
 
             try
             {
-                await this._queueManager.EnqueueAsync(peer, message);
+                await this._queueManager.EnqueueAsync(new Envelope<TMessage>
+                                                      {
+                                                          Message = message,
+                                                          Recipient = peer,
+                                                          Sender = this
+                                                      });
             }
             catch (Exception ex)
             {
@@ -212,7 +218,7 @@
                 while (message != null)
                 {
                     var messagePointer = message;
-                    sendMessageTasks.Add(Task.Factory.StartNew(() => this._transport.SendMessageAsync(peer, messagePointer)));
+                    sendMessageTasks.Add(Task.Factory.StartNew(() => this._transport.SendMessageAsync(messagePointer)));
 
                     message = this._queueManager.PeersNextMessageOrDefault(peer, message.QueuedAt);
                 }
@@ -240,10 +246,14 @@
                 var newPeer = new Peer(peer);
 
                 var registerWithPeerTask = this._queueManager.EnqueueAsync(
-                    newPeer,
-                    new PeerConnectedEvent
+                    new Envelope<PeerConnectedEvent>
                     {
-                        ConnectedPeer = new Peer(this.PeerAddress)
+                        Message = new PeerConnectedEvent
+                        {
+                            ConnectedPeer = new Peer(this.PeerAddress)
+                        },
+                        Recipient = newPeer,
+                        Sender = this
                     });
 
                 this._messageRouter.Peers.Add(newPeer);
@@ -267,7 +277,7 @@
         /// <typeparam name="TMessage">
         /// The type of <see cref="IMessage"/> the <see cref="IMessageHandler"/> is being registered too.
         /// </typeparam>
-        public IServiceBus WithMessageHandler<TMessage>(IMessageHandler<TMessage> messageHandler) 
+        public IServiceBus WithMessageHandler<TMessage>(IMessageHandler<TMessage> messageHandler)
             where TMessage : class, IMessage, new()
         {
             Argument.CannotBeNull(messageHandler, "messageHandler", "When registering an message handler cannot be null.");
@@ -305,10 +315,9 @@
         private void RegisterInternalEvents()
         {
             this.EventPublished += this._loggingEventHandler.LogEventPublished;
-            this.EventPublished += async e => await this._messageRouter.RouteMessageAsync(e);
             this.EventPublished += async e => await this._messageRouter.PublishEventAsync(e);
 
-            this._queueManager.MessageQueued += async m => await this._transport.SendMessageAsync(m.Peer, m);
+            this._queueManager.MessageQueued += async m => await this._transport.SendMessageAsync(m);
 
             this._transport.MessageSent += this._queueManager.Dequeue;
             this._transport.MessageSent += this._loggingEventHandler.LogMessageSent;
@@ -343,6 +352,15 @@
             this._transport.Dispose();
 
             this._disposed = true;
+        }
+
+        /// <summary>
+        /// Populates a <see cref="T:System.Runtime.Serialization.SerializationInfo"/> with the data needed to serialize the target object.
+        /// </summary>
+        /// <param name="info">The <see cref="T:System.Runtime.Serialization.SerializationInfo"/> to populate with data. </param><param name="context">The destination (see <see cref="T:System.Runtime.Serialization.StreamingContext"/>) for this serialization. </param><exception cref="T:System.Security.SecurityException">The caller does not have the required permission. </exception>
+        public void GetObjectData(SerializationInfo info, StreamingContext context)
+        {
+            info.AddValue("PeerAddress", this.PeerAddress);
         }
     }
 }

@@ -29,36 +29,36 @@ namespace TestHarness2.Controllers
                                                                                                                error.Message)
                                                                                                        });
 
-            this._serviceBus.Transporter.MessageFailedToSend += (error, message) => this.BroadCastLogEntry(new 
+            this._serviceBus.Transporter.MessageFailedToSend += (error, envelope) => this.BroadCastLogEntry(new 
                                                                                                            {
                                                                                                                Time = DateTime.Now.ToString("hh:mm:ss:fff"),
                                                                                                                Type = "danger",
                                                                                                                Message = string.Format(
                                                                                                                    CultureInfo.CurrentCulture,
                                                                                                                    "A [{0}] message could not be sent to [{1}]",
-                                                                                                                   message.Message.MessageType,
-                                                                                                                   message.Peer.PeerAddress.ToString())
+                                                                                                                   envelope.Envelope.Message.MessageType,
+                                                                                                                   envelope.Envelope.Recipient.PeerAddress.ToString())
                                                                                                            });
 
-            this._serviceBus.Transporter.MessageSent += message => this.BroadCastLogEntry(new
+            this._serviceBus.Transporter.MessageSent += envelope => this.BroadCastLogEntry(new
                                                                                           {
                                                                                               Time = DateTime.Now.ToString("hh:mm:ss:fff"),
                                                                                               Type = "info",
                                                                                               Message = string.Format(
                                                                                                   CultureInfo.CurrentCulture,
                                                                                                   "A [{0}] message has been sucessfully sent to [{1}]",
-                                                                                                  message.Message.MessageType,
-                                                                                                  message.Peer.PeerAddress.ToString())
+                                                                                                  envelope.Envelope.Message.MessageType,
+                                                                                                  envelope.Envelope.Recipient.PeerAddress.ToString())
                                                                                           });
 
-            this._serviceBus.Transporter.MessageRecieved += message => this.BroadCastLogEntry(new
+            this._serviceBus.Transporter.MessageRecieved += envelope => this.BroadCastLogEntry(new
                                                                                               {
                                                                                                   Time = DateTime.Now.ToString("hh:mm:ss:fff"),
                                                                                                   Type = "info",
                                                                                                   Message = string.Format(
                                                                                                       CultureInfo.CurrentCulture,
                                                                                                       "A [{0}] message has been recieved",
-                                                                                                      message.MessageType)
+                                                                                                      envelope.Message.MessageType)
                                                                                               });
         }
 

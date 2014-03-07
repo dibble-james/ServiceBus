@@ -14,7 +14,7 @@
         /// <summary>
         /// An event raised when an <see cref="IMessage"/> is received by the <see cref="ITransporter"/>.
         /// </summary>
-        event Action<IMessage> MessageRecieved;
+        event Action<Envelope> MessageRecieved;
 
         /// <summary>
         /// An event raised when an <see cref="IMessage"/> is successfully exported.
@@ -41,10 +41,8 @@
         /// <summary>
         /// Transport a <see cref="QueuedMessage"/>.
         /// </summary>
-        /// <typeparam name="TMessage">The type of <see cref="IMessage"/> to transport.</typeparam>
-        /// <param name="peerToRecieve">The <see cref="IPeer"/> that should receive the <paramref name="message"/>.</param>
         /// <param name="message">The <see cref="IMessage"/> to transport.</param>
         /// <returns>An awaitable object representing the send operation.</returns>
-        Task SendMessageAsync<TMessage>(IPeer peerToRecieve, TMessage message) where TMessage : QueuedMessage;
+        Task SendMessageAsync(QueuedMessage message);
     }
 }

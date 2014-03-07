@@ -11,7 +11,7 @@
         /// An event raised when the <see cref="IMessageSerialiser"/> encounters a message
         /// not registered to the <see cref="MessageTypeDictionary"/>.
         /// </summary>
-        event Action<string> UnrecognisedMessageReceived;
+        event Action<string, string> UnrecognisedMessageReceived;
 
         /// <summary>
         /// Gets the message type mappings.
@@ -23,14 +23,13 @@
         /// </summary>
         /// <param name="messageContent">The raw message content.</param>
         /// <returns>The concrete message data.</returns>
-        IMessage Deserialise(string messageContent);
+        Envelope Deserialise(string messageContent);
 
         /// <summary>
-        /// Transform a <typeparamref name="TMessage"/> into raw message data.
+        /// Transform an <see cref="Envelope"/> into raw message data.
         /// </summary>
-        /// <typeparam name="TMessage">The type of <see cref="IMessage"/> to transform.</typeparam>
         /// <param name="message">The message to transform.</param>
         /// <returns>The raw message data.</returns>
-        string Serialise<TMessage>(TMessage message) where TMessage : class, IMessage;
+        string Serialise(Envelope message);
     }
 }
