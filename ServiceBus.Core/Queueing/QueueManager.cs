@@ -14,7 +14,7 @@
     internal class QueueManager : IQueueManager
     {
         private readonly string _databasePath;
-        private Lazy<IObjectContainer> _queuePersistence;
+        private readonly Lazy<IObjectContainer> _queuePersistence;
 
         private bool _disposed;
                 
@@ -36,9 +36,7 @@
             this._queuePersistence.Value.Store(queuedMessage);
 
             await Task.Factory.StartNew(() => this._queuePersistence.Value.Commit());
-
-            this.RecreateQueuePersistence();
-
+            
             if (this.MessageQueued != null)
             {
                 await Task.Factory.StartNew(() => this.MessageQueued(queuedMessage));
@@ -50,7 +48,7 @@
             var queuedMessage = this._queuePersistence.Value.AsQueryable<QueuedMessage>()
                             .FirstOrDefault(
                                 qm => qm.QueuedAt == message.QueuedAt 
-                                   && qm.Envelope.Recipient == message.Envelope.Recipient 
+                                   && qm.Envelope.Recipient.PeerAddress == message.Envelope.Recipient.PeerAddress 
                                    && !message.HasSent);
 
             if (queuedMessage == null)
@@ -68,8 +66,6 @@
             this._queuePersistence.Value.Store(queuedMessage);
 
             this._queuePersistence.Value.Commit();
-
-            this.RecreateQueuePersistence();
         }
 
         public QueuedMessage PeersNextMessageOrDefault(IPeer peer)
@@ -83,9 +79,7 @@
                            !qm.HasSent 
                         && qm.Envelope.Recipient.PeerAddress == peer.PeerAddress
                         && !(qm.Envelope.Message is PeerConnectedEvent));
-
-            this.RecreateQueuePersistence();
-
+            
             return nextMessage;
         }
 
@@ -100,9 +94,7 @@
                               && qm.Envelope.Recipient.PeerAddress == peer.PeerAddress
                               && qm.QueuedAt < messageQueuedBefore
                               && !(qm.Envelope.Message is PeerConnectedEvent));
-
-            this.RecreateQueuePersistence();
-
+            
             return nextMessage;
         }
 
@@ -117,18 +109,6 @@
             }
 
             this._disposed = true;
-        }
-
-        private void RecreateQueuePersistence()
-        {
-            if (this._queuePersistence.IsValueCreated)
-            {
-                this._queuePersistence.Value.Close();
-
-                this._queuePersistence.Value.Dispose();
-
-                this._queuePersistence = new Lazy<IObjectContainer>(() => Db4oEmbedded.OpenFile(this._databasePath));
-            }
         }
     }
 }

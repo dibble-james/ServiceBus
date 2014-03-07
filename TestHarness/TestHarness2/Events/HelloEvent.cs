@@ -8,7 +8,6 @@ namespace TestHarness2.Events
     using System;
     using System.Runtime.Serialization;
 
-    using ServiceBus.Messaging;
     using ServiceBus.Event;
 
     public class HelloEvent : EventBase

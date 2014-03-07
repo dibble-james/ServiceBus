@@ -68,10 +68,15 @@
         }
 
         internal async Task PublishEventAsync<TEvent>(TEvent @event) 
-            where TEvent : class, IEvent
+            where TEvent : class, IEvent, new()
         {
             var routeMessageTask =
-                this.RouteMessageAsync(new Envelope<TEvent> { Message = @event, Recipient = this._self, Sender = this._self });
+                this.HandleMessageAsync(new Envelope<TEvent>
+                                       {
+                                           Message = @event, 
+                                           Recipient = this._self, 
+                                           Sender = this._self
+                                       });
 
             await Task.WhenAll(this.Peers.Select(peer => this._queueManager.EnqueueAsync(new Envelope<TEvent>
                                                                                       {
@@ -87,15 +92,20 @@
         {
             var handleMessageGeneric = this.GetType()
                 .GetMethods(BindingFlags.NonPublic | BindingFlags.Instance)
-                .First(m => m.Name == "HandleMessage" && m.IsGenericMethod)
+                .First(m => m.Name == "HandleMessageAsync" && m.IsGenericMethod)
                 .MakeGenericMethod(envelope.Message.GetType());
 
             await Task.Factory.StartNew(() => handleMessageGeneric.Invoke(this, new object[] { envelope }));
         }
 
-        private async Task HandleMessage<TMessage>(Envelope<TMessage> envelope) where TMessage : class, IMessage, new()
+        private async Task HandleMessageAsync<TMessage>(Envelope<TMessage> envelope) where TMessage : class, IMessage, new()
         {
             var subscription = this._subscriptionDictionary.GetMessageSubscrption<TMessage>();
+
+            if (subscription == null)
+            {
+                return;
+            }
 
             await subscription.RaiseMessageRaisedAsync(envelope);
         }

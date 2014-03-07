@@ -32,20 +32,20 @@ namespace ServiceBus.Messaging
         /// Retrieve the event subscriptions for a given type.
         /// </summary>
         /// <typeparam name="TMessage">The type of event to get the subscriptions for.</typeparam>
-        /// <returns>The <see cref="IMessageSubscription{TMessage}"/> for the given event.</returns>
+        /// <returns>
+        /// The <see cref="IMessageSubscription{TMessage}"/> for the given event or null if no subscription exists.
+        /// </returns>
         public IMessageSubscription<TMessage> GetMessageSubscrption<TMessage>() where TMessage : class, IMessage, new()
         {
             lock (this._subscriptionsLock)
             {
-                var subsciption = this._subscrptions[typeof(TMessage)] as IMessageSubscription<TMessage>;
-
-                if (subsciption != null)
+                if (!this._subscrptions.ContainsKey(typeof(TMessage)))
                 {
-                    return subsciption;
+                    return null;
                 }
-
-                subsciption = new MessageSubscrption<TMessage>();
-
+                
+                var subsciption = (IMessageSubscription<TMessage>)this._subscrptions[typeof(TMessage)];
+                
                 this._subscrptions.Add(typeof(TMessage), subsciption);
 
                 return subsciption;   

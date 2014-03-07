@@ -170,7 +170,11 @@
 
             try
             {
+                var publishTask = this._messageRouter.PublishEventAsync(@event);
+
                 await Task.Factory.StartNew(() => this.EventPublished(@event));
+
+                await publishTask;
             }
             catch (Exception ex)
             {
@@ -331,7 +335,6 @@
         private void RegisterInternalEvents()
         {
             this.EventPublished += this._loggingEventHandler.LogEventPublished;
-            this.EventPublished += async e => await this._messageRouter.PublishEventAsync(e);
 
             this._queueManager.MessageQueued += async m => await this._transport.SendMessageAsync(m);
 

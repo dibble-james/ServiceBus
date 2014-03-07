@@ -21,6 +21,7 @@ namespace TestHarness2
     using ServiceBus.Transport.Http.Configuration;
     using ServiceBus.Web.Mvc.Configuration;
 
+    using TestHarness1.Events;
     using TestHarness1.Messages;
 
     public static class Bootstrapper
@@ -47,7 +48,8 @@ namespace TestHarness2
         {
             var messageDictionary = new MessageTypeDictionary
                                     {
-                                        { MessageExtensions.MessageTypeSignature<HelloMessage>(), typeof(HelloMessage) }
+                                        { MessageExtensions.MessageTypeSignature<HelloMessage>(), typeof(HelloMessage) },
+                                        { MessageExtensions.MessageTypeSignature<HelloEvent>(), typeof(HelloEvent) }
                                     };
 
             var hierarchy = (Hierarchy)LogManager.GetRepository();
