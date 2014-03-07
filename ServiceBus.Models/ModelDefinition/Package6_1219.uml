@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<package xmlns:dm0="http://schemas.microsoft.com/VisualStudio/2008/DslTools/Core" xmlns:dm1="http://schemas.microsoft.com/dsltools/Kernel" xmlns:dm2="http://schemas.microsoft.com/dsltools/Component" xmlns:dm3="http://schemas.microsoft.com/dsltools/UseCase" xmlns:dm4="http://schemas.microsoft.com/dsltools/Activity" xmlns:dm5="http://schemas.microsoft.com/dsltools/Interaction" xmlns:dm6="http://schemas.microsoft.com/dsltools/UmlModelLibrary" xmlns:dm7="http://schemas.microsoft.com/dsltools/UmlDiagrams" xmlns:dm8="http://schemas.microsoft.com/dsltools/LogicalClassDesigner"
+<package xmlns:dm0="http://schemas.microsoft.com/VisualStudio/2008/DslTools/Core" xmlns:dm1="http://schemas.microsoft.com/dsltools/Kernel" xmlns:dm2="http://schemas.microsoft.com/dsltools/Component" xmlns:dm3="http://schemas.microsoft.com/dsltools/UseCase" xmlns:dm4="http://schemas.microsoft.com/dsltools/Activity" xmlns:dm5="http://schemas.microsoft.com/dsltools/Interaction" xmlns:dm6="http://schemas.microsoft.com/dsltools/UmlModelLibrary" xmlns:dm7="http://schemas.microsoft.com/dsltools/UmlDiagrams" xmlns:dm8="http://schemas.microsoft.com/VisualStudio/TeamArchitect/SequenceDesigner" xmlns:dm9="http://schemas.microsoft.com/dsltools/LogicalClassDesigner"
   dslVersion="1.0.0.0"
   Id="75bc3746-f97c-460f-b2e1-294b0a4bb089"
   name="Desktop"
@@ -429,14 +429,7 @@
               <operationHasOwnedParameters>
                 <parameter
                   Id="19a046a9-cd5c-4821-8211-cb4341aac2d4"
-                  direction="Return">
-                  <type_NamedElement>
-                    <interfaceMoniker
-                      Id="07840a33-b4aa-499a-9ac7-89d157106ff4"
-                      LastKnownName="IHostApplicationConfiguration"
-                      LastKnownLocation="Package1_1218.uml" />
-                  </type_NamedElement>
-                </parameter>
+                  direction="Return" />
               </operationHasOwnedParameters>
               <operationHasOwnedParameters>
                 <parameter
@@ -449,12 +442,6 @@
                       handle="viewcode://./CodeSchema_Parameter?Assembly%3D&quot;file:%2F%2F%2FC:%2FGIT%2FService Bus%2FDebug%2FServiceBus.Desktop.dll&quot; Namespace%3DServiceBus.Desktop Type%3DServiceBusBuilderExtensions Member%3D(Name%3DAsDesktopApplication OverloadingParameters%3D[(Assembly%3D&quot;file:%2F%2F%2FC:%2FGIT%2FService Bus%2FDebug%2FServiceBus.Core.dll&quot; Namespace%3DServiceBus.Configuration Type%3DITransportConfiguration)]) ParameterIdentifier%3DtransportConfiguration"
                       tag="ViewCode" />
                   </referencesInternal>
-                  <type_NamedElement>
-                    <interfaceMoniker
-                      Id="9fbfb762-9c81-44b7-a3df-398d6f06399f"
-                      LastKnownName="ITransportConfiguration"
-                      LastKnownLocation="Package1_1218.uml" />
-                  </type_NamedElement>
                 </parameter>
               </operationHasOwnedParameters>
             </ownedParameters>

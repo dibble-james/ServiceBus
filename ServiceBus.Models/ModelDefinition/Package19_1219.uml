@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<package xmlns:dm0="http://schemas.microsoft.com/VisualStudio/2008/DslTools/Core" xmlns:dm1="http://schemas.microsoft.com/dsltools/Kernel" xmlns:dm2="http://schemas.microsoft.com/dsltools/Component" xmlns:dm3="http://schemas.microsoft.com/dsltools/UseCase" xmlns:dm4="http://schemas.microsoft.com/dsltools/Activity" xmlns:dm5="http://schemas.microsoft.com/dsltools/Interaction" xmlns:dm6="http://schemas.microsoft.com/dsltools/UmlModelLibrary" xmlns:dm7="http://schemas.microsoft.com/dsltools/UmlDiagrams" xmlns:dm8="http://schemas.microsoft.com/dsltools/LogicalClassDesigner"
+<package xmlns:dm0="http://schemas.microsoft.com/VisualStudio/2008/DslTools/Core" xmlns:dm1="http://schemas.microsoft.com/dsltools/Kernel" xmlns:dm2="http://schemas.microsoft.com/dsltools/Component" xmlns:dm3="http://schemas.microsoft.com/dsltools/UseCase" xmlns:dm4="http://schemas.microsoft.com/dsltools/Activity" xmlns:dm5="http://schemas.microsoft.com/dsltools/Interaction" xmlns:dm6="http://schemas.microsoft.com/dsltools/UmlModelLibrary" xmlns:dm7="http://schemas.microsoft.com/dsltools/UmlDiagrams" xmlns:dm8="http://schemas.microsoft.com/VisualStudio/TeamArchitect/SequenceDesigner" xmlns:dm9="http://schemas.microsoft.com/dsltools/LogicalClassDesigner"
   dslVersion="1.0.0.0"
   Id="63f80f4c-d788-4b55-b26b-190c7ade6f78"
   name="Configuration"
@@ -13,54 +13,54 @@
   <packagedElements>
     <packageHasNamedElement>
       <class
-        Id="16c71d3c-90a5-4564-b1c5-8bc38b2f5369"
+        Id="7ea7342b-5759-449a-ad99-121852c18753"
         name="ServiceBusBuilderExtensions"
         isAbstract="false"
         isLeaf="false"
         isActiveClass="false">
         <referencesInternal>
           <reference
-            Id="d7a07af4-c599-4ef0-98c9-1f498ba6d575"
+            Id="3b3af442-0b1a-4e0e-a938-38cf63bd605f"
             handle="viewcode://./CodeSchema_Class?Assembly%3D&quot;file:%2F%2F%2FC:%2FGIT%2FService Bus%2FDebug%2FServiceBus.Web.Mvc.dll&quot; Namespace%3DServiceBus.Web.Mvc.Configuration Type%3DServiceBusBuilderExtensions"
             tag="ViewCode" />
         </referencesInternal>
         <appliedStereotypesInternal>
           <stereotypeInstance
-            Id="62997228-aed7-40dc-a031-1ab82182cb72"
+            Id="d3226eb9-0a36-40cf-a9d0-fbf02d3dc7f4"
             name="class"
             profile="CSharpProfile">
             <propertyInstances>
               <stereotypeInstanceHasPropertyInstances
-                Id="b7c5148d-11b7-4d39-8411-fa9394cdee9c">
+                Id="77bdc76e-3555-4cee-8123-be58ada643e4">
                 <propertyInstance
-                  Id="ec2b9128-0202-4277-b495-e4d2384b950b"
+                  Id="7bf34973-2171-4af5-afab-07efd42e651a"
                   name="ClrAttributes" />
               </stereotypeInstanceHasPropertyInstances>
               <stereotypeInstanceHasPropertyInstances
-                Id="006a0a73-3f3c-48bb-9b82-b85b2e3f33e9">
+                Id="a38f9f5b-3cde-48e3-83d6-3e98253fec0f">
                 <propertyInstance
-                  Id="1ae02149-a1be-4285-84d9-ea78b87c8816"
+                  Id="97b870fc-d7de-4451-8c41-c3faf4cd1830"
                   name="IsPartial"
                   value="false" />
               </stereotypeInstanceHasPropertyInstances>
               <stereotypeInstanceHasPropertyInstances
-                Id="8e3f6258-9f91-46cc-a627-4204da6bfd3c">
+                Id="25233e27-5817-4b89-98ab-b5dbf12039cb">
                 <propertyInstance
-                  Id="3c48a715-b303-48d5-9ec4-8b804fa3144a"
+                  Id="fded61ea-3133-473a-8e56-9dadfaa82adf"
                   name="IsStatic"
                   value="True" />
               </stereotypeInstanceHasPropertyInstances>
               <stereotypeInstanceHasPropertyInstances
-                Id="d9ca4796-1e39-48bb-bbf0-7255634a6cfb">
+                Id="430fecc5-bb17-4d98-bfa3-b818989b3160">
                 <propertyInstance
-                  Id="f10c91dc-cbce-46af-b1c6-5ccde9b09ea3"
+                  Id="bb172d99-e745-4c85-8204-594a96a5bb77"
                   name="IsUnsafe"
                   value="false" />
               </stereotypeInstanceHasPropertyInstances>
               <stereotypeInstanceHasPropertyInstances
-                Id="ef16d54e-f81c-440d-9dc1-a2a062acfc95">
+                Id="ce885081-840e-4349-a768-5b97d336e711">
                 <propertyInstance
-                  Id="98872aab-4f76-4437-9f87-df3b11190d55"
+                  Id="48cc12c3-dfe1-4754-a5ce-47dca176bf86"
                   name="PackageVisibility"
                   value="internal" />
               </stereotypeInstanceHasPropertyInstances>
@@ -69,7 +69,7 @@
         </appliedStereotypesInternal>
         <ownedOperationsInternal>
           <operation
-            Id="339d2fa4-d4a7-4174-acfa-bcc5109e9ff3"
+            Id="97ab7910-7845-4f76-99ac-54e219f47bca"
             name="AsMvcServiceBus"
             isLeaf="false"
             isStatic="true"
@@ -78,54 +78,54 @@
             isQuery="false">
             <referencesInternal>
               <reference
-                Id="f4372b7a-525b-4d1c-9248-15d9bca2127d"
+                Id="1c0b4fe5-3e03-4846-8211-9adc09b22be2"
                 handle="viewcode://./CodeSchema_Method?Assembly%3D&quot;file:%2F%2F%2FC:%2FGIT%2FService Bus%2FDebug%2FServiceBus.Web.Mvc.dll&quot; Namespace%3DServiceBus.Web.Mvc.Configuration Type%3DServiceBusBuilderExtensions Member%3D(Name%3DAsMvcServiceBus OverloadingParameters%3D[(Assembly%3D&quot;file:%2F%2F%2FC:%2FGIT%2FService Bus%2FDebug%2FServiceBus.Core.dll&quot; Namespace%3DServiceBus.Configuration Type%3DITransportConfiguration)%2C(Assembly%3D&quot;file:%2F%2F%2FC:%2FProgram Files (x86)%2FReference Assemblies%2FMicrosoft%2FFramework%2F.NETFramework%2Fv4.5%2FSystem.Web.dll&quot; Namespace%3DSystem.Web.Routing Type%3DRouteCollection)])"
                 tag="ViewCode" />
             </referencesInternal>
             <appliedStereotypesInternal>
               <stereotypeInstance
-                Id="b3369734-9944-4c5c-a018-9528b1079728"
+                Id="7dd74e9e-5afd-48b6-8d31-ca3423f2432c"
                 name="method"
                 profile="CSharpProfile">
                 <propertyInstances>
                   <stereotypeInstanceHasPropertyInstances
-                    Id="74fd84f0-420a-419d-9ad3-8ba6c51a50c3">
+                    Id="2b600968-758c-4c7a-8a48-2369bf3f55f8">
                     <propertyInstance
-                      Id="6476f3fd-f364-4b0e-897d-6a1a67cb4543"
+                      Id="312eb43a-b53b-43f1-8d16-c8095afdf961"
                       name="ClrAttributes" />
                   </stereotypeInstanceHasPropertyInstances>
                   <stereotypeInstanceHasPropertyInstances
-                    Id="5392e0b6-f836-454d-80ad-819be059ae49">
+                    Id="c3069933-1e42-44e6-9e5c-f97ecbe88d71">
                     <propertyInstance
-                      Id="1a8cd1b0-9e94-40b5-961d-4a6e338a2bf4"
+                      Id="0888401b-59be-4150-8c9d-6836008bfa42"
                       name="IsPartial"
                       value="false" />
                   </stereotypeInstanceHasPropertyInstances>
                   <stereotypeInstanceHasPropertyInstances
-                    Id="19136015-8cc5-40c0-ad98-11814c8b2076">
+                    Id="0a6df46d-5b72-4ccc-983f-17728cb4b8a2">
                     <propertyInstance
-                      Id="93adf79b-2ce9-40f3-8bcb-6e197c3899f3"
+                      Id="d6b6e359-07ea-43a0-bf35-9744b2b70126"
                       name="IsUnsafe"
                       value="false" />
                   </stereotypeInstanceHasPropertyInstances>
                   <stereotypeInstanceHasPropertyInstances
-                    Id="f9c7a3e1-2253-443a-80bd-4fbb745eb5c0">
+                    Id="a94bd335-393d-414b-bfdf-23669fc61d87">
                     <propertyInstance
-                      Id="656a0089-4bbf-4822-9157-f9fcaac90767"
+                      Id="87e71725-87a2-49fa-a06a-ac04ce3eb64a"
                       name="Inheritance"
                       value="none" />
                   </stereotypeInstanceHasPropertyInstances>
                   <stereotypeInstanceHasPropertyInstances
-                    Id="5183253c-9473-4c4b-9829-a4611258c457">
+                    Id="ca5f6b0c-f241-4ec6-9fe9-522e19da9573">
                     <propertyInstance
-                      Id="3579cd0a-27c5-4c86-8480-ffd82518a177"
+                      Id="a71af118-8644-4a95-b7aa-fd44c10f2ec5"
                       name="PackageVisibility"
                       value="internal" />
                   </stereotypeInstanceHasPropertyInstances>
                   <stereotypeInstanceHasPropertyInstances
-                    Id="f1d8a719-8064-4f9a-a72e-f7a63219840f">
+                    Id="ca7f46a9-dc6e-4159-9526-5f2fd479b376">
                     <propertyInstance
-                      Id="4d68b383-5fb6-415b-bfbb-0c809b52af7b"
+                      Id="9dca576e-dbf1-4c77-bd8a-fa5b0855e2cc"
                       name="params"
                       value="false" />
                   </stereotypeInstanceHasPropertyInstances>
@@ -135,11 +135,11 @@
             <ownedParameters>
               <operationHasOwnedParameters>
                 <parameter
-                  Id="6dd5a1e8-869d-4843-bcb2-dbc4b323d434"
+                  Id="f29536ba-8ef3-4470-834f-a191f3965ff7"
                   direction="Return">
                   <type_NamedElement>
                     <interfaceMoniker
-                      Id="07840a33-b4aa-499a-9ac7-89d157106ff4"
+                      Id="3f6a6957-26b3-4773-a37c-c3bf621ee2c2"
                       LastKnownName="IHostApplicationConfiguration"
                       LastKnownLocation="Package1_1218.uml" />
                   </type_NamedElement>
@@ -147,18 +147,18 @@
               </operationHasOwnedParameters>
               <operationHasOwnedParameters>
                 <parameter
-                  Id="1aac405c-7438-4c9a-af2f-0ffb18dcc521"
+                  Id="9d429060-6719-40f6-a618-56ef2a23ec92"
                   name="transportConfiguration"
                   direction="In">
                   <referencesInternal>
                     <reference
-                      Id="0f8129e2-95cb-475b-8c2f-48b349f5cb56"
+                      Id="833ac4a5-b527-407f-bbb2-0261653819b5"
                       handle="viewcode://./CodeSchema_Parameter?Assembly%3D&quot;file:%2F%2F%2FC:%2FGIT%2FService Bus%2FDebug%2FServiceBus.Web.Mvc.dll&quot; Namespace%3DServiceBus.Web.Mvc.Configuration Type%3DServiceBusBuilderExtensions Member%3D(Name%3DAsMvcServiceBus OverloadingParameters%3D[(Assembly%3D&quot;file:%2F%2F%2FC:%2FGIT%2FService Bus%2FDebug%2FServiceBus.Core.dll&quot; Namespace%3DServiceBus.Configuration Type%3DITransportConfiguration)%2C(Assembly%3D&quot;file:%2F%2F%2FC:%2FProgram Files (x86)%2FReference Assemblies%2FMicrosoft%2FFramework%2F.NETFramework%2Fv4.5%2FSystem.Web.dll&quot; Namespace%3DSystem.Web.Routing Type%3DRouteCollection)]) ParameterIdentifier%3DtransportConfiguration"
                       tag="ViewCode" />
                   </referencesInternal>
                   <type_NamedElement>
                     <interfaceMoniker
-                      Id="9fbfb762-9c81-44b7-a3df-398d6f06399f"
+                      Id="d42e90fe-c664-4cf3-95e4-1162e6556dae"
                       LastKnownName="ITransportConfiguration"
                       LastKnownLocation="Package1_1218.uml" />
                   </type_NamedElement>
@@ -166,12 +166,12 @@
               </operationHasOwnedParameters>
               <operationHasOwnedParameters>
                 <parameter
-                  Id="d4ba378e-2b7e-4c10-b2a8-2d81b7397d2e"
+                  Id="09d00f52-4a53-4af3-9382-e1e9f33e0b1f"
                   name="routes"
                   direction="In">
                   <referencesInternal>
                     <reference
-                      Id="4ab44022-0c8f-4940-93e6-67027e513d72"
+                      Id="3cbb5fbb-a26d-4a0d-8044-907f44ee8e07"
                       handle="viewcode://./CodeSchema_Parameter?Assembly%3D&quot;file:%2F%2F%2FC:%2FGIT%2FService Bus%2FDebug%2FServiceBus.Web.Mvc.dll&quot; Namespace%3DServiceBus.Web.Mvc.Configuration Type%3DServiceBusBuilderExtensions Member%3D(Name%3DAsMvcServiceBus OverloadingParameters%3D[(Assembly%3D&quot;file:%2F%2F%2FC:%2FGIT%2FService Bus%2FDebug%2FServiceBus.Core.dll&quot; Namespace%3DServiceBus.Configuration Type%3DITransportConfiguration)%2C(Assembly%3D&quot;file:%2F%2F%2FC:%2FProgram Files (x86)%2FReference Assemblies%2FMicrosoft%2FFramework%2F.NETFramework%2Fv4.5%2FSystem.Web.dll&quot; Namespace%3DSystem.Web.Routing Type%3DRouteCollection)]) ParameterIdentifier%3Droutes"
                       tag="ViewCode" />
                   </referencesInternal>

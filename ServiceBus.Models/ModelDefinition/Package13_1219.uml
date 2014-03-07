@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<package xmlns:dm0="http://schemas.microsoft.com/VisualStudio/2008/DslTools/Core" xmlns:dm1="http://schemas.microsoft.com/dsltools/Kernel" xmlns:dm2="http://schemas.microsoft.com/dsltools/Component" xmlns:dm3="http://schemas.microsoft.com/dsltools/UseCase" xmlns:dm4="http://schemas.microsoft.com/dsltools/Activity" xmlns:dm5="http://schemas.microsoft.com/dsltools/Interaction" xmlns:dm6="http://schemas.microsoft.com/dsltools/UmlModelLibrary" xmlns:dm7="http://schemas.microsoft.com/dsltools/UmlDiagrams" xmlns:dm8="http://schemas.microsoft.com/dsltools/LogicalClassDesigner"
+<package xmlns:dm0="http://schemas.microsoft.com/VisualStudio/2008/DslTools/Core" xmlns:dm1="http://schemas.microsoft.com/dsltools/Kernel" xmlns:dm2="http://schemas.microsoft.com/dsltools/Component" xmlns:dm3="http://schemas.microsoft.com/dsltools/UseCase" xmlns:dm4="http://schemas.microsoft.com/dsltools/Activity" xmlns:dm5="http://schemas.microsoft.com/dsltools/Interaction" xmlns:dm6="http://schemas.microsoft.com/dsltools/UmlModelLibrary" xmlns:dm7="http://schemas.microsoft.com/dsltools/UmlDiagrams" xmlns:dm8="http://schemas.microsoft.com/VisualStudio/TeamArchitect/SequenceDesigner" xmlns:dm9="http://schemas.microsoft.com/dsltools/LogicalClassDesigner"
   dslVersion="1.0.0.0"
   Id="44b10a22-89f2-4499-8711-e49d34ce2367"
   name="Tasks"
@@ -493,12 +493,6 @@
               <templateBindingHasTemplateParameterSubstitution>
                 <templateParameterSubstitution
                   Id="1b81a854-2cb7-4a4b-90fd-8d161f75144d">
-                  <actuals>
-                    <interfaceMoniker
-                      Id="011dbe43-b39b-4fd8-8688-3820f7954367"
-                      LastKnownName="IServiceBus"
-                      LastKnownLocation="Package_1218.uml" />
-                  </actuals>
                   <formal>
                     <classifierTemplateParameterMoniker
                       Id="b89196ce-1367-420a-af60-f1cdc8f8d29d"
@@ -688,6 +682,94 @@
         <generalsInternal>
           <generalization
             Id="a13d6b0f-62d7-48de-96e4-292e1cc099d4"
+            isSubstitutable="false">
+            <classMoniker
+              Id="01502229-2b0e-48a9-a2a6-d8d84030bb90"
+              LastKnownName="Task"
+              LastKnownLocation="Package13_1219.uml" />
+          </generalization>
+        </generalsInternal>
+      </class>
+    </packageHasNamedElement>
+    <packageHasNamedElement>
+      <class
+        Id="4da5dc39-0cd5-4efc-ad80-9e6a9410a6d7"
+        name="Task&lt;IServiceBus‎&gt;"
+        isAbstract="false"
+        isLeaf="false"
+        isActiveClass="false">
+        <appliedStereotypesInternal>
+          <stereotypeInstance
+            Id="cb3be31d-c113-494e-a0fd-c6cfc37bca50"
+            name="class"
+            profile="CSharpProfile">
+            <propertyInstances>
+              <stereotypeInstanceHasPropertyInstances
+                Id="ab593a0b-fca7-4338-ac85-4acaf3c230c9">
+                <propertyInstance
+                  Id="81268f98-68ed-4c7a-aade-f259cf401030"
+                  name="ClrAttributes" />
+              </stereotypeInstanceHasPropertyInstances>
+              <stereotypeInstanceHasPropertyInstances
+                Id="98e15288-116f-489b-a5df-33279c605749">
+                <propertyInstance
+                  Id="e4d75efa-77f9-4505-bdc7-c0332543b433"
+                  name="IsPartial"
+                  value="false" />
+              </stereotypeInstanceHasPropertyInstances>
+              <stereotypeInstanceHasPropertyInstances
+                Id="54f3ece3-176c-4d82-8ad7-88fab323a4f0">
+                <propertyInstance
+                  Id="ce03010f-3ca0-447b-9f66-2f2e99231283"
+                  name="IsStatic"
+                  value="False" />
+              </stereotypeInstanceHasPropertyInstances>
+              <stereotypeInstanceHasPropertyInstances
+                Id="22e4166b-6f09-4e10-9d50-3b9fd5238ae3">
+                <propertyInstance
+                  Id="160f6066-cd3d-45bb-9bde-3376c93de5e7"
+                  name="IsUnsafe"
+                  value="false" />
+              </stereotypeInstanceHasPropertyInstances>
+              <stereotypeInstanceHasPropertyInstances
+                Id="546c7104-6842-4644-a252-024ad310b574">
+                <propertyInstance
+                  Id="23ca5ba9-df2a-4d26-9ab9-35ae5ceb5c86"
+                  name="PackageVisibility"
+                  value="internal" />
+              </stereotypeInstanceHasPropertyInstances>
+            </propertyInstances>
+          </stereotypeInstance>
+        </appliedStereotypesInternal>
+        <signatures>
+          <templateBinding
+            Id="cb86ae9a-dfb1-4dbc-8042-32505c85a9fc">
+            <redefinableTemplateSignatureMoniker
+              Id="2fdb9089-cf30-4f8c-94e6-075b551d2546"
+              LastKnownLocation="Package13_1219.uml" />
+            <relationshipOwnedElementsInternal>
+              <templateBindingHasTemplateParameterSubstitution>
+                <templateParameterSubstitution
+                  Id="d8f42680-c8a6-4171-a683-8bbe3391fec5">
+                  <actuals>
+                    <interfaceMoniker
+                      Id="3d1b5b5b-0f56-4a64-8136-83c189a4ece1"
+                      LastKnownName="IServiceBus"
+                      LastKnownLocation="Package_1218.uml" />
+                  </actuals>
+                  <formal>
+                    <classifierTemplateParameterMoniker
+                      Id="b89196ce-1367-420a-af60-f1cdc8f8d29d"
+                      LastKnownLocation="Package13_1219.uml" />
+                  </formal>
+                </templateParameterSubstitution>
+              </templateBindingHasTemplateParameterSubstitution>
+            </relationshipOwnedElementsInternal>
+          </templateBinding>
+        </signatures>
+        <generalsInternal>
+          <generalization
+            Id="1e76f2b0-6a16-4004-9560-1d5e6a6b2feb"
             isSubstitutable="false">
             <classMoniker
               Id="01502229-2b0e-48a9-a2a6-d8d84030bb90"
