@@ -14,7 +14,7 @@
         /// <summary>
         /// An event raised when an <see cref="IMessage"/> is received by the <see cref="ITransporter"/>.
         /// </summary>
-        event Action<Envelope> MessageRecieved;
+        event Action<EnvelopeBase> MessageRecieved;
 
         /// <summary>
         /// An event raised when an <see cref="IMessage"/> is successfully exported.

@@ -82,7 +82,7 @@
             await routeMessageTask;
         }
 
-        internal async Task RouteMessageAsync(Envelope envelope)
+        internal async Task RouteMessageAsync(EnvelopeBase envelope)
         {
             if (envelope.Message is IEvent)
             {

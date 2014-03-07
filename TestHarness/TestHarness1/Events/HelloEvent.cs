@@ -12,8 +12,6 @@ namespace TestHarness1.Events
 
     public class HelloEvent : EventBase
     {
-        public const string HelloEventType = "HelloEvent";
-
         public HelloEvent()
         {
         }
@@ -29,18 +27,12 @@ namespace TestHarness1.Events
         /// <param name="info">The <see cref="T:System.Runtime.Serialization.SerializationInfo"/> to populate with data. </param><param name="context">The destination (see <see cref="T:System.Runtime.Serialization.StreamingContext"/>) for this serialization. </param><exception cref="T:System.Security.SecurityException">The caller does not have the required permission. </exception>
         public override void GetObjectData(SerializationInfo info, StreamingContext context)
         {
+            base.GetObjectData(info, context);
+
             info.AddValue("MessageType", this.MessageType);
             info.AddValue("TimeEventRaised", this.TimeEventRaised);
         }
 
         public DateTime TimeEventRaised { get; set; }
-
-        public override string MessageType
-        {
-            get
-            {
-                return HelloEventType;
-            }
-        }
     }
 }

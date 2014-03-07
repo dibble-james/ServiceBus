@@ -4,7 +4,6 @@
     using System.Runtime.Serialization;
 
     using ServiceBus.Event;
-    using ServiceBus.Messaging;
 
     /// <summary>
     /// A service bus system event to register a peer to it's own known peer network.  This class cannot be inherited.
@@ -12,11 +11,6 @@
     [Serializable]
     public sealed class PeerConnectedEvent : EventBase
     {
-        /// <summary>
-        /// A signature for the <see cref="PeerConnectedEvent"/>.
-        /// </summary>
-        public const string PeerConnectedEventMessageType = "PeerConnectedEvent";
-        
         /// <summary>
         /// Initialises a new instance of the <see cref="PeerConnectedEvent"/> class.
         /// </summary>
@@ -38,17 +32,6 @@
         /// Gets or sets the source <see cref="IPeer"/> that this event relates too.
         /// </summary>
         public IPeer ConnectedPeer { get; set; }
-
-        /// <summary>
-        /// Gets the identifier of this <see cref="IMessage"/>.
-        /// </summary>
-        public override string MessageType
-        {
-            get
-            {
-                return PeerConnectedEventMessageType;
-            }
-        }
 
         /// <summary>
         /// Populates a <see cref="T:System.Runtime.Serialization.SerializationInfo"/> with the data needed to serialize the target object.

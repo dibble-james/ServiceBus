@@ -44,7 +44,7 @@
         /// </summary>
         /// <param name="messageContent">The raw message content.</param>
         /// <returns>The concrete message data.</returns>
-        public Envelope Deserialise(string messageContent)
+        public EnvelopeBase Deserialise(string messageContent)
         {
             dynamic messageFromJson = JsonConvert.DeserializeObject(messageContent);
 
@@ -64,18 +64,18 @@
         }
 
         /// <summary>
-        /// Transform an <see cref="Envelope"/> into raw message data.
+        /// Transform an <see cref="EnvelopeBase"/> into raw message data.
         /// </summary>
         /// <param name="message">The message to transform.</param>
         /// <returns>The raw message data.</returns>
-        public string Serialise(Envelope message)
+        public string Serialise(EnvelopeBase message)
         {
             var asJson = JsonConvert.SerializeObject(message);
 
             return asJson;
         }
 
-        private Envelope ConvertToMessage(string messageContent, Type messageType)
+        private EnvelopeBase ConvertToMessage(string messageContent, Type messageType)
         {
             var envelopeType = typeof(Envelope<>).MakeGenericType(messageType);
 
@@ -91,7 +91,7 @@
 
             var message = method.Invoke(null, new object[] { messageContent });
 
-            return message as Envelope;
+            return message as EnvelopeBase;
         }
     }
 }

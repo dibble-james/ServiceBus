@@ -47,7 +47,7 @@ namespace TestHarness2
         {
             var messageDictionary = new MessageTypeDictionary
                                     {
-                                        { HelloMessage.HelloMessageType, typeof(HelloMessage) }
+                                        { MessageExtensions.MessageTypeSignature<HelloMessage>(), typeof(HelloMessage) }
                                     };
 
             var hierarchy = (Hierarchy)LogManager.GetRepository();

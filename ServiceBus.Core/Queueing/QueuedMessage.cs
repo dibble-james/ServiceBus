@@ -16,7 +16,7 @@
         /// <summary>
         /// Gets or sets the message data that was queued.
         /// </summary>
-        public Envelope Envelope { get; set; }
+        public EnvelopeBase Envelope { get; set; }
 
         /// <summary>
         /// Gets or sets a value indicating whether the <see cref="QueuedMessage"/> has been

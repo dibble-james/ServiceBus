@@ -6,7 +6,8 @@
     /// <summary>
     /// A remote <see cref="IServiceBus"/> instance.
     /// </summary>
-    public class Peer : IPeer
+    [Serializable]
+    public sealed class Peer : IPeer
     {
         /// <summary>
         /// Initialises a new instance of the <see cref="Peer"/> class.
@@ -17,12 +18,7 @@
             this.PeerAddress = address;
         }
 
-        /// <summary>
-        /// Initialises a new instance of the <see cref="Peer"/> class.
-        /// </summary>
-        /// <param name="info">The <see cref="T:System.Runtime.Serialization.SerializationInfo"/> to populate with data. </param>
-        /// <param name="context">The destination (see <see cref="T:System.Runtime.Serialization.StreamingContext"/>) for this serialization. </param>
-        public Peer(SerializationInfo info, StreamingContext context)
+        private Peer(SerializationInfo info, StreamingContext context)
         {
             this.PeerAddress = info.GetValue("PeerAddress", typeof(Uri)) as Uri;
         }

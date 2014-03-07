@@ -24,20 +24,9 @@ namespace ServiceBus.Core.EventHandlers
         }
 
         /// <summary>
-        /// Gets the <see cref="System.Uri"/> part that defines the location of this <see cref="IEndpoint"/>.
+        /// Invoke services to deal with this <see cref="ServiceBus.Core.Events.PeerConnectedEvent"/>.
         /// </summary>
-        public string EndpointPath
-        {
-            get
-            {
-                return "/peer-connected-logging";
-            }
-        }
-
-        /// <summary>
-        /// Invoke services to deal with this <typeparamref name="ServiceBus.Core.Events.PeerConnectedEvent"/>.
-        /// </summary>
-        /// <param name="event">The <typeparamref name="ServiceBus.Core.Events.PeerConnectedEvent"/> data.</param>
+        /// <param name="event">The <see cref="ServiceBus.Core.Events.PeerConnectedEvent"/> data.</param>
         /// <returns>An awaitable object representing the handling operation.</returns>
         public async Task HandleAsync(PeerConnectedEvent @event)
         {
@@ -50,7 +39,7 @@ namespace ServiceBus.Core.EventHandlers
            this._serviceBus.Log.Info(message);
         }
 
-        internal void LogMessageRecieved(Envelope envelope)
+        internal void LogMessageRecieved(EnvelopeBase envelope)
         {
             var message = string.Format(
                 CultureInfo.CurrentCulture, 

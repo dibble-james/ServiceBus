@@ -37,7 +37,7 @@
         /// <summary>
         /// An event raised when an <see cref="IMessage"/> is received by the <see cref="ITransporter"/>.
         /// </summary>
-        public event Action<Envelope> MessageRecieved;
+        public event Action<EnvelopeBase> MessageRecieved;
 
         /// <summary>
         /// An event raised when an <see cref="IMessage"/> is successfully exported.
@@ -122,7 +122,7 @@
             this._disposed = true;
         }
 
-        private Task<HttpResponseMessage> ExecutePostRequest(Uri address, Envelope messageToPost)
+        private Task<HttpResponseMessage> ExecutePostRequest(Uri address, EnvelopeBase messageToPost)
         {
             var serialisedMessage = this.Serialiser.Serialise(messageToPost);
 

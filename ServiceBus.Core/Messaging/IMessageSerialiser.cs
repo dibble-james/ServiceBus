@@ -23,13 +23,13 @@
         /// </summary>
         /// <param name="messageContent">The raw message content.</param>
         /// <returns>The concrete message data.</returns>
-        Envelope Deserialise(string messageContent);
+        EnvelopeBase Deserialise(string messageContent);
 
         /// <summary>
-        /// Transform an <see cref="Envelope"/> into raw message data.
+        /// Transform an <see cref="EnvelopeBase"/> into raw message data.
         /// </summary>
         /// <param name="message">The message to transform.</param>
         /// <returns>The raw message data.</returns>
-        string Serialise(Envelope message);
+        string Serialise(EnvelopeBase message);
     }
 }

@@ -72,9 +72,9 @@ namespace TestHarness2
 
             var messageDictionary = new MessageTypeDictionary
                                     {
-                                        { HelloMessage.HelloMessageType, typeof(HelloMessage) },
-                                        { GoodbyeMessage.GoodbyeMessageType, typeof(GoodbyeMessage) },
-                                        { HelloEvent.HelloEventType, typeof(HelloEvent) }
+                                        { MessageExtensions.MessageTypeSignature<HelloMessage>(), typeof(HelloMessage) },
+                                        { MessageExtensions.MessageTypeSignature<GoodbyeMessage>(), typeof(GoodbyeMessage) },
+                                        { MessageExtensions.MessageTypeSignature<HelloEvent>(), typeof(HelloEvent) }
                                     };
 
             var messageHandler = new HelloMessageHandler();

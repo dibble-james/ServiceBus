@@ -28,7 +28,13 @@
         /// <summary>
         /// Gets the identifier of this <see cref="IMessage"/>.
         /// </summary>
-        public abstract string MessageType { get; }
+        public virtual string MessageType
+        {
+            get
+            {
+                return MessageExtensions.MessageTypeSignature(this.GetType());
+            }
+        }
 
         /// <summary>
         /// Populates a <see cref="T:System.Runtime.Serialization.SerializationInfo"/> with the data needed to serialize the target object.
