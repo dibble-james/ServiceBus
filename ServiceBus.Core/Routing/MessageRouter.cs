@@ -6,6 +6,7 @@
     using System.Linq;
     using System.Reflection;
     using System.Threading.Tasks;
+
     using ServiceBus.Event;
     using ServiceBus.Messaging;
     using ServiceBus.Queueing;
@@ -19,13 +20,13 @@
         private readonly ICollection<IMessageHandler> _messageHandlers;
         private readonly object _messageHandlersLock;
 
-        private readonly EventSubscriptionDictionary _subscriptionDictionary;
+        private readonly MessageSubscriptionDictionary _subscriptionDictionary;
         private readonly IQueueManager _queueManager;
 
         internal MessageRouter(IQueueManager queueManager, IPeer self)
         {
             this._queueManager = queueManager;
-            this._subscriptionDictionary = new EventSubscriptionDictionary();
+            this._subscriptionDictionary = new MessageSubscriptionDictionary();
 
             this._messageHandlers = new Collection<IMessageHandler>();
             this._messageHandlersLock = new object();
@@ -58,7 +59,7 @@
             }
         }
 
-        internal EventSubscriptionDictionary Subscriptions
+        internal MessageSubscriptionDictionary Subscriptions
         {
             get
             {
@@ -84,49 +85,19 @@
 
         internal async Task RouteMessageAsync(EnvelopeBase envelope)
         {
-            if (envelope.Message is IEvent)
-            {
-                await this.HandleEvent(envelope.Message as IEvent);
-                return;
-            }
-
-            await this.HandleMessage(envelope.Message);
-        }
-
-        private async Task HandleMessage(IMessage message)
-        {
             var handleMessageGeneric = this.GetType()
                 .GetMethods(BindingFlags.NonPublic | BindingFlags.Instance)
-                .First(m => m.Name == ExpressionExtensions.MethodName(() => this.HandleMessage(message)) && m.IsGenericMethod)
-                .MakeGenericMethod(message.GetType());
+                .First(m => m.Name == "HandleMessage" && m.IsGenericMethod)
+                .MakeGenericMethod(envelope.Message.GetType());
 
-            await Task.Factory.StartNew(() => handleMessageGeneric.Invoke(this, new object[] { message }));
+            await Task.Factory.StartNew(() => handleMessageGeneric.Invoke(this, new object[] { envelope }));
         }
 
-        private async Task HandleMessage<TMessage>(Envelope<TMessage> message) where TMessage : class, IMessage
+        private async Task HandleMessage<TMessage>(Envelope<TMessage> envelope) where TMessage : class, IMessage, new()
         {
-            var handlingTasks = this.MessageHandlers
-                    .OfType<IMessageHandler<TMessage>>()
-                    .Select(mh => mh.ProcessMessageAsync(message.Message));
+            var subscription = this._subscriptionDictionary.GetMessageSubscrption<TMessage>();
 
-            await Task.WhenAll(handlingTasks);
-        }
-
-        private async Task HandleEvent(IEvent @event)
-        {
-            var handleEventGeneric = this.GetType()
-                .GetMethods(BindingFlags.NonPublic | BindingFlags.Instance)
-                .First(m => m.Name == ExpressionExtensions.MethodName(() => this.HandleEvent(@event)) && m.IsGenericMethod)
-                .MakeGenericMethod(@event.GetType());
-
-            await Task.Factory.StartNew(() => handleEventGeneric.Invoke(this, new object[] { @event }));
-        }
-
-        private async Task HandleEvent<TEvent>(TEvent @event) where TEvent : class, IEvent
-        {
-            var subscription = this._subscriptionDictionary.GetEventSubscrption<TEvent>();
-
-            await subscription.RaiseLocalAsync(@event);
+            await subscription.RaiseMessageRaisedAsync(envelope);
         }
     }
 }

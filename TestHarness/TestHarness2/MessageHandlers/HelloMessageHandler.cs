@@ -16,43 +16,22 @@ namespace TestHarness2.MessageHandlers
 
     public class HelloMessageHandler : IMessageHandler<HelloMessage>, IMessageHandler<GoodbyeMessage>
     {
-        public async Task ProcessMessageAsync(IMessage message)
-        {
-            if (message is HelloMessage)
-            {
-                await this.ProcessMessageAsync(message as HelloMessage);   
-            }
-
-            if (message is GoodbyeMessage)
-            {
-                await this.ProcessMessageAsync(message as GoodbyeMessage);
-            }
-        }
-
-        public async Task ProcessMessageAsync(HelloMessage message)
+        public async Task ProcessMessageAsync(Envelope<HelloMessage> envelope)
         {
             Debug.WriteLine(
                 "Hello Message received [{0}], Thread Id [{1}], Content [{2}]",
                 DateTime.Now,
                 Thread.CurrentThread.ManagedThreadId, 
-                message.World);
+                envelope.Message.World);
         }
 
-        public async Task ProcessMessageAsync(GoodbyeMessage message)
+        public async Task ProcessMessageAsync(Envelope<GoodbyeMessage> envelope)
         {
             Debug.WriteLine(
                 "Goodbye Message received in HelloMessageHandler [{0}], Thread Id [{1}], Content [{2}]", 
                 DateTime.Now, 
                 Thread.CurrentThread.ManagedThreadId, 
-                message.Planet);
-        }
-
-        public string EndpointPath
-        {
-            get
-            {
-                return "hello";
-            }
+                envelope.Message.Planet);
         }
     }
 }

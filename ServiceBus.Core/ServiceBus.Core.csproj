@@ -57,6 +57,7 @@
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Net.Http" />
     <Reference Include="System.Runtime.Serialization" />
   </ItemGroup>
   <ItemGroup>
@@ -74,11 +75,11 @@
     <Compile Include="Core\EventHandlers\PeerConnectedEventHandler.cs" />
     <Compile Include="Core\EventHandlers\LoggingEventHandler.cs" />
     <Compile Include="Event\EventBase.cs" />
-    <Compile Include="Event\EventSubscriptionDictionary.cs" />
-    <Compile Include="Event\EventSubscrption.cs" />
+    <Compile Include="Messaging\MessageSubscriptionDictionary.cs" />
+    <Compile Include="Messaging\MessageSubscrption.cs" />
     <Compile Include="Event\IEvent.cs" />
     <Compile Include="Event\IEventHandler.cs" />
-    <Compile Include="Event\IEventSubscrption.cs" />
+    <Compile Include="Messaging\IMessageSubscrption.cs" />
     <Compile Include="GlobalSuppressions.cs" />
     <Compile Include="IPeer.cs" />
     <Compile Include="IServiceBus.cs" />

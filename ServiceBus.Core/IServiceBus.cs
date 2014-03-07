@@ -49,7 +49,7 @@
         /// <summary>
         /// Gets the <see cref="IEventHandler"/>s subscriptions.
         /// </summary>
-        EventSubscriptionDictionary Subscriptions { get; }
+        MessageSubscriptionDictionary Subscriptions { get; }
 
         /// <summary>
         /// Directly send an <paramref name="message"/> to a given <paramref name="peer"/>.

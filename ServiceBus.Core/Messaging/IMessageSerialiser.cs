@@ -1,4 +1,9 @@
-﻿namespace ServiceBus.Messaging
+﻿// --------------------------------------------------------------------------------------------------------------------
+// <copyright file="IEventSubscrption.cs" company="James Dibble">
+//    Copyright 2014 James Dibble
+// </copyright>
+// --------------------------------------------------------------------------------------------------------------------
+namespace ServiceBus.Messaging
 {
     using System;
 

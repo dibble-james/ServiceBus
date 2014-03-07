@@ -4,6 +4,7 @@
 
     using ServiceBus.Core.Events;
     using ServiceBus.Event;
+    using ServiceBus.Messaging;
 
     internal sealed class PeerConnectedEventHandler : IEventHandler<PeerConnectedEvent>
     {
@@ -17,11 +18,11 @@
         /// <summary>
         /// Invoke services to deal with this PeerConnectedEvent.
         /// </summary>
-        /// <param name="event">The PeerConnectedEvent data.</param>
+        /// <param name="envelope">The PeerConnectedEvent data.</param>
         /// <returns>An awaitable object representing the handling operation.</returns>
-        public async Task HandleAsync(PeerConnectedEvent @event)
+        public async Task ProcessMessageAsync(Envelope<PeerConnectedEvent> envelope)
         {
-            await this._serviceBus.SynchroniseAsync(@event.ConnectedPeer);
+            await this._serviceBus.SynchroniseAsync(envelope.Message.ConnectedPeer);
         }
     }
 }

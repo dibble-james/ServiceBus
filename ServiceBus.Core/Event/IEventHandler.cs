@@ -1,6 +1,7 @@
 ﻿namespace ServiceBus.Event
 {
     using System.Threading.Tasks;
+    using ServiceBus.Messaging;
 
     /// <summary>
     /// DO NOT IMPLEMENT.  Implement the generic IEventHandler so that it can be registered.  This interface exists only to 
@@ -14,13 +15,7 @@
     /// Implementing classes can be used to subscribe to <see cref="IEvent"/>s of <typeparamref name="TEvent"/> type.
     /// </summary>
     /// <typeparam name="TEvent">The type of <see cref="IEvent"/> this <see cref="IEventHandler{TEvent}"/> can subscribe to.</typeparam>
-    public interface IEventHandler<in TEvent> : IEventHandler where TEvent : class, IEvent, new()
+    public interface IEventHandler<TEvent> : IEventHandler, IMessageHandler<TEvent> where TEvent : class, IEvent, new()
     {
-        /// <summary>
-        /// Invoke services to deal with this <typeparamref name="TEvent"/>.
-        /// </summary>
-        /// <param name="event">The <typeparamref name="TEvent"/> data.</param>
-        /// <returns>An awaitable object representing the handling operation.</returns>
-        Task HandleAsync(TEvent @event);
     }
 }

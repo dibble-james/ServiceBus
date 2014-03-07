@@ -11,7 +11,7 @@ namespace ServiceBus.Core.EventHandlers
 
     using ServiceBus.Core.Events;
     using ServiceBus.Event;
-    using ServiceBus.Messaging;
+    using ServiceBus.Messaging;    
     using ServiceBus.Queueing;
 
     internal sealed class LoggingEventHandler : IEventHandler<PeerConnectedEvent>
@@ -26,14 +26,14 @@ namespace ServiceBus.Core.EventHandlers
         /// <summary>
         /// Invoke services to deal with this <see cref="ServiceBus.Core.Events.PeerConnectedEvent"/>.
         /// </summary>
-        /// <param name="event">The <see cref="ServiceBus.Core.Events.PeerConnectedEvent"/> data.</param>
+        /// <param name="envelope">The <see cref="ServiceBus.Core.Events.PeerConnectedEvent"/> data.</param>
         /// <returns>An awaitable object representing the handling operation.</returns>
-        public async Task HandleAsync(PeerConnectedEvent @event)
+        public async Task ProcessMessageAsync(Envelope<PeerConnectedEvent> envelope)
         {
             var message = string.Format(
                 CultureInfo.CurrentCulture,
                 "Peer [{0}] connected at [{1}]",
-                @event.ConnectedPeer.PeerAddress,
+                envelope.Message.ConnectedPeer.PeerAddress,
                 DateTime.Now);
 
            this._serviceBus.Log.Info(message);

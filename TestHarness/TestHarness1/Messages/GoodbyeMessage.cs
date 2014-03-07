@@ -33,7 +33,6 @@ namespace TestHarness1.Messages
             base.GetObjectData(info, context);
 
             info.AddValue("Planet", this.Planet);
-            info.AddValue("MessageType", this.MessageType);
         }
     }
 }

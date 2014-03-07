@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNet.SignalR;
 using Microsoft.AspNet.SignalR.Hubs;
 using ServiceBus;
-using ServiceBus.Event;
+using ServiceBus.Messaging;
 using System;
 using System.Collections.Generic;
 using System.Globalization;

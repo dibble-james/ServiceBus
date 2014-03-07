@@ -31,7 +31,6 @@ namespace TestHarness1.Messages
             base.GetObjectData(info, context);
 
             info.AddValue("World", this.World);
-            info.AddValue("MessageType", this.MessageType);
-        
+        }
     }
 }

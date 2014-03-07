@@ -3,35 +3,35 @@
 //    Copyright 2014 James Dibble
 // </copyright>
 // --------------------------------------------------------------------------------------------------------------------
-namespace ServiceBus.Event
+namespace ServiceBus.Messaging
 {
     using System;
     using System.Threading.Tasks;
 
     /// <summary>
-    /// DO NOT IMPLEMENT.  This interface exists only to be able to hold <see cref="IEventSubscription{TEvent}"/>s
+    /// DO NOT IMPLEMENT.  This interface exists only to be able to hold <see cref="IMessageSubscription{TMessage}"/>s
     /// in a collection.
     /// </summary>
-    public interface IEventSubscription
+    public interface IMessageSubscription
     { 
     }
 
     /// <summary>
     /// A interface to represent a subscription to an <see cref="IEvent"/> type.
     /// </summary>
-    /// <typeparam name="TEvent">The <see cref="IEvent"/> this <see cref="EventSubscription{TEvent}"/> holds.</typeparam>
-    public interface IEventSubscription<TEvent> : IEventSubscription where TEvent : class, IEvent
+    /// <typeparam name="TMessage">The <see cref="IEvent"/> this <see cref="IMessageSubscription{TMessage}"/> holds.</typeparam>
+    public interface IMessageSubscription<TMessage> : IMessageSubscription where TMessage : class, IMessage, new()
     {
         /// <summary>
         /// A subscription for raising this <see cref="IEvent"/> instance when it is received.
         /// </summary>
-        event Action<TEvent> EventRaised;
+        event Action<Envelope<TMessage>> MessageReceived;
 
         /// <summary>
-        /// Raise the <see cref="E:EventRaised"/> event.
+        /// Raise the <see cref="E:MessageReceived"/> event.
         /// </summary>
-        /// <param name="event">The event instance being raised.</param>
-        /// <returns>An awaitable object representing the RaiseLocal operation.</returns>
-        Task RaiseLocalAsync(TEvent @event);
+        /// <param name="message">The message instance that has been received.</param>
+        /// <returns>An awaitable object representing the RaiseMessageRaised operation.</returns>
+        Task RaiseMessageRaisedAsync(Envelope<TMessage> message);
     }
 }

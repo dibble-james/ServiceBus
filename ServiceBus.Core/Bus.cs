@@ -52,7 +52,7 @@
             this._logger = log;
             this._loggingEventHandler = new LoggingEventHandler(this);
 
-            RegisterSystemMessages();
+            this.RegisterSystemMessages();
 
             this.RegisterSystemEventHandlers();
 
@@ -122,7 +122,7 @@
         /// <summary>
         /// Gets the <see cref="IEventHandler"/>s subscriptions.
         /// </summary>
-        public EventSubscriptionDictionary Subscriptions
+        public MessageSubscriptionDictionary Subscriptions
         {
             get
             {
@@ -286,7 +286,7 @@
 
             try
             {
-                this._messageRouter.MessageHandlers.Add(messageHandler);
+                this.Subscriptions.Subscribe(messageHandler);
 
                 return this;
             }

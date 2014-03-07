@@ -10,26 +10,19 @@ namespace TestHarness2.EventHandlers
     using System.Threading;
     using System.Threading.Tasks;
 
-    using ServiceBus.Event;
+    using ServiceBus.Messaging;
 
     using TestHarness2.Events;
+    using ServiceBus.Event;
 
     public class HelloEventHandler : IEventHandler<HelloEvent>
     {
-        public string EndpointPath
-        {
-            get
-            {
-                return "HelloEventHandler";
-            }
-        }
-
-        public async Task HandleAsync(HelloEvent @event)
+        public async Task ProcessMessageAsync(Envelope<HelloEvent> envelope)
         {
             Debug.WriteLine(
                 "HelloEvent Received [{0}], Raised [{1}], ThreadId[{2}]",
                 DateTime.Now,
-                @event.TimeEventRaised,
+                envelope.Message.TimeEventRaised,
                 Thread.CurrentThread.ManagedThreadId);
         }
     }

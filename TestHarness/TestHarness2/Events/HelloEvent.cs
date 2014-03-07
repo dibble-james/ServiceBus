@@ -8,6 +8,7 @@ namespace TestHarness2.Events
     using System;
     using System.Runtime.Serialization;
 
+    using ServiceBus.Messaging;
     using ServiceBus.Event;
 
     public class HelloEvent : EventBase
@@ -29,7 +30,6 @@ namespace TestHarness2.Events
         {
             base.GetObjectData(info, context);
 
-            info.AddValue("MessageType", this.MessageType);
             info.AddValue("TimeEventRaised", this.TimeEventRaised);
         }
 
