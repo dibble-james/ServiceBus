@@ -36,6 +36,20 @@
       <SubType>Content</SubType>
       <DependentUpon>Event.classdiagram</DependentUpon>
     </Content>
+    <Content Include="EventHandling.classdiagram">
+      <SubType>Content</SubType>
+    </Content>
+    <Content Include="EventHandling.classdiagram.layout">
+      <SubType>Content</SubType>
+      <DependentUpon>EventHandling.classdiagram</DependentUpon>
+    </Content>
+    <Content Include="Messages.classdiagram">
+      <SubType>Content</SubType>
+    </Content>
+    <Content Include="Messages.classdiagram.layout">
+      <SubType>Content</SubType>
+      <DependentUpon>Messages.classdiagram</DependentUpon>
+    </Content>
     <Content Include="Queue.sequencediagram">
       <SubType>Content</SubType>
     </Content>

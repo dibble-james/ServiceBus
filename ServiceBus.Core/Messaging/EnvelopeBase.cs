@@ -5,6 +5,8 @@
 // --------------------------------------------------------------------------------------------------------------------
 namespace ServiceBus.Messaging
 {
+    using System;
+
     /// <summary>
     /// A base class for an envelope to expose non-generic envelope properties.
     /// </summary>
@@ -24,5 +26,11 @@ namespace ServiceBus.Messaging
         /// Gets or sets <see cref="IMessage" /> this <see cref="EnvelopeBase" /> contains.
         /// </summary>
         public IMessage Message { get; set; }
+
+        /// <summary>
+        /// Gets or sets the <see cref="System.DateTime"/> that the message was passed to 
+        /// the <see cref="IServiceBus"/>.
+        /// </summary>
+        public DateTime MessageCreated { get; set; }
     }
 }

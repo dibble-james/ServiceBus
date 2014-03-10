@@ -16,10 +16,7 @@
         private readonly IPeer _self;
         private readonly ICollection<IPeer> _peers;
         private readonly object _peersLock;
-
-        private readonly ICollection<IMessageHandler> _messageHandlers;
-        private readonly object _messageHandlersLock;
-
+        
         private readonly MessageSubscriptionDictionary _subscriptionDictionary;
         private readonly IQueueManager _queueManager;
 
@@ -27,9 +24,6 @@
         {
             this._queueManager = queueManager;
             this._subscriptionDictionary = new MessageSubscriptionDictionary();
-
-            this._messageHandlers = new Collection<IMessageHandler>();
-            this._messageHandlersLock = new object();
 
             this._peersLock = new object();
             this._peers = new Collection<IPeer>();
@@ -44,17 +38,6 @@
                 lock (this._peersLock)
                 {
                     return this._peers;   
-                }
-            }
-        }
-
-        internal ICollection<IMessageHandler> MessageHandlers
-        {
-            get
-            {
-                lock (this._messageHandlersLock)
-                {
-                    return this._messageHandlers;
                 }
             }
         }
@@ -74,13 +57,15 @@
                 this.HandleMessageAsync(new Envelope<TEvent>
                                        {
                                            Message = @event, 
+                                           MessageCreated = DateTime.Now,
                                            Recipient = this._self, 
                                            Sender = this._self
                                        });
 
             await Task.WhenAll(this.Peers.Select(peer => this._queueManager.EnqueueAsync(new Envelope<TEvent>
                                                                                       {
-                                                                                          Message = @event, 
+                                                                                          Message = @event,
+                                                                                          MessageCreated = DateTime.Now,
                                                                                           Recipient = peer, 
                                                                                           Sender = this._self
                                                                                       })));
@@ -107,7 +92,7 @@
                 return;
             }
 
-            await subscription.RaiseMessageRaisedAsync(envelope);
+            await subscription.RaiseMessageReceivedAsync(envelope);
         }
     }
 }

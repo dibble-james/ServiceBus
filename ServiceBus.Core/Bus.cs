@@ -147,6 +147,7 @@
                 await this._queueManager.EnqueueAsync(new Envelope<TMessage>
                                                       {
                                                           Message = message,
+                                                          MessageCreated = DateTime.Now,
                                                           Recipient = peer,
                                                           Sender = this
                                                       });

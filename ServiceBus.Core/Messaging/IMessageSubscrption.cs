@@ -17,13 +17,13 @@ namespace ServiceBus.Messaging
     }
 
     /// <summary>
-    /// A interface to represent a subscription to an <see cref="IEvent"/> type.
+    /// A interface to represent a subscription to an <see cref="IMessage"/> type.
     /// </summary>
-    /// <typeparam name="TMessage">The <see cref="IEvent"/> this <see cref="IMessageSubscription{TMessage}"/> holds.</typeparam>
+    /// <typeparam name="TMessage">The <see cref="IMessage"/> this <see cref="IMessageSubscription{TMessage}"/> holds.</typeparam>
     public interface IMessageSubscription<TMessage> : IMessageSubscription where TMessage : class, IMessage, new()
     {
         /// <summary>
-        /// A subscription for raising this <see cref="IEvent"/> instance when it is received.
+        /// A subscription for raising this <see cref="IMessage"/> instance when it is received.
         /// </summary>
         event Action<Envelope<TMessage>> MessageReceived;
 
@@ -32,6 +32,6 @@ namespace ServiceBus.Messaging
         /// </summary>
         /// <param name="message">The message instance that has been received.</param>
         /// <returns>An awaitable object representing the RaiseMessageRaised operation.</returns>
-        Task RaiseMessageRaisedAsync(Envelope<TMessage> message);
+        Task RaiseMessageReceivedAsync(Envelope<TMessage> message);
     }
 }

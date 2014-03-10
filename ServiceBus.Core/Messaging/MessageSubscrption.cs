@@ -27,7 +27,7 @@ namespace ServiceBus.Messaging
         /// </summary>
         /// <param name="envelope">The message instance that has been received.</param>
         /// <returns>An awaitable object representing the RaiseMessageRaised operation.</returns>
-        public async Task RaiseMessageRaisedAsync(Envelope<TMessage> envelope)
+        public async Task RaiseMessageReceivedAsync(Envelope<TMessage> envelope)
         {
             if (this.MessageReceived != null)
             {

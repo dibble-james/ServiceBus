@@ -28,6 +28,7 @@ namespace ServiceBus.Messaging
             this.Sender = info.GetValue("Sender", typeof(Peer)) as IPeer;
             this.Recipient = info.GetValue("Recipient", typeof(Peer)) as IPeer;
             this.Message = info.GetValue("Message", typeof(TMessage)) as TMessage;
+            this.MessageCreated = info.GetDateTime("MessageCreated");
         }
 
         /// <summary>
@@ -57,6 +58,7 @@ namespace ServiceBus.Messaging
             info.AddValue("Sender", this.Sender);
             info.AddValue("Recipient", this.Recipient);
             info.AddValue("Message", this.Message, typeof(TMessage));
+            info.AddValue("MessageCreated", this.MessageCreated);
         }
     }
 }
