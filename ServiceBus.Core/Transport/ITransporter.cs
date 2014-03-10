@@ -14,12 +14,12 @@
         /// <summary>
         /// An event raised when an <see cref="IMessage"/> is received by the <see cref="ITransporter"/>.
         /// </summary>
-        event Action<EnvelopeBase> MessageRecieved;
+        event Action<EnvelopeBase, string> MessageRecieved;
 
         /// <summary>
         /// An event raised when an <see cref="IMessage"/> is successfully exported.
         /// </summary>
-        event Action<QueuedMessage> MessageSent;
+        event Action<QueuedMessage, string> MessageSent;
 
         /// <summary>
         /// An event raised when an <see cref="IMessage"/> could not be sent.

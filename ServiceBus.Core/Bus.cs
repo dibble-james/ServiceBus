@@ -342,7 +342,7 @@
             this._transport.MessageSent += this._queueManager.Dequeue;
             this._transport.MessageSent += this._loggingEventHandler.LogMessageSent;
 
-            this._transport.MessageRecieved += async m => await this._messageRouter.RouteMessageAsync(m);
+            this._transport.MessageRecieved += async (m, mc) => await this._messageRouter.RouteMessageAsync(m, mc);
             this._transport.MessageRecieved += this._loggingEventHandler.LogMessageRecieved;
 
             this._transport.MessageFailedToSend += this._loggingEventHandler.LogMessageFailedToSend;

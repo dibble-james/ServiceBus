@@ -12,6 +12,13 @@
     }
 </ul>
 <h2>Send Messages</h2>
+@using (this.Html.BeginForm("sendsharedmessage", "home"))
+{
+    <p>Shared Message</p>
+    <br />
+    <button type="submit">Send</button>
+}
+
 @using (this.Html.BeginForm("sendmessage", "home"))
 {
     <p>Say Hello</p>

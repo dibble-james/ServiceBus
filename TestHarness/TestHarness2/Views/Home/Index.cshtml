@@ -37,9 +37,18 @@
         <div class="panel panel-primary">
             <div class="panel-heading">Debug Log</div>
             <div class="panel-body">
-                <div class="alert alert-{{logEntry.Type}}" data-ng-repeat="logEntry in logEntries">
-                    <strong>{{logEntry.Time}}</strong>&nbsp;{{logEntry.Message}}
-                </div>
+                <table class="table table-stripped">
+                    <tr>
+                        <th>Message Type</th>
+                        <th>Message Sent</th>
+                        <th>Message Recieved</th>
+                    </tr>
+                    <tr data-ng-repeat="logEntry in logEntries">
+                        <td>{{logEntry.Message}}</td>
+                        <td>{{logEntry.Sent}}</td>
+                        <td>{{logEntry.Time}}</td>
+                    </tr>
+                </table>
             </div>
         </div>
     </div>

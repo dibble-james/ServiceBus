@@ -73,7 +73,7 @@
             await routeMessageTask;
         }
 
-        internal async Task RouteMessageAsync(EnvelopeBase envelope)
+        internal async Task RouteMessageAsync(EnvelopeBase envelope, string messageContent)
         {
             var handleMessageGeneric = this.GetType()
                 .GetMethods(BindingFlags.NonPublic | BindingFlags.Instance)

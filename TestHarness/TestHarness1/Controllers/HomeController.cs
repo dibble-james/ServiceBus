@@ -9,9 +9,8 @@ namespace TestHarness1.Controllers
     using System.Linq;
     using System.Threading.Tasks;
     using System.Web.Mvc;
-
     using ServiceBus;
-
+    using TestHarness.SharedMessages;
     using TestHarness1.Events;
     using TestHarness1.Messages;
 
@@ -33,6 +32,14 @@ namespace TestHarness1.Controllers
         public async Task<ActionResult> SendMessage(string message)
         {
             await this._serviceBus.SendAsync(this._serviceBus.Peers.First(), new HelloMessage { World = message });
+
+            return this.RedirectToAction("index");
+        }
+
+        [HttpPost]
+        public async Task<ActionResult> SendSharedMessage(string message)
+        {
+            await this._serviceBus.SendAsync(this._serviceBus.Peers.First(), new SharedMessage());
 
             return this.RedirectToAction("index");
         }

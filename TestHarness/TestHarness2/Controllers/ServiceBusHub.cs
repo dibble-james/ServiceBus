@@ -40,8 +40,9 @@ namespace TestHarness2.Controllers
                                                                                                                    envelope.Envelope.Recipient.PeerAddress.ToString())
                                                                                                            });
 
-            this._serviceBus.Transporter.MessageSent += envelope => this.BroadCastLogEntry(new
+            this._serviceBus.Transporter.MessageSent += (envelope, rawMessage) => this.BroadCastLogEntry(new
                                                                                           {
+                                                                                              Sent = envelope.Envelope.MessageCreated.ToString("hh:mm:ss:fff"),
                                                                                               Time = DateTime.Now.ToString("hh:mm:ss:fff"),
                                                                                               Type = "info",
                                                                                               Message = string.Format(
@@ -51,8 +52,9 @@ namespace TestHarness2.Controllers
                                                                                                   envelope.Envelope.Recipient.PeerAddress.ToString())
                                                                                           });
 
-            this._serviceBus.Transporter.MessageRecieved += envelope => this.BroadCastLogEntry(new
+            this._serviceBus.Transporter.MessageRecieved += (envelope, rawMessage) => this.BroadCastLogEntry(new
                                                                                               {
+                                                                                                  Sent = envelope.MessageCreated.ToString("hh:mm:ss:fff"),
                                                                                                   Time = DateTime.Now.ToString("hh:mm:ss:fff"),
                                                                                                   Type = "info",
                                                                                                   Message = string.Format(

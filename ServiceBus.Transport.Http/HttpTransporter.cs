@@ -37,12 +37,12 @@
         /// <summary>
         /// An event raised when an <see cref="IMessage"/> is received by the <see cref="ITransporter"/>.
         /// </summary>
-        public event Action<EnvelopeBase> MessageRecieved;
+        public event Action<EnvelopeBase, string> MessageRecieved;
 
         /// <summary>
         /// An event raised when an <see cref="IMessage"/> is successfully exported.
         /// </summary>
-        public event Action<QueuedMessage> MessageSent;
+        public event Action<QueuedMessage, string> MessageSent;
 
         /// <summary>
         /// An event raised when an <see cref="IMessage"/> could not be sent.
@@ -68,16 +68,18 @@
         public async Task SendMessageAsync(QueuedMessage message)
         {
             const string action = "message";
-
-            var fullActionPath = new Uri(message.Envelope.Recipient.PeerAddress, Path.Combine(ActionBase, action));
-
+            
             try
             {
-                var result = await this.ExecutePostRequest(fullActionPath, message.Envelope);
+                var fullActionPath = new Uri(message.Envelope.Recipient.PeerAddress, Path.Combine(ActionBase, action));
+
+                var serialisedMessage = this.Serialiser.Serialise(message.Envelope);
+
+                var result = await this.ExecutePostRequest(fullActionPath, serialisedMessage);
 
                 if (result.IsSuccessStatusCode && this.MessageSent != null)
                 {
-                    this.MessageSent(message);
+                    this.MessageSent(message, serialisedMessage);
                 }
                 else
                 {
@@ -104,7 +106,7 @@
 
             if (this.MessageRecieved != null)
             {
-                await Task.Factory.StartNew(() => this.MessageRecieved(message));
+                await Task.Factory.StartNew(() => this.MessageRecieved(message, messageContent));
             }
         }
 
@@ -122,10 +124,8 @@
             this._disposed = true;
         }
 
-        private Task<HttpResponseMessage> ExecutePostRequest(Uri address, EnvelopeBase messageToPost)
+        private Task<HttpResponseMessage> ExecutePostRequest(Uri address, string serialisedMessage)
         {
-            var serialisedMessage = this.Serialiser.Serialise(messageToPost);
-
             var content = new FormUrlEncodedContent(new Dictionary<string, string> { { "message", serialisedMessage } });
 
             return this._client.PostAsync(address, content);

@@ -27,7 +27,8 @@
         /// Mark a message as sent.
         /// </summary>
         /// <param name="message">The <see cref="QueuedMessage"/> that was sent.</param>
-        void Dequeue(QueuedMessage message);
+        /// <param name="messageContent">The raw message content.</param>
+        void Dequeue(QueuedMessage message, string messageContent);
 
         /// <summary>
         /// Retrieve the next <see cref="QueuedMessage"/> for the given <paramref name="peer"/>.

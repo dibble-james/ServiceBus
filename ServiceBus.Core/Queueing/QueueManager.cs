@@ -43,7 +43,7 @@
             }
         }
 
-        public void Dequeue(QueuedMessage message)
+        public void Dequeue(QueuedMessage message, string messageContent)
         {
             var queuedMessage = this._queuePersistence.Value.AsQueryable<QueuedMessage>()
                             .FirstOrDefault(

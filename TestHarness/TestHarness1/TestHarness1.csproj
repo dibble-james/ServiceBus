@@ -173,6 +173,10 @@
       <Project>{2a267688-0909-420b-825f-1468ee68ba22}</Project>
       <Name>ServiceBus.Web.Mvc</Name>
     </ProjectReference>
+    <ProjectReference Include="..\..\TestHarness.SharedMessages\TestHarness.SharedMessages.csproj">
+      <Project>{48b3d3ee-55cb-4708-9212-14135d2a3341}</Project>
+      <Name>TestHarness.SharedMessages</Name>
+    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\Home\Index.cshtml" />

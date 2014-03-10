@@ -30,85 +30,83 @@ namespace ServiceBus.Core.EventHandlers
         /// <returns>An awaitable object representing the handling operation.</returns>
         public async Task ProcessMessageAsync(Envelope<PeerConnectedEvent> envelope)
         {
-            var message = string.Format(
+            this._serviceBus.Log.InfoFormat(
                 CultureInfo.CurrentCulture,
-                "Peer [{0}] connected at [{1}]",
-                envelope.Message.ConnectedPeer.PeerAddress,
-                DateTime.Now);
-
-           this._serviceBus.Log.Info(message);
+                 "Peer [{0}] connected at [{1}]",
+                 envelope.Message.ConnectedPeer.PeerAddress,
+                 DateTime.Now);
         }
 
-        internal void LogMessageRecieved(EnvelopeBase envelope)
+        internal void LogMessageRecieved(EnvelopeBase envelope, string messageContent)
         {
-            var message = string.Format(
-                CultureInfo.CurrentCulture, 
-                "Message of type [{0}] Received at [{1}] from [{2}]", 
-                envelope.Message.MessageType, 
+            this._serviceBus.Log.InfoFormat(
+                CultureInfo.CurrentCulture,
+                "Message of type [{0}] Received at [{1}] from [{2}]",
+                envelope.Message.MessageType,
                 DateTime.Now,
                 envelope.Sender.PeerAddress);
 
-            this._serviceBus.Log.Info(message);
+            this._serviceBus.Log.DebugFormat(
+                CultureInfo.CurrentCulture,
+                "Raw Message Content:{0},{1}{0}================{0}",
+                Environment.NewLine,
+                messageContent);
         }
 
-        internal void LogMessageSent(QueuedMessage messageSent)
+        internal void LogMessageSent(QueuedMessage messageSent, string messageContent)
         {
-            var message = string.Format(
+            this._serviceBus.Log.InfoFormat(
                 CultureInfo.CurrentCulture,
                 "Message of type [{0}] was sent to [{1}] at [{2}]",
                 messageSent.Envelope.Message.MessageType,
                 messageSent.Envelope.Recipient.PeerAddress,
                 DateTime.Now);
 
-            this._serviceBus.Log.Info(message);
+            this._serviceBus.Log.DebugFormat(
+                CultureInfo.CurrentCulture,
+                "Raw Message Content:{0},{1}{0}================{0}",
+                Environment.NewLine,
+                messageContent);
         }
 
         internal void LogMessageFailedToSend(Exception ex, QueuedMessage failedMessage)
         {
-            var message = string.Format(
+            this._serviceBus.Log.InfoFormat(
                 CultureInfo.CurrentCulture,
                 "Message of type [{0}] could not be sent to [{1}] at [{2}].  Reason [{3}]",
                 failedMessage.Envelope.Message.MessageType,
                 failedMessage.Envelope.Recipient.PeerAddress,
                 DateTime.Now,
                 this.GetInnerMostException(ex).Message);
-
-            this._serviceBus.Log.Info(message);
         }
 
         internal void LogGeneralFailure(Exception ex, string methodName)
         {
-            var message = string.Format(
+            this._serviceBus.Log.ErrorFormat(
                 CultureInfo.CurrentCulture,
                 "Method [{0}] failed to complete at [{1}].  Reason [{2}]",
                 methodName,
                 DateTime.Now,
                 this.GetInnerMostException(ex).Message);
-
-            this._serviceBus.Log.Error(message);
         }
 
         internal void LogUnrecognisedMessage(string messageTypeName, string sender)
         {
-            var message = string.Format(
+            this._serviceBus.Log.ErrorFormat(
                 CultureInfo.CurrentCulture,
                 "A message of type [{0}] was received at [{1}] from [{2}].",
                 messageTypeName,
                 DateTime.Now,
                 sender);
-
-            this._serviceBus.Log.Error(message);
         }
 
         internal void LogEventPublished(IEvent @event)
         {
-            var message = string.Format(
+            this._serviceBus.Log.InfoFormat(
                 CultureInfo.CurrentCulture,
                 "A event of type [{0}] was published at [{1}].",
                 @event.MessageType,
                 DateTime.Now);
-
-            this._serviceBus.Log.Info(message);
         }
 
         private Exception GetInnerMostException(Exception ex)

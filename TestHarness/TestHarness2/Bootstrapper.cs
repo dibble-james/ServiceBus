@@ -27,6 +27,7 @@ namespace TestHarness2
     using TestHarness2.Messages;
     using TestHarness2.Controllers;
     using Microsoft.AspNet.SignalR.Hubs;
+    using TestHarness.SharedMessages;
 
     public static class Bootstrapper
     {
@@ -59,7 +60,7 @@ namespace TestHarness2
             FileAppender fileAppender = new RollingFileAppender();
             fileAppender.AppendToFile = true;
             fileAppender.LockingModel = new FileAppender.MinimalLock();
-            fileAppender.File = HttpContext.Current.Server.MapPath("~/ServiceBusLog.xml");
+            fileAppender.File = HttpContext.Current.Server.MapPath("~/Test.1.1.TestHarness2.log.txt");
             var patternLayout = new PatternLayout { ConversionPattern = "%d [%2%t] %-5p [%-10c]   %m%n%n" };
             patternLayout.ActivateOptions();
 
@@ -74,7 +75,8 @@ namespace TestHarness2
                                     {
                                         { MessageExtensions.MessageTypeSignature<HelloMessage>(), typeof(HelloMessage) },
                                         { MessageExtensions.MessageTypeSignature<GoodbyeMessage>(), typeof(GoodbyeMessage) },
-                                        { MessageExtensions.MessageTypeSignature<HelloEvent>(), typeof(HelloEvent) }
+                                        { MessageExtensions.MessageTypeSignature<HelloEvent>(), typeof(HelloEvent) },
+                                        { MessageExtensions.MessageTypeSignature<SharedMessage>(), typeof(SharedMessage) }
                                     };
 
             var messageHandler = new HelloMessageHandler();
