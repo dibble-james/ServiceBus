@@ -20,7 +20,7 @@ namespace TestHarness2.Controllers
             this._serviceBus = serviceBus;
 
             this._serviceBus.UnhandledExceptionOccurs += (error, method) => this.BroadCastLogEntry(new { 
-                                                                                                           Time = DateTime.Now.ToString("hh:mm:ss:fff"),
+                                                                                                           Time = DateTime.Now.ToString("hh:mm:ss.fff"),
                                                                                                            Type = "danger",
                                                                                                            Message = string.Format(
                                                                                                                CultureInfo.CurrentCulture,
@@ -31,7 +31,7 @@ namespace TestHarness2.Controllers
 
             this._serviceBus.Transporter.MessageFailedToSend += (error, envelope) => this.BroadCastLogEntry(new 
                                                                                                            {
-                                                                                                               Time = DateTime.Now.ToString("hh:mm:ss:fff"),
+                                                                                                               Time = DateTime.Now.ToString("hh:mm:ss.fff"),
                                                                                                                Type = "danger",
                                                                                                                Message = string.Format(
                                                                                                                    CultureInfo.CurrentCulture,
@@ -42,8 +42,8 @@ namespace TestHarness2.Controllers
 
             this._serviceBus.Transporter.MessageSent += (envelope, rawMessage) => this.BroadCastLogEntry(new
                                                                                           {
-                                                                                              Sent = envelope.Envelope.MessageCreated.ToString("hh:mm:ss:fff"),
-                                                                                              Time = DateTime.Now.ToString("hh:mm:ss:fff"),
+                                                                                              Sent = envelope.Envelope.MessageCreated.ToString("hh:mm:ss.fff"),
+                                                                                              Time = DateTime.Now.ToString("hh:mm:ss.fff"),
                                                                                               Type = "info",
                                                                                               Message = string.Format(
                                                                                                   CultureInfo.CurrentCulture,
@@ -54,8 +54,8 @@ namespace TestHarness2.Controllers
 
             this._serviceBus.Transporter.MessageRecieved += (envelope, rawMessage) => this.BroadCastLogEntry(new
                                                                                               {
-                                                                                                  Sent = envelope.MessageCreated.ToString("hh:mm:ss:fff"),
-                                                                                                  Time = DateTime.Now.ToString("hh:mm:ss:fff"),
+                                                                                                  Sent = envelope.MessageCreated.ToString("hh:mm:ss.fff"),
+                                                                                                  Time = DateTime.Now.ToString("hh:mm:ss.fff"),
                                                                                                   Type = "info",
                                                                                                   Message = string.Format(
                                                                                                       CultureInfo.CurrentCulture,

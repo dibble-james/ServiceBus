@@ -149,16 +149,11 @@
     <Compile Include="Bootstrapper.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ServiceBusHub.cs" />
-    <Compile Include="Events\HelloEvent.cs" />
-    <Compile Include="EventHandlers\HelloEventHandler.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="HubStartup.cs" />
-    <Compile Include="MessageHandlers\GoodbyeMessageHandler.cs" />
-    <Compile Include="MessageHandlers\HelloMessageHandler.cs" />
-    <Compile Include="Messages\GoodbyeMessage.cs" />
-    <Compile Include="Messages\HelloMessage.cs" />
+    <Compile Include="Messages\NonSharedMessage.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -183,7 +178,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Models\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />

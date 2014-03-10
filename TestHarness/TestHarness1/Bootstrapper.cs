@@ -19,8 +19,7 @@ using ServiceBus.Messaging;
 using ServiceBus.Transport.Http.Configuration;
 using ServiceBus.Web.Mvc.Configuration;
 using TestHarness.SharedMessages;
-using TestHarness1.Events;
-using TestHarness1.Messages;
+    using TestHarness1.Messages;
 
     public static class Bootstrapper
     {
@@ -46,9 +45,8 @@ using TestHarness1.Messages;
         {
             var messageDictionary = new MessageTypeDictionary
                                     {
-                                        { MessageExtensions.MessageTypeSignature<HelloMessage>(), typeof(HelloMessage) },
-                                        { MessageExtensions.MessageTypeSignature<HelloEvent>(), typeof(HelloEvent) },
-                                        { MessageExtensions.MessageTypeSignature<SharedMessage>(), typeof(SharedMessage) }
+                                        { MessageExtensions.MessageTypeSignature<SharedMessage>(), typeof(SharedMessage) },
+                                        { MessageExtensions.MessageTypeSignature<NonSharedMessage>(), typeof(NonSharedMessage) }
                                     };
 
             var hierarchy = (Hierarchy)LogManager.GetRepository();
@@ -60,7 +58,7 @@ using TestHarness1.Messages;
             FileAppender fileAppender = new RollingFileAppender();
             fileAppender.AppendToFile = true;
             fileAppender.LockingModel = new FileAppender.MinimalLock();
-            fileAppender.File = HttpContext.Current.Server.MapPath("~/Test.1.1.TestHarness1.log.txt");
+            fileAppender.File = HttpContext.Current.Server.MapPath("~/Test.1.2.TestHarness1.log.txt");
             var patternLayout = new PatternLayout { ConversionPattern = "%d [%2%t] %-5p [%-10c]   %m%n%n" };
             patternLayout.ActivateOptions();
 

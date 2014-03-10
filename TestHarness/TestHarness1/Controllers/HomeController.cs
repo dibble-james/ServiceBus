@@ -11,7 +11,6 @@ namespace TestHarness1.Controllers
     using System.Web.Mvc;
     using ServiceBus;
     using TestHarness.SharedMessages;
-    using TestHarness1.Events;
     using TestHarness1.Messages;
 
     public class HomeController : Controller
@@ -29,14 +28,6 @@ namespace TestHarness1.Controllers
         }
 
         [HttpPost]
-        public async Task<ActionResult> SendMessage(string message)
-        {
-            await this._serviceBus.SendAsync(this._serviceBus.Peers.First(), new HelloMessage { World = message });
-
-            return this.RedirectToAction("index");
-        }
-
-        [HttpPost]
         public async Task<ActionResult> SendSharedMessage(string message)
         {
             await this._serviceBus.SendAsync(this._serviceBus.Peers.First(), new SharedMessage());
@@ -45,17 +36,9 @@ namespace TestHarness1.Controllers
         }
 
         [HttpPost]
-        public async Task<ActionResult> SendGoodbyeMessage(string message)
+        public async Task<ActionResult> SendNonSharedMessage(string message)
         {
-            await this._serviceBus.SendAsync(this._serviceBus.Peers.First(), new GoodbyeMessage { Planet = message });
-
-            return this.RedirectToAction("index");
-        }
-
-        [HttpPost]
-        public async Task<ActionResult> RaiseHelloEvent()
-        {
-            await this._serviceBus.PublishAsync(new HelloEvent { TimeEventRaised = DateTime.Now });
+            await this._serviceBus.SendAsync(this._serviceBus.Peers.First(), new NonSharedMessage());
 
             return this.RedirectToAction("index");
         }

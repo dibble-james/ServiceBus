@@ -18,26 +18,9 @@
     <br />
     <button type="submit">Send</button>
 }
-
-@using (this.Html.BeginForm("sendmessage", "home"))
+@using (this.Html.BeginForm("sendnonsharedmessage", "home"))
 {
-    <p>Say Hello</p>
+    <p>Non-Shared Message</p>
     <br />
-    @Html.TextBox("message")
     <button type="submit">Send</button>
-}
-
-@using (this.Html.BeginForm("sendgoodbyemessage", "home"))
-{
-    <p>Say Goodbye</p>
-    <br />
-    @Html.TextBox("message")
-    <button type="submit">Send</button>
-}
-<h2>Raise Events</h2>
-@using (this.Html.BeginForm("raisehelloevent", "home"))
-{
-    <p>Raise Hello</p>
-    <br />
-    <button type="submit">Raise</button>
 }

@@ -20,14 +20,10 @@ namespace TestHarness2
     using ServiceBus.Messaging;
     using ServiceBus.Transport.Http.Configuration;
     using ServiceBus.Web.Mvc.Configuration;
-
-    using TestHarness2.EventHandlers;
-    using TestHarness2.Events;
-    using TestHarness2.MessageHandlers;
-    using TestHarness2.Messages;
     using TestHarness2.Controllers;
     using Microsoft.AspNet.SignalR.Hubs;
     using TestHarness.SharedMessages;
+    using TestHarness2.Messages;
 
     public static class Bootstrapper
     {
@@ -60,7 +56,7 @@ namespace TestHarness2
             FileAppender fileAppender = new RollingFileAppender();
             fileAppender.AppendToFile = true;
             fileAppender.LockingModel = new FileAppender.MinimalLock();
-            fileAppender.File = HttpContext.Current.Server.MapPath("~/Test.1.1.TestHarness2.log.txt");
+            fileAppender.File = HttpContext.Current.Server.MapPath("~/Test.1.2.TestHarness2.log.txt");
             var patternLayout = new PatternLayout { ConversionPattern = "%d [%2%t] %-5p [%-10c]   %m%n%n" };
             patternLayout.ActivateOptions();
 
@@ -73,13 +69,9 @@ namespace TestHarness2
 
             var messageDictionary = new MessageTypeDictionary
                                     {
-                                        { MessageExtensions.MessageTypeSignature<HelloMessage>(), typeof(HelloMessage) },
-                                        { MessageExtensions.MessageTypeSignature<GoodbyeMessage>(), typeof(GoodbyeMessage) },
-                                        { MessageExtensions.MessageTypeSignature<HelloEvent>(), typeof(HelloEvent) },
-                                        { MessageExtensions.MessageTypeSignature<SharedMessage>(), typeof(SharedMessage) }
+                                        { MessageExtensions.MessageTypeSignature<SharedMessage>(), typeof(SharedMessage) },
+                                        { MessageExtensions.MessageTypeSignature<NonSharedMessage>(), typeof(NonSharedMessage) }
                                     };
-
-            var messageHandler = new HelloMessageHandler();
 
             var serviceBus =
                 ServiceBusBuilder.Configure()
@@ -88,10 +80,6 @@ namespace TestHarness2
                     .WithHttpTransport(new JsonMessageSerialiser(messageDictionary))
                     .AsMvcServiceBus(RouteTable.Routes)
                     .Build()
-                        .WithMessageHandler<HelloMessage>(messageHandler)
-                        .WithMessageHandler<GoodbyeMessage>(messageHandler)
-                        .WithMessageHandler(new GoodbyeMessageHandler())
-                        .Subscribe(new HelloEventHandler())
                         .WithPeerAsync(new Uri("http://localhost:55001"));
 
             container.RegisterInstance(serviceBus.Result, new ContainerControlledLifetimeManager());
