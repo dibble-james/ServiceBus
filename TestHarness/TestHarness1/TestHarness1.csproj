@@ -41,6 +41,10 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="JamesDibble.Extensions.System, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\packages\JamesDibble.Extensions.System.1.0.1\lib\JamesDibble.Extensions.System.dll</HintPath>
+    </Reference>
     <Reference Include="log4net">
       <HintPath>..\..\packages\log4net.2.0.3\lib\net40-full\log4net.dll</HintPath>
     </Reference>
@@ -130,6 +134,7 @@
   <ItemGroup>
     <Compile Include="Bootstrapper.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="EventHandlers\SharedEventHandler.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -171,7 +176,7 @@
       <Project>{2a267688-0909-420b-825f-1468ee68ba22}</Project>
       <Name>ServiceBus.Web.Mvc</Name>
     </ProjectReference>
-    <ProjectReference Include="..\..\TestHarness.SharedMessages\TestHarness.SharedMessages.csproj">
+    <ProjectReference Include="..\TestHarness.SharedMessages\TestHarness.SharedMessages.csproj">
       <Project>{48b3d3ee-55cb-4708-9212-14135d2a3341}</Project>
       <Name>TestHarness.SharedMessages</Name>
     </ProjectReference>

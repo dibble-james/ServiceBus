@@ -30,7 +30,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestHarness1", "TestHarness
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestHarness2", "TestHarness\TestHarness2\TestHarness2.csproj", "{87E69BE6-4A6C-4FCF-8A66-65886927066B}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestHarness.SharedMessages", "TestHarness.SharedMessages\TestHarness.SharedMessages.csproj", "{48B3D3EE-55CB-4708-9212-14135D2A3341}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestHarness.SharedMessages", "TestHarness\TestHarness.SharedMessages\TestHarness.SharedMessages.csproj", "{48B3D3EE-55CB-4708-9212-14135D2A3341}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

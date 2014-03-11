@@ -5,20 +5,21 @@ using Unity.Mvc4;
 namespace TestHarness2
 {
     using System;
-using System.Web;
-using System.Web.Routing;
-using log4net;
-using log4net.Appender;
-using log4net.Config;
-using log4net.Core;
-using log4net.Layout;
-using log4net.Repository.Hierarchy;
-using ServiceBus;
-using ServiceBus.Configuration;
-using ServiceBus.Messaging;
-using ServiceBus.Transport.Http.Configuration;
-using ServiceBus.Web.Mvc.Configuration;
-using TestHarness.SharedMessages;
+    using System.Web;
+    using System.Web.Routing;
+    using log4net;
+    using log4net.Appender;
+    using log4net.Config;
+    using log4net.Core;
+    using log4net.Layout;
+    using log4net.Repository.Hierarchy;
+    using ServiceBus;
+    using ServiceBus.Configuration;
+    using ServiceBus.Messaging;
+    using ServiceBus.Transport.Http.Configuration;
+    using ServiceBus.Web.Mvc.Configuration;
+    using TestHarness.SharedMessages;
+    using TestHarness1.EventHandlers;
     using TestHarness1.Messages;
 
     public static class Bootstrapper
@@ -58,7 +59,7 @@ using TestHarness.SharedMessages;
             FileAppender fileAppender = new RollingFileAppender();
             fileAppender.AppendToFile = true;
             fileAppender.LockingModel = new FileAppender.MinimalLock();
-            fileAppender.File = HttpContext.Current.Server.MapPath("~/Test.1.2.TestHarness1.log.txt");
+            fileAppender.File = HttpContext.Current.Server.MapPath("~/Test.3.2.TestHarness1.log.txt");
             var patternLayout = new PatternLayout { ConversionPattern = "%d [%2%t] %-5p [%-10c]   %m%n%n" };
             patternLayout.ActivateOptions();
 
@@ -69,13 +70,18 @@ using TestHarness.SharedMessages;
 
             var logger = LogManager.GetLogger(typeof(IServiceBus));
 
+            container.RegisterInstance<ILog>(logger, new ContainerControlledLifetimeManager());
+
+            container.RegisterType<SharedEventHandler>();
+
             var serviceBus =
                 ServiceBusBuilder.Configure()
-                    .WithLogger(logger)
+                    .WithLogger(container.Resolve<ILog>())
                     .WithHostAddress(new Uri("http://localhost:55001"))
                     .WithHttpTransport(new JsonMessageSerialiser(messageDictionary))
                     .AsMvcServiceBus(RouteTable.Routes)
                     .Build()
+                        .Subscribe(container.Resolve<SharedEventHandler>())
                         .WithPeerAsync(new Uri("http://localhost:55033"));
 
             container.RegisterInstance(serviceBus.Result);

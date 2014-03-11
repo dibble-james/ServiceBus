@@ -24,6 +24,8 @@ namespace TestHarness2
     using Microsoft.AspNet.SignalR.Hubs;
     using TestHarness.SharedMessages;
     using TestHarness2.Messages;
+    using TestHarness2.MessageHandlers;
+    using TestHarness2.EventHandlers;
 
     public static class Bootstrapper
     {
@@ -56,7 +58,7 @@ namespace TestHarness2
             FileAppender fileAppender = new RollingFileAppender();
             fileAppender.AppendToFile = true;
             fileAppender.LockingModel = new FileAppender.MinimalLock();
-            fileAppender.File = HttpContext.Current.Server.MapPath("~/Test.1.2.TestHarness2.log.txt");
+            fileAppender.File = HttpContext.Current.Server.MapPath("~/Test.3.2.TestHarness2.log.txt");
             var patternLayout = new PatternLayout { ConversionPattern = "%d [%2%t] %-5p [%-10c]   %m%n%n" };
             patternLayout.ActivateOptions();
 
@@ -67,19 +69,26 @@ namespace TestHarness2
 
             var logger = LogManager.GetLogger(typeof(IServiceBus));
 
+            container.RegisterInstance<ILog>(logger, new ContainerControlledLifetimeManager());
+
+            container.RegisterType<SharedMessageHandler>();
+
             var messageDictionary = new MessageTypeDictionary
                                     {
                                         { MessageExtensions.MessageTypeSignature<SharedMessage>(), typeof(SharedMessage) },
-                                        { MessageExtensions.MessageTypeSignature<NonSharedMessage>(), typeof(NonSharedMessage) }
+                                        { MessageExtensions.MessageTypeSignature<NonSharedMessage>(), typeof(NonSharedMessage) },
+                                        { MessageExtensions.MessageTypeSignature<SharedEvent>(), typeof(SharedEvent) }
                                     };
 
             var serviceBus =
                 ServiceBusBuilder.Configure()
-                    .WithLogger(logger)
+                    .WithLogger(container.Resolve<ILog>())
                     .WithHostAddress(new Uri("http://localhost:55033"))
                     .WithHttpTransport(new JsonMessageSerialiser(messageDictionary))
                     .AsMvcServiceBus(RouteTable.Routes)
                     .Build()
+                        .WithMessageHandler(container.Resolve<SharedMessageHandler>())
+                        .Subscribe(container.Resolve<SharedEventHandler>())
                         .WithPeerAsync(new Uri("http://localhost:55001"));
 
             container.RegisterInstance(serviceBus.Result, new ContainerControlledLifetimeManager());

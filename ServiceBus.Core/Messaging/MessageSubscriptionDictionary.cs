@@ -44,11 +44,9 @@ namespace ServiceBus.Messaging
                     return null;
                 }
                 
-                var subsciption = (IMessageSubscription<TMessage>)this._subscrptions[typeof(TMessage)];
-                
-                this._subscrptions.Add(typeof(TMessage), subsciption);
+                var subscription = (IMessageSubscription<TMessage>)this._subscrptions[typeof(TMessage)];
 
-                return subsciption;   
+                return subscription;   
             }
         }
 

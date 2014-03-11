@@ -252,16 +252,7 @@
             {
                 var newPeer = new Peer(peer);
 
-                var registerWithPeerTask = this._queueManager.EnqueueAsync(
-                    new Envelope<PeerConnectedEvent>
-                    {
-                        Message = new PeerConnectedEvent
-                        {
-                            ConnectedPeer = new Peer(this.PeerAddress)
-                        },
-                        Recipient = newPeer,
-                        Sender = this
-                    });
+                var registerWithPeerTask = this.SendAsync(newPeer, new PeerConnectedEvent { ConnectedPeer = this });
 
                 this._messageRouter.Peers.Add(newPeer);
 
