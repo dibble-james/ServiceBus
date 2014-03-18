@@ -10,6 +10,11 @@ using System.Web;
 
 namespace TestHarness2.Controllers
 {
+    using Db4objects.Db4o;
+    using Db4objects.Db4o.Linq;
+
+    using ServiceBus.Queueing;
+
     [HubName("ServiceBusHub")]
     public class ServiceBusHub : Hub
     {
@@ -19,7 +24,7 @@ namespace TestHarness2.Controllers
         {
             this._serviceBus = serviceBus;
 
-            this._serviceBus.UnhandledExceptionOccurs += (error, method) => this.BroadCastLogEntry(new { 
+            this._serviceBus.UnhandledExceptionOccurs += (error, method) => this.BroadcastLogEntry(new { 
                                                                                                            Time = DateTime.Now.ToString("hh:mm:ss.fff"),
                                                                                                            Type = "danger",
                                                                                                            Message = string.Format(
@@ -29,7 +34,7 @@ namespace TestHarness2.Controllers
                                                                                                                error.Message)
                                                                                                        });
 
-            this._serviceBus.Transporter.MessageFailedToSend += (error, envelope) => this.BroadCastLogEntry(new 
+            this._serviceBus.Transporter.MessageFailedToSend += (error, envelope) => this.BroadcastLogEntry(new 
                                                                                                            {
                                                                                                                Time = DateTime.Now.ToString("hh:mm:ss.fff"),
                                                                                                                Type = "danger",
@@ -40,28 +45,32 @@ namespace TestHarness2.Controllers
                                                                                                                    envelope.Envelope.Recipient.PeerAddress.ToString())
                                                                                                            });
 
-            this._serviceBus.Transporter.MessageSent += (envelope, rawMessage) => this.BroadCastLogEntry(new
+            this._serviceBus.Transporter.MessageSent += (envelope, rawMessage) => this.BroadcastLogEntry(new
                                                                                           {
                                                                                               Sent = envelope.Envelope.MessageCreated.ToString("hh:mm:ss.fff"),
                                                                                               Time = DateTime.Now.ToString("hh:mm:ss.fff"),
                                                                                               Type = "info",
                                                                                               Message = string.Format(
                                                                                                   CultureInfo.CurrentCulture,
-                                                                                                  "A [{0}] message has been sucessfully sent to [{1}]",
+                                                                                                  "A [{0}] message has been successfully sent to [{1}]",
                                                                                                   envelope.Envelope.Message.MessageType,
                                                                                                   envelope.Envelope.Recipient.PeerAddress.ToString())
                                                                                           });
 
-            this._serviceBus.Transporter.MessageRecieved += (envelope, rawMessage) => this.BroadCastLogEntry(new
+            this._serviceBus.Transporter.MessageRecieved += (envelope, rawMessage) => this.BroadcastLogEntry(new
                                                                                               {
                                                                                                   Sent = envelope.MessageCreated.ToString("hh:mm:ss.fff"),
                                                                                                   Time = DateTime.Now.ToString("hh:mm:ss.fff"),
                                                                                                   Type = "info",
                                                                                                   Message = string.Format(
                                                                                                       CultureInfo.CurrentCulture,
-                                                                                                      "A [{0}] message has been recieved",
+                                                                                                      "A [{0}] message has been received",
                                                                                                       envelope.Message.MessageType)
                                                                                               });
+
+            this._serviceBus.Transporter.MessageSent += (message, s) => this.BroadcastMessageSent(message);
+
+            this._serviceBus.MessageQueued += this.BroadcastMessageQueued;
         }
 
         public string GetHostAddress()
@@ -74,9 +83,39 @@ namespace TestHarness2.Controllers
             return this._serviceBus.Peers;
         }
 
-        public void BroadCastLogEntry(dynamic logEntry)
+        public IEnumerable<QueuedMessage> GetQueuedMessages()
+        {
+            using (var queue = Db4oEmbedded.OpenFile(HttpContext.Current.Server.MapPath("~/App_Data/queue.db4o")))
+            {
+                var queuedMessages = queue.AsQueryable<QueuedMessage>().Where(qm => !qm.HasSent);
+                
+                return queuedMessages;   
+            }
+        }
+
+        public IEnumerable<QueuedMessage> GetSentMessages()
+        {
+            using (var queue = Db4oEmbedded.OpenFile(HttpContext.Current.Server.MapPath("~/App_Data/queue.db4o")))
+            {
+                var sentMessages = queue.AsQueryable<QueuedMessage>().Where(qm => qm.HasSent);
+
+                return sentMessages;
+            }
+        }
+
+        public void BroadcastLogEntry(dynamic logEntry)
         {
             this.Clients.All.updateLog(logEntry);
+        }
+
+        public void BroadcastMessageSent(QueuedMessage sentMessage)
+        {
+            this.Clients.All.messageSent(sentMessage);
+        }
+
+        public void BroadcastMessageQueued(QueuedMessage queuedMessage)
+        {
+            this.Clients.All.messageQueued(queuedMessage);
         }
     }
 }

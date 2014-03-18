@@ -8,6 +8,7 @@
 
     using ServiceBus.Event;
     using ServiceBus.Messaging;
+    using ServiceBus.Queueing;
     using ServiceBus.Transport;
 
     /// <summary>
@@ -25,6 +26,11 @@
         /// An event raised when an <see cref="IEvent"/> is published on the <see cref="IServiceBus"/>.
         /// </summary>
         event Action<IEvent> EventPublished;
+
+        /// <summary>
+        /// An event raised when a <see cref="QueuedMessage"/> is created and persisted.
+        /// </summary>
+        event Action<QueuedMessage> MessageQueued;
 
         /// <summary>
         /// Gets the <see cref="IPeer"/>s that are known to the <see cref="IServiceBus"/>.

@@ -7,29 +7,79 @@
             <h1>Service Bus Host Address: {{serviceBusHostAddress}}</h1>
         </div>
     </div>
-    <div class="col-lg-3 col-md-4">
-        <div class="panel panel-primary">
-            <div class="panel-heading">Event Handlers</div>
-            <div class="panel-body">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-lg-4 col-md-4">
+                <div class="panel panel-primary">
+                    <div class="panel-heading">Actions</div>
+                    <div class="panel-body">
+                        <button class="btn btn-primary" data-ng-click="sendSharedMessage()">Send Shared Message</button>
+                        <button class="btn btn-primary" data-ng-click="sendNonSharedMessage()">Send Non-Shared Message</button>
+                        <button class="btn btn-primary" data-ng-click="raiseEvent()">Raise Event</button>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-4 col-md-4">
+                <div class="panel panel-primary">
+                    <div class="panel-heading">Peers</div>
+                    <div class="panel-body">
+                        <ul class="list-unstyled">
+                            <li data-ng-repeat="peer in peers">
+                                {{peer.PeerAddress}}
+                            </li>
+                        </ul>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
-    <div class="col-lg-3 col-md-4">
+    <div class="col-lg-6 col-md-6">
         <div class="panel panel-primary">
-            <div class="panel-heading">Message Handlers</div>
+            <div class="panel-heading">
+                Sent Messages
+            </div>
             <div class="panel-body">
+                <div class="table-responsive">
+                    <table class="table table-stripped col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                        <tr>
+                            <th>Queued</th>
+                            <th>Created</th>
+                            <th>Recipient</th>
+                            <th>Message Type</th>
+                        </tr>
+                        <tr data-ng-repeat="message in sentMessages">
+                            <td>{{message.QueuedAt}}</td>
+                            <td>{{message.Envelope.MessageCreated}}</td>
+                            <td>{{message.Envelope.Recipient.PeerAddress}}</td>
+                            <td>{{message.Envelope.Message.MessageType}}</td>
+                        </tr>
+                    </table>
+                </div>
             </div>
         </div>
     </div>
-    <div class="col-lg-3 col-md-4">
+    <div class="col-lg-6 col-md-6">
         <div class="panel panel-primary">
-            <div class="panel-heading">Peers</div>
+            <div class="panel-heading">
+                Queued Messages
+            </div>
             <div class="panel-body">
-                <ul class="list-unstyled">
-                    <li data-ng-repeat="peer in peers">
-                        {{peer.PeerAddress}}
-                    </li>
-                </ul>
+                <div class="table-responsive">
+                    <table class="table table-stripped">
+                        <tr>
+                            <th>Queued</th>
+                            <th>Created</th>
+                            <th>Recipient</th>
+                            <th>Message Type</th>
+                        </tr>
+                        <tr data-ng-repeat="message in queuedMessages">
+                            <td>{{message.QueuedAt}}</td>
+                            <td>{{message.Envelope.MessageCreated}}</td>
+                            <td>{{message.Envelope.Recipient.PeerAddress}}</td>
+                            <td>{{message.Envelope.Message.MessageType}}</td>
+                        </tr>
+                    </table>
+                </div>
             </div>
         </div>
     </div>
@@ -61,7 +111,7 @@
     <script>
         var serviceBus = angular.module('serviceBus', []);
 
-        function indexController($scope) {
+        function indexController($scope, $http) {
             var hub = $.connection.ServiceBusHub;
 
             var scope = $scope;
@@ -69,10 +119,10 @@
             scope.serviceBusHostAddress = '';
             scope.peers = [];
             scope.logEntries = [];
+            scope.queuedMessages = [];
+            scope.sentMessages = [];
 
             var init = function () {
-
-
                 hub.server.getHostAddress().done(function (hostAddress) {
                     scope.serviceBusHostAddress = hostAddress;
                     scope.$apply();
@@ -82,6 +132,16 @@
                     scope.peers = peers;
                     scope.$apply();
                 });
+
+                hub.server.getQueuedMessages().done(function (queuedMessages) {
+                    scope.queuedMessages = queuedMessages;
+                    scope.$apply();
+                });
+
+                hub.server.getSentMessages().done(function (sentMessages) {
+                    scope.sentMessages = sentMessages;
+                    scope.$apply();
+                });
             };
 
             hub.client.updateLog = function (newLogEntry) {
@@ -89,7 +149,32 @@
                 scope.$apply();
             };
 
+            hub.client.messageQueued = function (queuedMessage) {
+                scope.queuedMessages.push(queuedMessage);
+                scope.$apply();
+            };
+
+            hub.client.messageSent = function (sentMessage) {
+                scope.sentMessages.push(sentMessage);
+
+                var sentMessageIndex = scope.queuedMessages.indexOf(sentMessage);
+                scope.queuedMessages.splice(sentMessageIndex, 1);
+                scope.$apply();
+            };
+
             $.connection.hub.start().done(init);
+
+            scope.sendSharedMessage = function () {
+                $http.post('@this.Url.Action("SendSharedMessage")');
+            };
+
+            scope.sendNonSharedMessage = function () {
+                $http.post('@this.Url.Action("SendNonSharedMessage")');
+            };
+
+            scope.raiseEvent = function () {
+                $http.post('@this.Url.Action("RaiseSharedEvent")');
+            };
         }
     </script>
 }

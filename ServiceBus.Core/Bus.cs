@@ -71,6 +71,11 @@
         public event Action<IEvent> EventPublished;
 
         /// <summary>
+        /// An event raised when a <see cref="QueuedMessage"/> is created and persisted.
+        /// </summary>
+        public event Action<QueuedMessage> MessageQueued;
+
+        /// <summary>
         /// Gets the <see cref="System.Uri"/> of the location of the <see cref="IPeer"/>.
         /// </summary>
         public Uri PeerAddress { get; private set; }
@@ -329,6 +334,7 @@
             this.EventPublished += this._loggingEventHandler.LogEventPublished;
 
             this._queueManager.MessageQueued += async m => await this._transport.SendMessageAsync(m);
+            this._queueManager.MessageQueued += this.RaiseMessageQueuedEvent;
 
             this._transport.MessageSent += this._queueManager.Dequeue;
             this._transport.MessageSent += this._loggingEventHandler.LogMessageSent;
@@ -348,6 +354,14 @@
             if (this.UnhandledExceptionOccurs != null)
             {
                 this.UnhandledExceptionOccurs(ex, methodName);
+            }
+        }
+
+        private void RaiseMessageQueuedEvent(QueuedMessage queuedMessage)
+        {
+            if (this.MessageQueued != null)
+            {
+                this.MessageQueued(queuedMessage);
             }
         }
 

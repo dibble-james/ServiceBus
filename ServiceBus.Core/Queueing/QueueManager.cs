@@ -22,7 +22,7 @@
         {
             this._disposed = false;
 
-            this._databasePath = Path.Combine(storeDirectory, "queue.db40");
+            this._databasePath = Path.Combine(storeDirectory, "queue.db4o");
 
             this._queuePersistence = new Lazy<IObjectContainer>(() => Db4oEmbedded.OpenFile(this._databasePath));
         }
