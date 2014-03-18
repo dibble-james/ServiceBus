@@ -104,7 +104,7 @@
         {
             var message = this.Serialiser.Deserialise(messageContent);
 
-            if (this.MessageRecieved != null)
+            if (message != null && this.MessageRecieved != null)
             {
                 await Task.Factory.StartNew(() => this.MessageRecieved(message, messageContent));
             }

@@ -7,6 +7,7 @@ namespace TestHarness2
     using System;
     using System.Web;
     using System.Web.Routing;
+    using Db4objects.Db4o;
     using log4net;
     using log4net.Appender;
     using log4net.Config;
@@ -16,6 +17,7 @@ namespace TestHarness2
     using ServiceBus;
     using ServiceBus.Configuration;
     using ServiceBus.Messaging;
+    using ServiceBus.Queueing;
     using ServiceBus.Transport.Http.Configuration;
     using ServiceBus.Web.Mvc.Configuration;
     using TestHarness.SharedMessages;
@@ -59,7 +61,7 @@ namespace TestHarness2
             FileAppender fileAppender = new RollingFileAppender();
             fileAppender.AppendToFile = true;
             fileAppender.LockingModel = new FileAppender.MinimalLock();
-            fileAppender.File = HttpContext.Current.Server.MapPath("~/Test.3.2.TestHarness1.log.txt");
+            fileAppender.File = HttpContext.Current.Server.MapPath("~/TestHarness1.log.txt");
             var patternLayout = new PatternLayout { ConversionPattern = "%d [%2%t] %-5p [%-10c]   %m%n%n" };
             patternLayout.ActivateOptions();
 
@@ -72,6 +74,10 @@ namespace TestHarness2
 
             container.RegisterInstance<ILog>(logger, new ContainerControlledLifetimeManager());
 
+            container.RegisterInstance<IObjectContainer>(Db4oEmbedded.OpenFile(HttpContext.Current.Server.MapPath("~/App_Data/queue.db4o")), new ContainerControlledLifetimeManager());
+
+            container.RegisterType<IQueueManager, QueueManager>(new ContainerControlledLifetimeManager());
+
             container.RegisterType<SharedEventHandler>();
 
             var serviceBus =
@@ -79,7 +85,7 @@ namespace TestHarness2
                     .WithLogger(container.Resolve<ILog>())
                     .WithHostAddress(new Uri("http://localhost:55001"))
                     .WithHttpTransport(new JsonMessageSerialiser(messageDictionary))
-                    .AsMvcServiceBus(RouteTable.Routes)
+                    .AsMvcServiceBus(RouteTable.Routes, container.Resolve<IQueueManager>())
                     .Build()
                         .Subscribe(container.Resolve<SharedEventHandler>())
                         .WithPeerAsync(new Uri("http://localhost:55033"));

@@ -5,8 +5,8 @@
     using System.Web;
     using System.Web.Mvc;
     using System.Web.Routing;
-
     using ServiceBus.Configuration;
+    using ServiceBus.Queueing;
     using ServiceBus.Transport.Http.Controllers;
 
     /// <summary>
@@ -20,7 +20,7 @@
         /// <param name="transportConfiguration">The transportation configuration.</param>
         /// <param name="routes">The MVC route table to add the service bus actions too.</param>
         /// <returns>The <see cref="IHostApplicationConfiguration"/>.</returns>
-        public static IHostApplicationConfiguration AsMvcServiceBus(this ITransportConfiguration transportConfiguration, RouteCollection routes)
+        public static IHostApplicationConfiguration AsMvcServiceBus(this ITransportConfiguration transportConfiguration, RouteCollection routes, IQueueManager queueManager)
         {
             Argument.CannotBeNull(routes, "routes", "Route collection must be used to add service bus HTTP methods.");
 
@@ -30,14 +30,7 @@
                 new { controller = "Message", action = "Receive" },
                 new[] { typeof(MessageController).Namespace });
 
-            var appDataPath = HttpContext.Current.Server.MapPath("~/App_Data");
-
-            if (!Directory.Exists(appDataPath))
-            {
-                Directory.CreateDirectory(appDataPath);
-            }
-
-            return new HostApplicationConfiguration(transportConfiguration, appDataPath);
+            return new HostApplicationConfiguration(transportConfiguration, queueManager);
         }
     }
 }

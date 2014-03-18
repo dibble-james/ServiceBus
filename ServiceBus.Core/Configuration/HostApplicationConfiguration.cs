@@ -14,10 +14,10 @@
         /// </summary>
         /// <param name="transportConfiguration">The <see cref="ITransportConfiguration"/>.</param>
         /// <param name="queueStoreDirectory">The path of the directory where the queued will be placed.</param>
-        public HostApplicationConfiguration(ITransportConfiguration transportConfiguration, string queueStoreDirectory)
+        public HostApplicationConfiguration(ITransportConfiguration transportConfiguration, IQueueManager queueManager)
             : base(transportConfiguration)
         {
-            this._queueManager = new QueueManager(queueStoreDirectory);
+            this._queueManager = queueManager;
         }
 
         /// <summary>

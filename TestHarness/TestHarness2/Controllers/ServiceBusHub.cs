@@ -19,22 +19,25 @@ namespace TestHarness2.Controllers
     public class ServiceBusHub : Hub
     {
         private readonly IServiceBus _serviceBus;
+        private readonly IObjectContainer _queue;
 
-        public ServiceBusHub(IServiceBus serviceBus)
+        public ServiceBusHub(IServiceBus serviceBus, IObjectContainer queue)
         {
             this._serviceBus = serviceBus;
+            this._queue = queue;
 
-            this._serviceBus.UnhandledExceptionOccurs += (error, method) => this.BroadcastLogEntry(new { 
-                                                                                                           Time = DateTime.Now.ToString("hh:mm:ss.fff"),
-                                                                                                           Type = "danger",
-                                                                                                           Message = string.Format(
-                                                                                                               CultureInfo.CurrentCulture,
-                                                                                                               "Method [{0}] caused error [{1}]",
-                                                                                                               method,
-                                                                                                               error.Message)
-                                                                                                       });
+            this._serviceBus.UnhandledExceptionOccurs += (error, method) => this.BroadcastLogEntry(new
+            {
+                Time = DateTime.Now.ToString("hh:mm:ss.fff"),
+                Type = "danger",
+                Message = string.Format(
+                    CultureInfo.CurrentCulture,
+                    "Method [{0}] caused error [{1}]",
+                    method,
+                    error.Message)
+            });
 
-            this._serviceBus.Transporter.MessageFailedToSend += (error, envelope) => this.BroadcastLogEntry(new 
+            this._serviceBus.Transporter.MessageFailedToSend += (error, envelope) => this.BroadcastLogEntry(new
                                                                                                            {
                                                                                                                Time = DateTime.Now.ToString("hh:mm:ss.fff"),
                                                                                                                Type = "danger",
@@ -85,22 +88,16 @@ namespace TestHarness2.Controllers
 
         public IEnumerable<QueuedMessage> GetQueuedMessages()
         {
-            using (var queue = Db4oEmbedded.OpenFile(HttpContext.Current.Server.MapPath("~/App_Data/queue.db4o")))
-            {
-                var queuedMessages = queue.AsQueryable<QueuedMessage>().Where(qm => !qm.HasSent);
-                
-                return queuedMessages;   
-            }
+            var queuedMessages = this._queue.AsQueryable<QueuedMessage>().Where(qm => !qm.HasSent);
+
+            return queuedMessages;
         }
 
         public IEnumerable<QueuedMessage> GetSentMessages()
         {
-            using (var queue = Db4oEmbedded.OpenFile(HttpContext.Current.Server.MapPath("~/App_Data/queue.db4o")))
-            {
-                var sentMessages = queue.AsQueryable<QueuedMessage>().Where(qm => qm.HasSent);
+            var sentMessages = this._queue.AsQueryable<QueuedMessage>().Where(qm => qm.HasSent);
 
-                return sentMessages;
-            }
+            return sentMessages;
         }
 
         public void BroadcastLogEntry(dynamic logEntry)

@@ -7,6 +7,8 @@ namespace TestHarness1.Controllers
 {
     using System;
     using System.Linq;
+    using System.Net;
+    using System.Net.Http;
     using System.Threading.Tasks;
     using System.Web.Mvc;
     using ServiceBus;
@@ -28,27 +30,27 @@ namespace TestHarness1.Controllers
         }
 
         [HttpPost]
-        public async Task<ActionResult> SendSharedMessage()
+        public async Task<HttpResponseMessage> SendSharedMessage()
         {
             await this._serviceBus.SendAsync(this._serviceBus.Peers.First(), new SharedMessage());
 
-            return this.RedirectToAction(ExpressionExtensions.MethodName(() => this.Index()));
+            return new HttpResponseMessage(HttpStatusCode.OK);
         }
 
         [HttpPost]
-        public async Task<ActionResult> SendNonSharedMessage()
+        public async Task<HttpResponseMessage> SendNonSharedMessage()
         {
             await this._serviceBus.SendAsync(this._serviceBus.Peers.First(), new NonSharedMessage());
 
-            return this.RedirectToAction(ExpressionExtensions.MethodName(() => this.Index()));
+            return new HttpResponseMessage(HttpStatusCode.OK);
         }
 
         [HttpPost]
-        public async Task<ActionResult> RaiseSharedEvent()
+        public async Task<HttpResponseMessage> RaiseSharedEvent()
         {
             await this._serviceBus.PublishAsync(new SharedEvent());
 
-            return this.RedirectToAction(ExpressionExtensions.MethodName(() => this.Index()));
+            return new HttpResponseMessage(HttpStatusCode.OK);
         }
     }
 }

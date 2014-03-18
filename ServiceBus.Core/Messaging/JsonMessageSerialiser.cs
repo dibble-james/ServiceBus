@@ -61,6 +61,8 @@ namespace ServiceBus.Messaging
                 {
                     this.UnrecognisedMessageReceived(messageTypeName, messageFromJson.Message.Sender);
                 }
+
+                return null;
             }
 
             var messageType = this._messageTypeDictionary[messageTypeName];

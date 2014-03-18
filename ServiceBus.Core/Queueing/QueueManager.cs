@@ -4,27 +4,24 @@
     using System.IO;
     using System.Linq;
     using System.Threading.Tasks;
-
     using Db4objects.Db4o;
+    using Db4objects.Db4o.Ext;
     using Db4objects.Db4o.Linq;
-
     using ServiceBus.Core.Events;
     using ServiceBus.Messaging;
 
-    internal class QueueManager : IQueueManager
+    public sealed class QueueManager : IQueueManager
     {
         private readonly string _databasePath;
-        private readonly Lazy<IObjectContainer> _queuePersistence;
+        private readonly IObjectContainer _queuePersistence;
 
         private bool _disposed;
-                
-        public QueueManager(string storeDirectory)
+
+        public QueueManager(IObjectContainer queuePersistence)
         {
             this._disposed = false;
 
-            this._databasePath = Path.Combine(storeDirectory, "queue.db4o");
-
-            this._queuePersistence = new Lazy<IObjectContainer>(() => Db4oEmbedded.OpenFile(this._databasePath));
+            this._queuePersistence = queuePersistence;
         }
 
         public event Action<QueuedMessage> MessageQueued;
@@ -33,10 +30,10 @@
         {
             var queuedMessage = new QueuedMessage { QueuedAt = DateTime.Now, Envelope = envelope, HasSent = false };
 
-            this._queuePersistence.Value.Store(queuedMessage);
+            this._queuePersistence.Store(queuedMessage);
 
-            await Task.Factory.StartNew(() => this._queuePersistence.Value.Commit());
-            
+            await Task.Factory.StartNew(() => this._queuePersistence.Commit());
+
             if (this.MessageQueued != null)
             {
                 await Task.Factory.StartNew(() => this.MessageQueued(queuedMessage));
@@ -45,10 +42,10 @@
 
         public void Dequeue(QueuedMessage message, string messageContent)
         {
-            var queuedMessage = this._queuePersistence.Value.AsQueryable<QueuedMessage>()
+            var queuedMessage = this._queuePersistence.AsQueryable<QueuedMessage>()
                             .FirstOrDefault(
-                                qm => qm.QueuedAt == message.QueuedAt 
-                                   && qm.Envelope.Recipient.PeerAddress == message.Envelope.Recipient.PeerAddress 
+                                qm => qm.QueuedAt == message.QueuedAt
+                                   && qm.Envelope.Recipient.PeerAddress == message.Envelope.Recipient.PeerAddress
                                    && !message.HasSent);
 
             if (queuedMessage == null)
@@ -63,38 +60,38 @@
 
             queuedMessage.HasSent = true;
 
-            this._queuePersistence.Value.Store(queuedMessage);
+            this._queuePersistence.Store(queuedMessage);
 
-            this._queuePersistence.Value.Commit();
+            this._queuePersistence.Commit();
         }
 
         public QueuedMessage PeersNextMessageOrDefault(IPeer peer)
         {
             var nextMessage =
-                this._queuePersistence.Value.AsQueryable<QueuedMessage>()
-                    .OrderByDescending(qm => qm.HasSent)
-                    .ThenBy(qm => qm.QueuedAt)
-                    .FirstOrDefault(
-                    qm => 
-                           !qm.HasSent 
-                        && qm.Envelope.Recipient.PeerAddress == peer.PeerAddress
-                        && !(qm.Envelope.Message is PeerConnectedEvent));
-            
+                    this._queuePersistence.AsQueryable<QueuedMessage>()
+                        .OrderByDescending(qm => qm.HasSent)
+                        .ThenBy(qm => qm.QueuedAt)
+                        .FirstOrDefault(
+                        qm =>
+                               !qm.HasSent
+                            && qm.Envelope.Recipient.PeerAddress == peer.PeerAddress
+                            && !(qm.Envelope.Message is PeerConnectedEvent));
+
             return nextMessage;
         }
 
         public QueuedMessage PeersNextMessageOrDefault(IPeer peer, DateTime messageQueuedBefore)
         {
             var nextMessage =
-                this._queuePersistence.Value.AsQueryable<QueuedMessage>()
+                this._queuePersistence.AsQueryable<QueuedMessage>()
                     .OrderByDescending(qm => qm.HasSent)
                     .ThenBy(qm => qm.QueuedAt)
                     .FirstOrDefault(
-                        qm =>    !qm.HasSent 
+                        qm => !qm.HasSent
                               && qm.Envelope.Recipient.PeerAddress == peer.PeerAddress
                               && qm.QueuedAt < messageQueuedBefore
                               && !(qm.Envelope.Message is PeerConnectedEvent));
-            
+
             return nextMessage;
         }
 
@@ -103,11 +100,6 @@
         /// </summary>
         public void Dispose()
         {
-            if (!this._disposed && this._queuePersistence.IsValueCreated)
-            {
-                this._queuePersistence.Value.Dispose();
-            }
-
             this._disposed = true;
         }
     }
