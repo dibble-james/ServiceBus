@@ -204,6 +204,20 @@
       <SubType>Content</SubType>
       <DependentUpon>ServiceBus.classdiagram</DependentUpon>
     </Content>
+    <Content Include="PeerConnected.sequencediagram">
+      <SubType>Content</SubType>
+    </Content>
+    <Content Include="PeerConnected.sequencediagram.layout">
+      <SubType>Content</SubType>
+      <DependentUpon>PeerConnected.sequencediagram</DependentUpon>
+    </Content>
+    <Content Include="Sync.sequencediagram">
+      <SubType>Content</SubType>
+    </Content>
+    <Content Include="Sync.sequencediagram.layout">
+      <SubType>Content</SubType>
+      <DependentUpon>Sync.sequencediagram</DependentUpon>
+    </Content>
     <Content Include="Transport.classdiagram">
       <SubType>Content</SubType>
     </Content>
