@@ -89,7 +89,7 @@
                     .FirstOrDefault(
                         qm => !qm.HasSent
                               && qm.Envelope.Recipient.PeerAddress == peer.PeerAddress
-                              && qm.QueuedAt < messageQueuedBefore
+                              && qm.QueuedAt > messageQueuedBefore
                               && !(qm.Envelope.Message is PeerConnectedEvent));
 
             return nextMessage;
