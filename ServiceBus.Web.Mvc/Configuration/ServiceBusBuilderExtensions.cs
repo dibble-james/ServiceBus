@@ -19,6 +19,7 @@
         /// </summary>
         /// <param name="transportConfiguration">The transportation configuration.</param>
         /// <param name="routes">The MVC route table to add the service bus actions too.</param>
+        /// <param name="queueManager">The embedded queue database.</param>
         /// <returns>The <see cref="IHostApplicationConfiguration"/>.</returns>
         public static IHostApplicationConfiguration AsMvcServiceBus(this ITransportConfiguration transportConfiguration, RouteCollection routes, IQueueManager queueManager)
         {

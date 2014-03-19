@@ -13,7 +13,7 @@
         /// Initialises a new instance of the <see cref="HostApplicationConfiguration"/> class.
         /// </summary>
         /// <param name="transportConfiguration">The <see cref="ITransportConfiguration"/>.</param>
-        /// <param name="queueStoreDirectory">The path of the directory where the queued will be placed.</param>
+        /// <param name="queueManager">The embedded queue database.</param>
         public HostApplicationConfiguration(ITransportConfiguration transportConfiguration, IQueueManager queueManager)
             : base(transportConfiguration)
         {
