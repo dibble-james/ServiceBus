@@ -35,11 +35,7 @@
         /// <param name="transporter">The protocol to use to communicate with other <see cref="IServiceBus"/>es.</param>
         /// <param name="queueManager">The message persistence service to use.</param>
         /// <param name="log">The <see cref="log4net.ILog"/> to use with this service bus instance.</param>
-        internal Bus(
-            Uri hostAddress,
-            ITransporter transporter,
-            IQueueManager queueManager,
-            ILog log)
+        internal Bus(Uri hostAddress, ITransporter transporter, IQueueManager queueManager, ILog log)
         {
             this._disposed = false;
 
@@ -125,7 +121,7 @@
         }
 
         /// <summary>
-        /// Gets the <see cref="IEventHandler"/>s subscriptions.
+        /// Gets the <see cref="IEventHandler{T}"/>s subscriptions.
         /// </summary>
         public MessageSubscriptionDictionary Subscriptions
         {
@@ -273,12 +269,12 @@
         }
 
         /// <summary>
-        /// Register an <see cref="IMessageHandler"/> to the <see cref="IServiceBus"/>.
+        /// Register an <see cref="IMessageHandler{T}"/> to the <see cref="IServiceBus"/>.
         /// </summary>
-        /// <param name="messageHandler">The <see cref="IMessageHandler"/> to register.</param>
+        /// <param name="messageHandler">The <see cref="IMessageHandler{T}"/> to register.</param>
         /// <returns>The <see cref="IServiceBus"/>.</returns>
         /// <typeparam name="TMessage">
-        /// The type of <see cref="IMessage"/> the <see cref="IMessageHandler"/> is being registered too.
+        /// The type of <see cref="IMessage"/> the <see cref="IMessageHandler{T}"/> is being registered too.
         /// </typeparam>
         public IServiceBus WithMessageHandler<TMessage>(IMessageHandler<TMessage> messageHandler)
             where TMessage : class, IMessage, new()
@@ -312,7 +308,9 @@
         /// <summary>
         /// Populates a <see cref="T:System.Runtime.Serialization.SerializationInfo"/> with the data needed to serialize the target object.
         /// </summary>
-        /// <param name="info">The <see cref="T:System.Runtime.Serialization.SerializationInfo"/> to populate with data. </param><param name="context">The destination (see <see cref="T:System.Runtime.Serialization.StreamingContext"/>) for this serialization. </param><exception cref="T:System.Security.SecurityException">The caller does not have the required permission. </exception>
+        /// <param name="info">The <see cref="T:System.Runtime.Serialization.SerializationInfo"/> to populate with data.</param>
+        /// <param name="context">The destination (see <see cref="T:System.Runtime.Serialization.StreamingContext"/>) for this serialization.</param>
+        /// <exception cref="T:System.Security.SecurityException">The caller does not have the required permission.</exception>
         public void GetObjectData(SerializationInfo info, StreamingContext context)
         {
             info.AddValue("PeerAddress", this.PeerAddress);

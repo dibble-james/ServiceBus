@@ -83,7 +83,8 @@
             await Task.Factory.StartNew(() => handleMessageGeneric.Invoke(this, new object[] { envelope }));
         }
 
-        private async Task HandleMessageAsync<TMessage>(Envelope<TMessage> envelope) where TMessage : class, IMessage, new()
+        private async Task HandleMessageAsync<TMessage>(Envelope<TMessage> envelope) 
+            where TMessage : class, IMessage, new()
         {
             var subscription = this._subscriptionDictionary.GetMessageSubscrption<TMessage>();
 

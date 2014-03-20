@@ -19,7 +19,7 @@ namespace ServiceBus.Messaging
         /// <returns>The <see cref="IMessage"/> signature.</returns>
         public static string MessageTypeSignature<TMessage>() where TMessage : IMessage
         {
-            return MessageExtensions.MessageTypeSignature(typeof(TMessage));
+            return MessageTypeSignature(typeof(TMessage));
         }
 
         /// <summary>

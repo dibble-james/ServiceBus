@@ -53,7 +53,7 @@
         ILog Log { get; }
 
         /// <summary>
-        /// Gets the <see cref="IEventHandler"/>s subscriptions.
+        /// Gets the <see cref="IMessageHandler{T}"/>s subscriptions.
         /// </summary>
         MessageSubscriptionDictionary Subscriptions { get; }
 
@@ -97,12 +97,12 @@
         Task<IServiceBus> WithPeerAsync(Uri peer);
 
         /// <summary>
-        /// Register an <see cref="IMessageHandler"/> to the <see cref="IServiceBus"/>.
+        /// Register an <see cref="IMessageHandler{T}"/> to the <see cref="IServiceBus"/>.
         /// </summary>
-        /// <param name="messageHandler">The <see cref="IMessageHandler"/> to register.</param>
+        /// <param name="messageHandler">The <see cref="IMessageHandler{T}"/> to register.</param>
         /// <returns>The <see cref="IServiceBus"/>.</returns>
         /// <typeparam name="TMessage">
-        /// The type of <see cref="IMessage"/> the <see cref="IMessageHandler"/> is being registered too.
+        /// The type of <see cref="IMessage"/> the <see cref="IMessageHandler{T}"/> is being registered too.
         /// </typeparam>
         IServiceBus WithMessageHandler<TMessage>(IMessageHandler<TMessage> messageHandler) 
             where TMessage : class, IMessage, new();

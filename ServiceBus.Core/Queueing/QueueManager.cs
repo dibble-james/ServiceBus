@@ -1,18 +1,17 @@
 ﻿namespace ServiceBus.Queueing
 {
     using System;
-    using System.IO;
     using System.Linq;
     using System.Threading.Tasks;
+
     using Db4objects.Db4o;
-    using Db4objects.Db4o.Ext;
     using Db4objects.Db4o.Linq;
+
     using ServiceBus.Core.Events;
     using ServiceBus.Messaging;
 
     public sealed class QueueManager : IQueueManager
     {
-        private readonly string _databasePath;
         private readonly IObjectContainer _queuePersistence;
 
         private bool _disposed;

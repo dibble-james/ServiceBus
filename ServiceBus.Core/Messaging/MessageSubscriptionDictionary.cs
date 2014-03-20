@@ -8,11 +8,9 @@ namespace ServiceBus.Messaging
     using System;
     using System.Collections.Generic;
 
-    using ServiceBus.Event;
-
     /// <summary>
-    /// A wrapper for a dictionary to hold mappings for <see cref="IEvent"/> types and
-    /// <see cref="IEventHandler"/>s.
+    /// A wrapper for a dictionary to hold mappings for <see cref="IMessage"/> types and
+    /// <see cref="IMessageHandler{T}"/>s.
     /// </summary>
     public sealed class MessageSubscriptionDictionary
     {

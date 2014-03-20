@@ -4,7 +4,6 @@
     using System.Runtime.Serialization;
 
     using ServiceBus.Event;
-    using ServiceBus.Messaging;
 
     /// <summary>
     /// A service bus system event to register a peer to it's own known peer network.  This class cannot be inherited.

@@ -1,8 +1,6 @@
 ﻿namespace ServiceBus.Web.Mvc.Configuration
 {
     using System;
-    using System.IO;
-    using System.Web;
     using System.Web.Mvc;
     using System.Web.Routing;
     using ServiceBus.Configuration;
@@ -19,6 +17,7 @@
         /// </summary>
         /// <param name="transportConfiguration">The transportation configuration.</param>
         /// <param name="routes">The MVC route table to add the service bus actions too.</param>
+        /// <param name="queueManager">The embedded persisted message queue.</param>
         /// <returns>The <see cref="IHostApplicationConfiguration"/>.</returns>
         public static IHostApplicationConfiguration AsMvcServiceBus(this ITransportConfiguration transportConfiguration, RouteCollection routes, IQueueManager queueManager)
         {
