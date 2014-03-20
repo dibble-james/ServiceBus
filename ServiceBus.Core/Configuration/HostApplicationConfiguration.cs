@@ -13,7 +13,11 @@
         /// Initialises a new instance of the <see cref="HostApplicationConfiguration"/> class.
         /// </summary>
         /// <param name="transportConfiguration">The <see cref="ITransportConfiguration"/>.</param>
+<<<<<<< HEAD
         /// <param name="queueManager">The embedded persisted message queue.</param>
+=======
+        /// <param name="queueManager">The embedded queue database.</param>
+>>>>>>> baeec8091b70e2e8fee3e378d535dc727dda6a9a
         public HostApplicationConfiguration(ITransportConfiguration transportConfiguration, IQueueManager queueManager)
             : base(transportConfiguration)
         {
