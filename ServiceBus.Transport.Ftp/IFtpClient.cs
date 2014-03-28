@@ -5,8 +5,8 @@
 
     public interface IFtpClient : IDisposable
     {
-        Task Connect(Uri ftpLocation);
+        Task ConnectAsync(FtpPeer peerToConnectTo);
 
-        Task SendMessage(string serialisedMessage);
+        Task SendMessageAsync(string serialisedMessage);
     }
 }

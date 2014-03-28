@@ -94,7 +94,7 @@
         /// </summary>
         /// <param name="peer">The known <see cref="IServiceBus"/> location.</param>
         /// <returns>The <see cref="IServiceBus"/>.</returns>
-        Task<IServiceBus> WithPeerAsync(Uri peer);
+        Task<IServiceBus> WithPeerAsync(IPeer peer);
 
         /// <summary>
         /// Register an <see cref="IMessageHandler{T}"/> to the <see cref="IServiceBus"/>.

@@ -7,7 +7,7 @@
     /// A remote <see cref="IServiceBus"/> instance.
     /// </summary>
     [Serializable]
-    public sealed class Peer : IPeer
+    public class Peer : IPeer
     {
         /// <summary>
         /// Initialises a new instance of the <see cref="Peer"/> class.

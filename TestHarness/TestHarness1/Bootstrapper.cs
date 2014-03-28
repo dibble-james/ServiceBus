@@ -2,9 +2,10 @@ using System.Web.Mvc;
 using Microsoft.Practices.Unity;
 using Unity.Mvc4;
 
-namespace TestHarness2
+namespace TestHarness1
 {
     using System;
+    using System.Net;
     using System.Web;
     using System.Web.Routing;
     using Db4objects.Db4o;
@@ -18,6 +19,8 @@ namespace TestHarness2
     using ServiceBus.Configuration;
     using ServiceBus.Messaging;
     using ServiceBus.Queueing;
+    using ServiceBus.Transport.Ftp;
+    using ServiceBus.Transport.Ftp.Configuration;
     using ServiceBus.Transport.Http.Configuration;
     using ServiceBus.Web.Mvc.Configuration;
     using TestHarness.SharedMessages;
@@ -83,12 +86,12 @@ namespace TestHarness2
             var serviceBus =
                 ServiceBusBuilder.Configure()
                     .WithLogger(container.Resolve<ILog>())
-                    .WithHostAddress(new Uri("http://localhost:55001"))
-                    .WithHttpTransport(new JsonMessageSerialiser(messageDictionary))
+                    .WithHostAddress(new Uri("ftp://127.0.0.1:21"))
+                    .WithFtpTransport(new JsonMessageSerialiser(messageDictionary), @"C:\Queue\SB1")
                     .AsMvcServiceBus(RouteTable.Routes, container.Resolve<IQueueManager>())
                     .Build()
                         .Subscribe(container.Resolve<SharedEventHandler>())
-                        .WithPeerAsync(new Uri("http://localhost:55033"));
+                        .WithPeerAsync(new FtpPeer(new Uri("ftp://127.0.0.1:22"), new NetworkCredential(@"home\james", "3l3m3ntal!")));
 
             container.RegisterInstance(serviceBus.Result);
         }

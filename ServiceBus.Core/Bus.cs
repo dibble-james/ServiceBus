@@ -245,17 +245,15 @@
         /// </summary>
         /// <param name="peer">The known <see cref="IServiceBus"/> location.</param>
         /// <returns>The <see cref="IServiceBus"/>.</returns>
-        public async Task<IServiceBus> WithPeerAsync(Uri peer)
+        public async Task<IServiceBus> WithPeerAsync(IPeer peer)
         {
             Argument.CannotBeNull(peer, "peer", "When registering a peer, its address cannot be null.");
 
             try
             {
-                var newPeer = new Peer(peer);
+                var registerWithPeerTask = this.SendAsync(peer, new PeerConnectedEvent { ConnectedPeer = this });
 
-                var registerWithPeerTask = this.SendAsync(newPeer, new PeerConnectedEvent { ConnectedPeer = this });
-
-                this._messageRouter.Peers.Add(newPeer);
+                this._messageRouter.Peers.Add(peer);
 
                 await registerWithPeerTask;
 

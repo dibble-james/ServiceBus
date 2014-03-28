@@ -21,9 +21,9 @@
         /// <summary>
         /// Initialises a new instance of the <see cref="FtpTransporter"/> class.
         /// </summary>
-        /// <param name="client">The <see cref="FtpMessageSender"/> to use to send messages.</param>
+        /// <param name="clientFactory">The <see cref="FtpMessageSender"/> to use to send messages.</param>
         /// <param name="messageSerialiser">The <see cref="IMessageSerialiser"/> to use.</param>
-        /// <param name="pathToReciever">The full file path of the location this peers FTP server is mapped to recieve messages.</param>
+        /// <param name="pathToReciever">The full file path of the location this peers FTP server is mapped to receive messages.</param>
         public FtpTransporter(IFtpClientFactory clientFactory, IMessageSerialiser messageSerialiser, string pathToReciever)
         {
             this._clientFactory = clientFactory;
@@ -83,13 +83,20 @@
         {
             try
             {
-                var clientConnectTask = this._clientFactory.Connect(message.Envelope.Recipient.PeerAddress);
+                var recipient = message.Envelope.Recipient as FtpPeer;
+
+                if (recipient == null)
+                {
+                    throw new InvalidOperationException("The FTP Transporter cannot send a message to a non FtpPeer.");
+                }
+
+                var clientConnectTask = this._clientFactory.ConnectAsync(recipient);
 
                 var messageContent = this.Serialiser.Serialise(message.Envelope);
 
                 var client = await clientConnectTask;
 
-                await client.SendMessage(messageContent);
+                await client.SendMessageAsync(messageContent);
             }
             catch (Exception exception)
             {

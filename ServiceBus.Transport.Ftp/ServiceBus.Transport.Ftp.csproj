@@ -33,12 +33,22 @@
     <DocumentationFile>..\Release\ServiceBus.Transport.Ftp.XML</DocumentationFile>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="JamesDibble.Extensions.System, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\JamesDibble.Extensions.System.1.0.1\lib\JamesDibble.Extensions.System.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Net.FtpClient">
+      <HintPath>..\packages\System.Net.FtpClient.1.0.5120.19022\lib\net40\System.Net.FtpClient.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Configuration\ServiceBusBuilderExtensions.cs" />
+    <Compile Include="FtpClientFactory.cs" />
     <Compile Include="FtpMessageSender.cs" />
+    <Compile Include="FtpPeer.cs" />
     <Compile Include="FtpTransporter.cs" />
     <Compile Include="IFtpClient.cs" />
     <Compile Include="IFtpClientFactory.cs" />
@@ -46,6 +56,12 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\ServiceBus.Core\ServiceBus.Core.csproj">
+      <Project>{2DF282BD-1565-4D4E-9F73-972AAF9B98E4}</Project>
+      <Name>ServiceBus.Core</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="$(SolutionDir)\.nuget\nuget.targets" />

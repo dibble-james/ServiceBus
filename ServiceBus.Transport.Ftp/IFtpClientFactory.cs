@@ -5,6 +5,6 @@
 
     public interface IFtpClientFactory
     {
-        Task<IFtpClient> Connect(Uri ftpLocation);
+        Task<IFtpClient> ConnectAsync(FtpPeer peerToConnectTo);
     }
 }

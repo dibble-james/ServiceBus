@@ -209,6 +209,10 @@
       <Project>{2DF282BD-1565-4D4E-9F73-972AAF9B98E4}</Project>
       <Name>ServiceBus.Core</Name>
     </ProjectReference>
+    <ProjectReference Include="..\..\ServiceBus.Transport.Ftp\ServiceBus.Transport.Ftp.csproj">
+      <Project>{af099c16-219e-4a36-884d-07d01f3d7480}</Project>
+      <Name>ServiceBus.Transport.Ftp</Name>
+    </ProjectReference>
     <ProjectReference Include="..\..\ServiceBus.Transport.Http\ServiceBus.Transport.Http.csproj">
       <Project>{BFD0910F-4720-45CE-BCDD-960440EF0ADC}</Project>
       <Name>ServiceBus.Transport.Http</Name>

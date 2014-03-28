@@ -8,15 +8,6 @@ using System.Web.Routing;
 
 namespace TestHarness1
 {
-    using ServiceBus.Configuration;
-    using ServiceBus.Messaging;
-    using ServiceBus.Transport.Http.Configuration;
-    using ServiceBus.Web.Mvc.Configuration;
-
-    using TestHarness1.Messages;
-
-    using TestHarness2;
-
     // Note: For instructions on enabling IIS6 or IIS7 classic mode, 
     // visit http://go.microsoft.com/?LinkId=9394801
     public class MvcApplication : System.Web.HttpApplication

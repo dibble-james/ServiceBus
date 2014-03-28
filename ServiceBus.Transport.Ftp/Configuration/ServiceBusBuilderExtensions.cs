@@ -1,7 +1,6 @@
-﻿namespace ServiceBus.Transport.Http.Configuration
+﻿namespace ServiceBus.Transport.Ftp.Configuration
 {
     using System;
-    using System.Net.FtpClient;
 
     using ServiceBus.Configuration;
     using ServiceBus.Messaging;
@@ -21,8 +20,7 @@
         /// <returns>The <see cref="ITransportConfiguration"/>.</returns>
         public static ITransportConfiguration WithFtpTransport(this IHostAddressConfiguration hostAddressConfiguration, IMessageSerialiser messageSerialiser, string pathToReciever)
         {
-            //// TODO: Use new instance of client factory.
-            return hostAddressConfiguration.WithFtpTransport(null, messageSerialiser, pathToReciever);
+            return hostAddressConfiguration.WithFtpTransport(new FtpClientFactory(), messageSerialiser, pathToReciever);
         }
 
         /// <summary>
