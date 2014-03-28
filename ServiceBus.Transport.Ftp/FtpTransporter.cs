@@ -1,11 +1,13 @@
 ﻿namespace ServiceBus.Transport.Ftp
 {
     using System;
+    using System.IO;
     using System.Net.FtpClient;
     using System.Threading.Tasks;
 
     using ServiceBus.Messaging;
     using ServiceBus.Queueing;
+
 
     /// <summary>
     /// A <see cref="ITransporter"/> for sending messages to <see cref="IPeer"/>s using the File Transfer Protocol (FTP).
@@ -13,17 +15,22 @@
     public class FtpTransporter : ITransporter
     {
         private readonly IMessageSerialiser _serialiser;
-        private readonly FtpClient _client;
+        private readonly IFtpClientFactory _clientFactory;
+        private readonly FileSystemWatcher _messageRecievedWatcher;
 
         /// <summary>
         /// Initialises a new instance of the <see cref="FtpTransporter"/> class.
         /// </summary>
-        /// <param name="client">The <see cref="FtpClient"/> to use to send messages.</param>
+        /// <param name="client">The <see cref="FtpMessageSender"/> to use to send messages.</param>
         /// <param name="messageSerialiser">The <see cref="IMessageSerialiser"/> to use.</param>
-        public FtpTransporter(FtpClient client, IMessageSerialiser messageSerialiser)
+        /// <param name="pathToReciever">The full file path of the location this peers FTP server is mapped to recieve messages.</param>
+        public FtpTransporter(IFtpClientFactory clientFactory, IMessageSerialiser messageSerialiser, string pathToReciever)
         {
-            this._client = client;
+            this._clientFactory = clientFactory;
             this._serialiser = messageSerialiser;
+            this._messageRecievedWatcher = new FileSystemWatcher(pathToReciever);
+
+            this._messageRecievedWatcher.Created += this.MessageReceived;
         }
 
         /// <summary>
@@ -76,7 +83,13 @@
         {
             try
             {
-                await Task.Factory.StartNew(null);
+                var clientConnectTask = this._clientFactory.Connect(message.Envelope.Recipient.PeerAddress);
+
+                var messageContent = this.Serialiser.Serialise(message.Envelope);
+
+                var client = await clientConnectTask;
+
+                await client.SendMessage(messageContent);
             }
             catch (Exception exception)
             {
@@ -93,7 +106,19 @@
         /// <filterpriority>2</filterpriority>
         public void Dispose()
         {
-            this._client.Dispose();
+            this._messageRecievedWatcher.Dispose();
+        }
+
+        private void MessageReceived(object source, FileSystemEventArgs e)
+        {
+            if (e.ChangeType != WatcherChangeTypes.Created)
+            {
+                return;
+            }
+
+            var messageContents = File.ReadAllLines(e.FullPath);
+
+            Task.Factory.StartNew(async () => await this.ReceiveAsync(string.Join(string.Empty, messageContents)));
         }
     }
 }

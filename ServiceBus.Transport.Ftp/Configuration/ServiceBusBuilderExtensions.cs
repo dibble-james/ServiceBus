@@ -8,34 +8,38 @@
     using ServiceBus.Transport.Ftp;
 
     /// <summary>
-    /// Extension methods for <see cref="IHostAddressConfiguration"/> to define HTTP transportation.
+    /// Extension methods for <see cref="IHostAddressConfiguration"/> to define FTP transportation.
     /// </summary>
     public static class ServiceBusBuilderExtensions
     {
         /// <summary>
-        /// Use HTTP transportation for this <see cref="IServiceBus"/> using the default HTTP client.
+        /// Use FTP transportation for this <see cref="IServiceBus"/> using the default FTP client factory.
         /// </summary>
         /// <param name="hostAddressConfiguration">The <see cref="IHostAddressConfiguration"/>.</param>
         /// <param name="messageSerialiser">The <see cref="IMessageSerialiser"/> to use.</param>
+        /// <param name="pathToReciever">The full file path of the location this peers FTP server is mapped to recieve messages.</param>
         /// <returns>The <see cref="ITransportConfiguration"/>.</returns>
-        public static ITransportConfiguration WithFtpTransport(this IHostAddressConfiguration hostAddressConfiguration, IMessageSerialiser messageSerialiser)
+        public static ITransportConfiguration WithFtpTransport(this IHostAddressConfiguration hostAddressConfiguration, IMessageSerialiser messageSerialiser, string pathToReciever)
         {
-            return hostAddressConfiguration.WithFtpTransport(new FtpClient(), messageSerialiser);
+            //// TODO: Use new instance of client factory.
+            return hostAddressConfiguration.WithFtpTransport(null, messageSerialiser, pathToReciever);
         }
 
         /// <summary>
-        /// Use HTTP transportation for this <see cref="IServiceBus"/> using the a predefined HTTP client.
+        /// Use FTP transportation for this <see cref="IServiceBus"/> using the a predefined FTP client factory.
         /// </summary>
         /// <param name="hostAddressConfiguration">The <see cref="IHostAddressConfiguration"/>.</param>
-        /// <param name="client">The HTTP client to use.</param>
+        /// <param name="clientFactory">The FTP client factory to use.</param>
         /// <param name="messageSerialiser">The <see cref="IMessageSerialiser"/> to use.</param>
+        /// <param name="pathToReciever">The full file path of the location this peers FTP server is mapped to recieve messages.</param>
         /// <returns>The <see cref="ITransportConfiguration"/>.</returns>
-        public static ITransportConfiguration WithFtpTransport(this IHostAddressConfiguration hostAddressConfiguration, FtpClient client, IMessageSerialiser messageSerialiser)
+        public static ITransportConfiguration WithFtpTransport(this IHostAddressConfiguration hostAddressConfiguration, IFtpClientFactory clientFactory, IMessageSerialiser messageSerialiser, string pathToReciever)
         {
-            Argument.CannotBeNull(client, "client", "The FTP transporter cannot accept a null FTP Client.");
+            Argument.CannotBeNull(clientFactory, "clientFactory", "The FTP transporter cannot accept a null FTP Client Factory.");
             Argument.CannotBeNull(messageSerialiser, "messageSerialiser", "A message serialiser to be used by the transporter cannot be null.");
+            Argument.CannotBe(pathToReciever, "pathToReciever", path => !string.IsNullOrEmpty(path));
 
-            var transporter = new FtpTransporter(client, messageSerialiser);
+            var transporter = new FtpTransporter(clientFactory, messageSerialiser, pathToReciever);
 
             return new TransportConfiguration(hostAddressConfiguration, transporter);
         }
