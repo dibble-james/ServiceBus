@@ -3,7 +3,7 @@
 //    Copyright 2014 James Dibble
 // </copyright>
 // --------------------------------------------------------------------------------------------------------------------
-namespace ServiceBus.Messaging
+namespace ServiceBus.Messaging.Json
 {
     using System;
     using System.Linq;

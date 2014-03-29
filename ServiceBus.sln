@@ -36,6 +36,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestHarness.SharedMessages"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ServiceBus.Transport.Ftp", "ServiceBus.Transport.Ftp\ServiceBus.Transport.Ftp.csproj", "{AF099C16-219E-4A36-884D-07D01F3D7480}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ServiceBus.Messaging.Json", "ServiceBus.Messaging.Json\ServiceBus.Messaging.Json.csproj", "{EA334873-5C7F-4491-AF48-21F4FEC31871}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -78,6 +80,10 @@ Global
 		{AF099C16-219E-4A36-884D-07D01F3D7480}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{AF099C16-219E-4A36-884D-07D01F3D7480}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{AF099C16-219E-4A36-884D-07D01F3D7480}.Release|Any CPU.Build.0 = Release|Any CPU
+		{EA334873-5C7F-4491-AF48-21F4FEC31871}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{EA334873-5C7F-4491-AF48-21F4FEC31871}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{EA334873-5C7F-4491-AF48-21F4FEC31871}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{EA334873-5C7F-4491-AF48-21F4FEC31871}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
