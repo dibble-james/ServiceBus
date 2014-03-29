@@ -24,8 +24,7 @@ namespace TestHarness1
     using ServiceBus.Messaging.Json;
     using ServiceBus.Queueing;
     using ServiceBus.Queueing.Db4o;
-    using ServiceBus.Transport.Ftp;
-    using ServiceBus.Transport.Ftp.Configuration;
+    using ServiceBus.Transport.Http.Configuration;
     using ServiceBus.Web.Mvc.Configuration;
 
     using TestHarness.SharedMessages;
@@ -97,13 +96,13 @@ namespace TestHarness1
             var serviceBus =
                 ServiceBusBuilder.Configure()
                     .WithLogger(container.Resolve<ILog>())
-                    .WithHostAddress(new Uri("ftp://127.0.0.1:21"))
-                    .WithFtpTransport(new JsonMessageSerialiser(messageDictionary), @"C:\Queue\SB1")
+                    .WithHostAddress(new Uri("http://servicebus.jdibble.co.uk"))
+                    .WithHttpTransport(new JsonMessageSerialiser(messageDictionary))
                     .AsMvcServiceBus(RouteTable.Routes, container.Resolve<IQueueManager>())
                     .Build()
                         .WithMessageHandler(container.Resolve<SharedMessageHandler>())
                         .Subscribe(container.Resolve<SharedEventHandler>())
-                        .WithPeerAsync(new FtpPeer(new Uri("ftp://127.0.0.1:22"), new NetworkCredential(@"home\james", "3l3m3ntal!")));
+                        .WithPeerAsync(new Peer(new Uri("http://servicebus2.jdibble.co.uk")));
 
             container.RegisterInstance(serviceBus.Result, new ContainerControlledLifetimeManager());
 

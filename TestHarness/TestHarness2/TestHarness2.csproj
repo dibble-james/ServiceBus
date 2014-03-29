@@ -183,6 +183,7 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Content Include="Global.asax" />
+    <None Include="Properties\PublishProfiles\SmarterAsp.pubxml" />
     <None Include="Scripts\jquery-1.6.4-vsdoc.js" />
     <Content Include="Scripts\jquery-1.6.4.js" />
     <Content Include="Scripts\jquery-1.6.4.min.js" />
@@ -217,9 +218,9 @@
       <Project>{CDA2ED6C-8AA5-46E7-B681-C3EA82A243D0}</Project>
       <Name>ServiceBus.Queueing.Db4o</Name>
     </ProjectReference>
-    <ProjectReference Include="..\..\ServiceBus.Transport\ServiceBus.Transport.Ftp\ServiceBus.Transport.Ftp.csproj">
-      <Project>{AF099C16-219E-4A36-884D-07D01F3D7480}</Project>
-      <Name>ServiceBus.Transport.Ftp</Name>
+    <ProjectReference Include="..\..\ServiceBus.Transport\ServiceBus.Transport.Http\ServiceBus.Transport.Http.csproj">
+      <Project>{BFD0910F-4720-45CE-BCDD-960440EF0ADC}</Project>
+      <Name>ServiceBus.Transport.Http</Name>
     </ProjectReference>
     <ProjectReference Include="..\..\ServiceBus.Web.Mvc\ServiceBus.Web.Mvc.csproj">
       <Project>{2A267688-0909-420B-825F-1468EE68BA22}</Project>
