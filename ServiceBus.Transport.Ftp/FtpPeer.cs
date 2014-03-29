@@ -7,7 +7,11 @@ namespace ServiceBus.Transport.Ftp
 {
     using System;
     using System.Net;
+    using System.Runtime.Serialization;
 
+    /// <summary>
+    /// An <see cref="IPeer"/> that is connected too via an FTP server.
+    /// </summary>
     [Serializable]
     public class FtpPeer : Peer
     {
@@ -22,8 +26,28 @@ namespace ServiceBus.Transport.Ftp
         }
 
         /// <summary>
+        /// Initialises a new instance of the <see cref="Peer"/> class.
+        /// </summary>
+        /// <param name="info">The <see cref="T:System.Runtime.Serialization.SerializationInfo"/> to populate with data. </param>
+        /// <param name="context">The destination (see <see cref="T:System.Runtime.Serialization.StreamingContext"/>) for this serialization. </param>
+        protected FtpPeer(SerializationInfo info, StreamingContext context) : base(info, context)
+        {
+        }
+
+        /// <summary>
         /// Gets the user information to connect to this <see cref="FtpPeer"/>.
         /// </summary>
         public NetworkCredential Credentials { get; private set; }
+
+        /// <summary>
+        /// Populates a <see cref="T:System.Runtime.Serialization.SerializationInfo"/> with the data needed to serialize the target object.
+        /// </summary>
+        /// <param name="info">The <see cref="T:System.Runtime.Serialization.SerializationInfo"/> to populate with data. </param>
+        /// <param name="context">The destination (see <see cref="T:System.Runtime.Serialization.StreamingContext"/>) for this serialization. </param>
+        /// <exception cref="T:System.Security.SecurityException">The caller does not have the required permission. </exception>
+        public override void GetObjectData(SerializationInfo info, StreamingContext context)
+        {
+            base.GetObjectData(info, context);
+        }
     }
 }

@@ -16,7 +16,7 @@
         /// </summary>
         /// <param name="hostAddressConfiguration">The <see cref="IHostAddressConfiguration"/>.</param>
         /// <param name="messageSerialiser">The <see cref="IMessageSerialiser"/> to use.</param>
-        /// <param name="pathToReciever">The full file path of the location this peers FTP server is mapped to recieve messages.</param>
+        /// <param name="pathToReciever">The full file path of the location this peers FTP server is mapped to receive messages.</param>
         /// <returns>The <see cref="ITransportConfiguration"/>.</returns>
         public static ITransportConfiguration WithFtpTransport(this IHostAddressConfiguration hostAddressConfiguration, IMessageSerialiser messageSerialiser, string pathToReciever)
         {
@@ -29,7 +29,7 @@
         /// <param name="hostAddressConfiguration">The <see cref="IHostAddressConfiguration"/>.</param>
         /// <param name="clientFactory">The FTP client factory to use.</param>
         /// <param name="messageSerialiser">The <see cref="IMessageSerialiser"/> to use.</param>
-        /// <param name="pathToReciever">The full file path of the location this peers FTP server is mapped to recieve messages.</param>
+        /// <param name="pathToReciever">The full file path of the location this peers FTP server is mapped to receive messages.</param>
         /// <returns>The <see cref="ITransportConfiguration"/>.</returns>
         public static ITransportConfiguration WithFtpTransport(this IHostAddressConfiguration hostAddressConfiguration, IFtpClientFactory clientFactory, IMessageSerialiser messageSerialiser, string pathToReciever)
         {

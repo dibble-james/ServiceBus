@@ -7,11 +7,10 @@
     using ServiceBus.Messaging;
     using ServiceBus.Queueing;
 
-
     /// <summary>
     /// A <see cref="ITransporter"/> for sending messages to <see cref="IPeer"/>s using the File Transfer Protocol (FTP).
     /// </summary>
-    public class FtpTransporter : ITransporter
+    public sealed class FtpTransporter : ITransporter
     {
         private readonly IMessageSerialiser _serialiser;
         private readonly IFtpClientFactory _clientFactory;
@@ -32,7 +31,7 @@
                                                NotifyFilter = NotifyFilters.LastWrite
                                            };
 
-            this._messageRecievedWatcher.Changed += this.MessageReceived;
+            this._messageRecievedWatcher.Changed += async (sender, args) => await this.MessageReceived(sender, args);
 
             this._messageRecievedWatcher.EnableRaisingEvents = true;
         }
@@ -116,13 +115,21 @@
         /// <summary>
         /// Performs application-defined tasks associated with freeing, releasing, or resetting unmanaged resources.
         /// </summary>
-        /// <filterpriority>2</filterpriority>
         public void Dispose()
         {
-            this._messageRecievedWatcher.Dispose();
+            this.Dispose(true);
+            GC.SuppressFinalize(this);
         }
 
-        private void MessageReceived(object source, FileSystemEventArgs e)
+        private void Dispose(bool disposing)
+        {
+            if (disposing)
+            {
+                this._messageRecievedWatcher.Dispose();
+            }
+        }
+
+        private async Task MessageReceived(object source, FileSystemEventArgs e)
         {
             if (e.ChangeType != WatcherChangeTypes.Changed)
             {
@@ -131,7 +138,7 @@
 
             var messageContents = File.ReadAllLines(e.FullPath);
 
-            Task.Factory.StartNew(async () => await this.ReceiveAsync(string.Join(string.Empty, messageContents)));
+            await Task.Factory.StartNew(async () => await this.ReceiveAsync(string.Concat(messageContents)));
         }
     }
 }

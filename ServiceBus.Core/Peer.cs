@@ -18,7 +18,12 @@
             this.PeerAddress = address;
         }
 
-        private Peer(SerializationInfo info, StreamingContext context)
+        /// <summary>
+        /// Initialises a new instance of the <see cref="Peer"/> class.
+        /// </summary>
+        /// <param name="info">The <see cref="T:System.Runtime.Serialization.SerializationInfo"/> to populate with data. </param>
+        /// <param name="context">The destination (see <see cref="T:System.Runtime.Serialization.StreamingContext"/>) for this serialization. </param>
+        protected Peer(SerializationInfo info, StreamingContext context)
         {
             this.PeerAddress = info.GetValue("PeerAddress", typeof(Uri)) as Uri;
         }
@@ -34,7 +39,7 @@
         /// <param name="info">The <see cref="T:System.Runtime.Serialization.SerializationInfo"/> to populate with data. </param>
         /// <param name="context">The destination (see <see cref="T:System.Runtime.Serialization.StreamingContext"/>) for this serialization. </param>
         /// <exception cref="T:System.Security.SecurityException">The caller does not have the required permission. </exception>
-        public void GetObjectData(SerializationInfo info, StreamingContext context)
+        public virtual void GetObjectData(SerializationInfo info, StreamingContext context)
         {
             info.AddValue("PeerAddress", this.PeerAddress);
         }
