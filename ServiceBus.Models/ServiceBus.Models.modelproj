@@ -235,10 +235,6 @@
       <Name>ServiceBus.Core</Name>
       <Project>{2df282bd-1565-4d4e-9f73-972aaf9b98e4}</Project>
     </ProjectReference>
-    <ProjectReference Include="..\ServiceBus.Transport.Http\ServiceBus.Transport.Http.csproj">
-      <Name>ServiceBus.Transport.Http</Name>
-      <Project>{bfd0910f-4720-45ce-bcdd-960440ef0adc}</Project>
-    </ProjectReference>
     <ProjectReference Include="..\ServiceBus.Web.Mvc\ServiceBus.Web.Mvc.csproj">
       <Name>ServiceBus.Web.Mvc</Name>
       <Project>{2a267688-0909-420b-825f-1468ee68ba22}</Project>

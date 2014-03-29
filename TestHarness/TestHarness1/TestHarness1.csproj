@@ -184,13 +184,17 @@
       <Project>{2DF282BD-1565-4D4E-9F73-972AAF9B98E4}</Project>
       <Name>ServiceBus.Core</Name>
     </ProjectReference>
-    <ProjectReference Include="..\..\ServiceBus.Transport.Ftp\ServiceBus.Transport.Ftp.csproj">
-      <Project>{af099c16-219e-4a36-884d-07d01f3d7480}</Project>
-      <Name>ServiceBus.Transport.Ftp</Name>
+    <ProjectReference Include="..\..\ServiceBus.Messaging\ServiceBus.Messaging.Json\ServiceBus.Messaging.Json.csproj">
+      <Project>{EA334873-5C7F-4491-AF48-21F4FEC31871}</Project>
+      <Name>ServiceBus.Messaging.Json</Name>
     </ProjectReference>
-    <ProjectReference Include="..\..\ServiceBus.Transport.Http\ServiceBus.Transport.Http.csproj">
-      <Project>{BFD0910F-4720-45CE-BCDD-960440EF0ADC}</Project>
-      <Name>ServiceBus.Transport.Http</Name>
+    <ProjectReference Include="..\..\ServiceBus.Queueing\ServiceBus.Queueing.Db4o\ServiceBus.Queueing.Db4o.csproj">
+      <Project>{CDA2ED6C-8AA5-46E7-B681-C3EA82A243D0}</Project>
+      <Name>ServiceBus.Queueing.Db4o</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\ServiceBus.Transport\ServiceBus.Transport.Ftp\ServiceBus.Transport.Ftp.csproj">
+      <Project>{AF099C16-219E-4A36-884D-07D01F3D7480}</Project>
+      <Name>ServiceBus.Transport.Ftp</Name>
     </ProjectReference>
     <ProjectReference Include="..\..\ServiceBus.Web.Mvc\ServiceBus.Web.Mvc.csproj">
       <Project>{2a267688-0909-420b-825f-1468ee68ba22}</Project>

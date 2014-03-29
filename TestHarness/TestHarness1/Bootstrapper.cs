@@ -18,11 +18,13 @@ namespace TestHarness1
     using ServiceBus;
     using ServiceBus.Configuration;
     using ServiceBus.Messaging;
+    using ServiceBus.Messaging.Json;
     using ServiceBus.Queueing;
+    using ServiceBus.Queueing.Db4o;
     using ServiceBus.Transport.Ftp;
     using ServiceBus.Transport.Ftp.Configuration;
-    using ServiceBus.Transport.Http.Configuration;
     using ServiceBus.Web.Mvc.Configuration;
+
     using TestHarness.SharedMessages;
     using TestHarness1.EventHandlers;
     using TestHarness1.Messages;
@@ -79,7 +81,7 @@ namespace TestHarness1
 
             container.RegisterInstance<IObjectContainer>(Db4oEmbedded.OpenFile(HttpContext.Current.Server.MapPath("~/App_Data/queue.db4o")), new ContainerControlledLifetimeManager());
 
-            container.RegisterType<IQueueManager, QueueManager>(new ContainerControlledLifetimeManager());
+            container.RegisterType<IQueueManager, Db4oQueueManager>(new ContainerControlledLifetimeManager());
 
             container.RegisterType<SharedEventHandler>();
 

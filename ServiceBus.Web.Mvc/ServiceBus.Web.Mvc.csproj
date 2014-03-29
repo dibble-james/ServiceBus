@@ -56,8 +56,8 @@
       <Project>{2df282bd-1565-4d4e-9f73-972aaf9b98e4}</Project>
       <Name>ServiceBus.Core</Name>
     </ProjectReference>
-    <ProjectReference Include="..\ServiceBus.Transport.Http\ServiceBus.Transport.Http.csproj">
-      <Project>{bfd0910f-4720-45ce-bcdd-960440ef0adc}</Project>
+    <ProjectReference Include="..\ServiceBus.Transport\ServiceBus.Transport.Http\ServiceBus.Transport.Http.csproj">
+      <Project>{BFD0910F-4720-45CE-BCDD-960440EF0ADC}</Project>
       <Name>ServiceBus.Transport.Http</Name>
     </ProjectReference>
   </ItemGroup>

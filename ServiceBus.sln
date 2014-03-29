@@ -14,8 +14,6 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ServiceBus.Core", "ServiceB
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ServiceBus.Web.Mvc", "ServiceBus.Web.Mvc\ServiceBus.Web.Mvc.csproj", "{2A267688-0909-420B-825F-1468EE68BA22}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ServiceBus.Transport.Http", "ServiceBus.Transport.Http\ServiceBus.Transport.Http.csproj", "{BFD0910F-4720-45CE-BCDD-960440EF0ADC}"
-EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{50BAABF9-F456-4194-836E-6D1632BC3900}"
 	ProjectSection(SolutionItems) = preProject
 		.gitignore = .gitignore
@@ -34,11 +32,19 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestHarness2", "TestHarness
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestHarness.SharedMessages", "TestHarness\TestHarness.SharedMessages\TestHarness.SharedMessages.csproj", "{48B3D3EE-55CB-4708-9212-14135D2A3341}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ServiceBus.Transport.Ftp", "ServiceBus.Transport.Ftp\ServiceBus.Transport.Ftp.csproj", "{AF099C16-219E-4A36-884D-07D01F3D7480}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "ServiceBus.Transport", "ServiceBus.Transport", "{29139BEA-9DCE-45D8-8ED0-EFF74DB5FFA5}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ServiceBus.Messaging.Json", "ServiceBus.Messaging.Json\ServiceBus.Messaging.Json.csproj", "{EA334873-5C7F-4491-AF48-21F4FEC31871}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "ServiceBus.Messaging", "ServiceBus.Messaging", "{52BA313D-F4A8-46B0-A796-6EE45E00270C}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ServiceBus.Queueing.Db4o", "ServiceBus.Queueing.Db4o\ServiceBus.Queueing.Db4o.csproj", "{CDA2ED6C-8AA5-46E7-B681-C3EA82A243D0}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ServiceBus.Messaging.Json", "ServiceBus.Messaging\ServiceBus.Messaging.Json\ServiceBus.Messaging.Json.csproj", "{EA334873-5C7F-4491-AF48-21F4FEC31871}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ServiceBus.Transport.Ftp", "ServiceBus.Transport\ServiceBus.Transport.Ftp\ServiceBus.Transport.Ftp.csproj", "{AF099C16-219E-4A36-884D-07D01F3D7480}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ServiceBus.Transport.Http", "ServiceBus.Transport\ServiceBus.Transport.Http\ServiceBus.Transport.Http.csproj", "{BFD0910F-4720-45CE-BCDD-960440EF0ADC}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "ServiceBus.Queueing", "ServiceBus.Queueing", "{9D7BC88D-BAF9-4DCC-8BC9-A937E6B6E0B1}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ServiceBus.Queueing.Db4o", "ServiceBus.Queueing\ServiceBus.Queueing.Db4o\ServiceBus.Queueing.Db4o.csproj", "{CDA2ED6C-8AA5-46E7-B681-C3EA82A243D0}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -54,10 +60,6 @@ Global
 		{2A267688-0909-420B-825F-1468EE68BA22}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{2A267688-0909-420B-825F-1468EE68BA22}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{2A267688-0909-420B-825F-1468EE68BA22}.Release|Any CPU.Build.0 = Release|Any CPU
-		{BFD0910F-4720-45CE-BCDD-960440EF0ADC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{BFD0910F-4720-45CE-BCDD-960440EF0ADC}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{BFD0910F-4720-45CE-BCDD-960440EF0ADC}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{BFD0910F-4720-45CE-BCDD-960440EF0ADC}.Release|Any CPU.Build.0 = Release|Any CPU
 		{221732AB-E1B4-4998-8D32-96D3BC370BFA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{221732AB-E1B4-4998-8D32-96D3BC370BFA}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{221732AB-E1B4-4998-8D32-96D3BC370BFA}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -78,14 +80,18 @@ Global
 		{48B3D3EE-55CB-4708-9212-14135D2A3341}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{48B3D3EE-55CB-4708-9212-14135D2A3341}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{48B3D3EE-55CB-4708-9212-14135D2A3341}.Release|Any CPU.Build.0 = Release|Any CPU
-		{AF099C16-219E-4A36-884D-07D01F3D7480}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{AF099C16-219E-4A36-884D-07D01F3D7480}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{AF099C16-219E-4A36-884D-07D01F3D7480}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{AF099C16-219E-4A36-884D-07D01F3D7480}.Release|Any CPU.Build.0 = Release|Any CPU
 		{EA334873-5C7F-4491-AF48-21F4FEC31871}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{EA334873-5C7F-4491-AF48-21F4FEC31871}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{EA334873-5C7F-4491-AF48-21F4FEC31871}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{EA334873-5C7F-4491-AF48-21F4FEC31871}.Release|Any CPU.Build.0 = Release|Any CPU
+		{AF099C16-219E-4A36-884D-07D01F3D7480}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{AF099C16-219E-4A36-884D-07D01F3D7480}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{AF099C16-219E-4A36-884D-07D01F3D7480}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{AF099C16-219E-4A36-884D-07D01F3D7480}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BFD0910F-4720-45CE-BCDD-960440EF0ADC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BFD0910F-4720-45CE-BCDD-960440EF0ADC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BFD0910F-4720-45CE-BCDD-960440EF0ADC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BFD0910F-4720-45CE-BCDD-960440EF0ADC}.Release|Any CPU.Build.0 = Release|Any CPU
 		{CDA2ED6C-8AA5-46E7-B681-C3EA82A243D0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{CDA2ED6C-8AA5-46E7-B681-C3EA82A243D0}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{CDA2ED6C-8AA5-46E7-B681-C3EA82A243D0}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -98,5 +104,9 @@ Global
 		{C5E69563-9D8A-4177-815A-6987F8BE15DC} = {246176ED-8F5B-4F89-89D2-91572A8B804D}
 		{87E69BE6-4A6C-4FCF-8A66-65886927066B} = {246176ED-8F5B-4F89-89D2-91572A8B804D}
 		{48B3D3EE-55CB-4708-9212-14135D2A3341} = {246176ED-8F5B-4F89-89D2-91572A8B804D}
+		{AF099C16-219E-4A36-884D-07D01F3D7480} = {29139BEA-9DCE-45D8-8ED0-EFF74DB5FFA5}
+		{BFD0910F-4720-45CE-BCDD-960440EF0ADC} = {29139BEA-9DCE-45D8-8ED0-EFF74DB5FFA5}
+		{EA334873-5C7F-4491-AF48-21F4FEC31871} = {52BA313D-F4A8-46B0-A796-6EE45E00270C}
+		{CDA2ED6C-8AA5-46E7-B681-C3EA82A243D0} = {9D7BC88D-BAF9-4DCC-8BC9-A937E6B6E0B1}
 	EndGlobalSection
 EndGlobal
