@@ -27,9 +27,14 @@
         {
             this._clientFactory = clientFactory;
             this._serialiser = messageSerialiser;
-            this._messageRecievedWatcher = new FileSystemWatcher(pathToReciever);
+            this._messageRecievedWatcher = new FileSystemWatcher(pathToReciever, "*.msg")
+                                           {
+                                               NotifyFilter = NotifyFilters.LastWrite
+                                           };
 
-            this._messageRecievedWatcher.Created += this.MessageReceived;
+            this._messageRecievedWatcher.Changed += this.MessageReceived;
+
+            this._messageRecievedWatcher.EnableRaisingEvents = true;
         }
 
         /// <summary>
@@ -96,6 +101,8 @@
                 var client = await clientConnectTask;
 
                 await client.SendMessageAsync(messageContent);
+
+                this.MessageSent(message, messageContent);
             }
             catch (Exception exception)
             {
@@ -117,7 +124,7 @@
 
         private void MessageReceived(object source, FileSystemEventArgs e)
         {
-            if (e.ChangeType != WatcherChangeTypes.Created)
+            if (e.ChangeType != WatcherChangeTypes.Changed)
             {
                 return;
             }
