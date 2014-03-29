@@ -1,7 +1,7 @@
 ﻿namespace TestHarness1.Messages
 {
     using System.Runtime.Serialization;
-    
+
     using ServiceBus.Messaging;
 
     public class NonSharedMessage : MessageBase
@@ -10,7 +10,7 @@
         {
         }
 
-        private NonSharedMessage (SerializationInfo info, StreamingContext context)
+        private NonSharedMessage(SerializationInfo info, StreamingContext context)
             : base(info, context)
         {
         }

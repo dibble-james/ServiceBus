@@ -1,20 +1,23 @@
-using System.Web.Mvc;
-using Microsoft.Practices.Unity;
-using Unity.Mvc4;
-
 namespace TestHarness1
 {
     using System;
     using System.Net;
     using System.Web;
+    using System.Web.Mvc;
     using System.Web.Routing;
+
     using Db4objects.Db4o;
+
     using log4net;
     using log4net.Appender;
     using log4net.Config;
     using log4net.Core;
     using log4net.Layout;
     using log4net.Repository.Hierarchy;
+
+    using Microsoft.AspNet.SignalR.Hubs;
+    using Microsoft.Practices.Unity;
+
     using ServiceBus;
     using ServiceBus.Configuration;
     using ServiceBus.Messaging;
@@ -26,8 +29,13 @@ namespace TestHarness1
     using ServiceBus.Web.Mvc.Configuration;
 
     using TestHarness.SharedMessages;
+
+    using TestHarness1.Controllers;
     using TestHarness1.EventHandlers;
+    using TestHarness1.MessageHandlers;
     using TestHarness1.Messages;
+
+    using Unity.Mvc4;
 
     public static class Bootstrapper
     {
@@ -45,18 +53,12 @@ namespace TestHarness1
             var container = new UnityContainer();
 
             RegisterTypes(container);
-            
+
             return container;
         }
 
         public static void RegisterTypes(IUnityContainer container)
         {
-            var messageDictionary = new MessageTypeDictionary
-                                    {
-                                        { MessageExtensions.MessageTypeSignature<SharedMessage>(), typeof(SharedMessage) },
-                                        { MessageExtensions.MessageTypeSignature<NonSharedMessage>(), typeof(NonSharedMessage) }
-                                    };
-
             var hierarchy = (Hierarchy)LogManager.GetRepository();
             hierarchy.Root.RemoveAllAppenders();
 
@@ -83,7 +85,14 @@ namespace TestHarness1
 
             container.RegisterType<IQueueManager, Db4oQueueManager>(new ContainerControlledLifetimeManager());
 
-            container.RegisterType<SharedEventHandler>();
+            container.RegisterType<SharedMessageHandler>();
+                        
+            var messageDictionary = new MessageTypeDictionary
+                                    {
+                                        { MessageExtensions.MessageTypeSignature<SharedMessage>(), typeof(SharedMessage) },
+                                        { MessageExtensions.MessageTypeSignature<NonSharedMessage>(), typeof(NonSharedMessage) },
+                                        { MessageExtensions.MessageTypeSignature<SharedEvent>(), typeof(SharedEvent) }
+                                    };
 
             var serviceBus =
                 ServiceBusBuilder.Configure()
@@ -92,10 +101,21 @@ namespace TestHarness1
                     .WithFtpTransport(new JsonMessageSerialiser(messageDictionary), @"C:\Queue\SB1")
                     .AsMvcServiceBus(RouteTable.Routes, container.Resolve<IQueueManager>())
                     .Build()
+                        .WithMessageHandler(container.Resolve<SharedMessageHandler>())
                         .Subscribe(container.Resolve<SharedEventHandler>())
                         .WithPeerAsync(new FtpPeer(new Uri("ftp://127.0.0.1:22"), new NetworkCredential(@"home\james", "3l3m3ntal!")));
 
-            container.RegisterInstance(serviceBus.Result);
+            container.RegisterInstance(serviceBus.Result, new ContainerControlledLifetimeManager());
+
+            container.RegisterType<ServiceBusHub>(new ContainerControlledLifetimeManager());
+        }
+    }
+
+    public class UnityHubActivator : IHubActivator
+    {
+        public IHub Create(HubDescriptor descriptor)
+        {
+            return DependencyResolver.Current.GetService(descriptor.HubType) as IHub;
         }
     }
 }

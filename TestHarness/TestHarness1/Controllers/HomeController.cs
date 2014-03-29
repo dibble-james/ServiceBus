@@ -1,18 +1,14 @@
-﻿// --------------------------------------------------------------------------------------------------------------------
-// <copyright file="HomeController.cs" company="James Dibble">
-//    Copyright 2012 James Dibble
-// </copyright>
-// --------------------------------------------------------------------------------------------------------------------
-namespace TestHarness1.Controllers
+﻿namespace TestHarness1.Controllers
 {
     using System;
     using System.Linq;
-    using System.Net;
-    using System.Net.Http;
     using System.Threading.Tasks;
     using System.Web.Mvc;
+
     using ServiceBus;
+
     using TestHarness.SharedMessages;
+
     using TestHarness1.Messages;
 
     public class HomeController : Controller
@@ -26,31 +22,31 @@ namespace TestHarness1.Controllers
 
         public ActionResult Index()
         {
-            return this.View(this._serviceBus);
+            return this.View();
         }
 
         [HttpPost]
-        public async Task<HttpResponseMessage> SendSharedMessage()
+        public async Task<ActionResult> SendSharedMessage()
         {
             await this._serviceBus.SendAsync(this._serviceBus.Peers.First(), new SharedMessage());
 
-            return new HttpResponseMessage(HttpStatusCode.OK);
+            return this.RedirectToAction(ExpressionExtensions.MethodName(() => this.Index()));
         }
 
         [HttpPost]
-        public async Task<HttpResponseMessage> SendNonSharedMessage()
+        public async Task<ActionResult> SendNonSharedMessage()
         {
             await this._serviceBus.SendAsync(this._serviceBus.Peers.First(), new NonSharedMessage());
 
-            return new HttpResponseMessage(HttpStatusCode.OK);
+            return this.RedirectToAction(ExpressionExtensions.MethodName(() => this.Index()));
         }
 
         [HttpPost]
-        public async Task<HttpResponseMessage> RaiseSharedEvent()
+        public async Task<ActionResult> RaiseSharedEvent()
         {
             await this._serviceBus.PublishAsync(new SharedEvent());
 
-            return new HttpResponseMessage(HttpStatusCode.OK);
+            return this.RedirectToAction(ExpressionExtensions.MethodName(() => this.Index()));
         }
     }
 }

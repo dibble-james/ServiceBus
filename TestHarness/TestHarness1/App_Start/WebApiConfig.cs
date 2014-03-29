@@ -1,10 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web.Http;
-
-namespace TestHarness1
+﻿namespace TestHarness1
 {
+    using System.Web.Http;
+
     public static class WebApiConfig
     {
         public static void Register(HttpConfiguration config)
