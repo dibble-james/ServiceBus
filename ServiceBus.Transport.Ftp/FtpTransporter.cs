@@ -2,7 +2,6 @@
 {
     using System;
     using System.IO;
-    using System.Net.FtpClient;
     using System.Threading.Tasks;
 
     using ServiceBus.Messaging;

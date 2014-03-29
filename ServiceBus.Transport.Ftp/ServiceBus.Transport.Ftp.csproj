@@ -33,15 +33,15 @@
     <DocumentationFile>..\Release\ServiceBus.Transport.Ftp.XML</DocumentationFile>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="AlexPilotti.FTPS.Client">
+      <HintPath>..\packages\AlexFTPS.1.1.0.27735\lib\net20\AlexPilotti.FTPS.Client.dll</HintPath>
+    </Reference>
     <Reference Include="JamesDibble.Extensions.System, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\JamesDibble.Extensions.System.1.0.1\lib\JamesDibble.Extensions.System.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
-    <Reference Include="System.Net.FtpClient">
-      <HintPath>..\packages\System.Net.FtpClient.1.0.5120.19022\lib\net40\System.Net.FtpClient.dll</HintPath>
-    </Reference>
     <Reference Include="System.Web" />
   </ItemGroup>
   <ItemGroup>
