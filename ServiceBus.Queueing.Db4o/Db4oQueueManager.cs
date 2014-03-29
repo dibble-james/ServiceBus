@@ -1,4 +1,4 @@
-﻿namespace ServiceBus.Queueing
+﻿namespace ServiceBus.Queueing.Db4o
 {
     using System;
     using System.Linq;
@@ -13,17 +13,17 @@
     /// <summary>
     /// An queue that uses an embedded database for persisting <see cref="IMessage"/>s.
     /// </summary>
-    public sealed class QueueManager : IQueueManager
+    public sealed class Db4oQueueManager : IQueueManager
     {
         private readonly IObjectContainer _queuePersistence;
 
         private bool _disposed;
 
         /// <summary>
-        /// Initialises a new instance of the <see cref="QueueManager"/> class.
+        /// Initialises a new instance of the <see cref="Db4oQueueManager"/> class.
         /// </summary>
         /// <param name="queuePersistence">The embedded queue database.</param>
-        public QueueManager(IObjectContainer queuePersistence)
+        public Db4oQueueManager(IObjectContainer queuePersistence)
         {
             this._disposed = false;
 

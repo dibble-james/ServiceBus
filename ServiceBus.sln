@@ -38,6 +38,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ServiceBus.Transport.Ftp", 
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ServiceBus.Messaging.Json", "ServiceBus.Messaging.Json\ServiceBus.Messaging.Json.csproj", "{EA334873-5C7F-4491-AF48-21F4FEC31871}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ServiceBus.Queueing.Db4o", "ServiceBus.Queueing.Db4o\ServiceBus.Queueing.Db4o.csproj", "{CDA2ED6C-8AA5-46E7-B681-C3EA82A243D0}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -84,6 +86,10 @@ Global
 		{EA334873-5C7F-4491-AF48-21F4FEC31871}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{EA334873-5C7F-4491-AF48-21F4FEC31871}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{EA334873-5C7F-4491-AF48-21F4FEC31871}.Release|Any CPU.Build.0 = Release|Any CPU
+		{CDA2ED6C-8AA5-46E7-B681-C3EA82A243D0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CDA2ED6C-8AA5-46E7-B681-C3EA82A243D0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CDA2ED6C-8AA5-46E7-B681-C3EA82A243D0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CDA2ED6C-8AA5-46E7-B681-C3EA82A243D0}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
