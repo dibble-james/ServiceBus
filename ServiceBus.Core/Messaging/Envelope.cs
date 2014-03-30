@@ -32,7 +32,7 @@ namespace ServiceBus.Messaging
         }
 
         /// <summary>
-        /// Gets or sets <typeparamref cref="TMessage" /> this <see cref="EnvelopeBase" /> contains.
+        /// Gets or sets <typeparamref name="TMessage" /> this <see cref="EnvelopeBase" /> contains.
         /// </summary>
         public new TMessage Message 
         {
