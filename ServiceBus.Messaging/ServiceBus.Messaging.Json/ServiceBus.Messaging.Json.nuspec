@@ -10,6 +10,7 @@
         <language>en-GB</language>
         <dependencies>
           <dependency id="Newtonsoft.Json" version="6.0.1" />
+          <dependency id="ServiceBus.Core" version="1.0.12" />
         </dependencies>
     </metadata>
     <files>

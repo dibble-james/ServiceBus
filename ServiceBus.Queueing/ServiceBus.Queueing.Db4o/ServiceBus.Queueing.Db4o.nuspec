@@ -10,6 +10,7 @@
         <language>en-GB</language>
         <dependencies>
           <dependency id="db4o-devel" version="8.1.184.15492" />
+          <dependency id="ServiceBus.Core" version="1.0.12" />
         </dependencies>
     </metadata>
     <files>
