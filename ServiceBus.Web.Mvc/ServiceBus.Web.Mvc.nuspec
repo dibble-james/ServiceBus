@@ -1,0 +1,20 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2010/07/nuspec.xsd">
+  <metadata>
+    <id>ServiceBus.Web.Mvc</id>
+    <version>$version$</version>
+    <title>ServiceBus.Web.Mvc</title>
+    <authors>$author$</authors>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <description>A package to integrate a service bus into an MVC Application.</description>
+    <language>en-GB</language>
+    <dependencies>
+      <dependency id="JamesDibble.Extensions.System" version="1.0.1" />
+      <dependency id="log4net" version="2.0.3" />
+    </dependencies>
+  </metadata>
+  <files>
+    <file src="..\Release\ServiceBus.Web.Mvc.dll" target="lib\ServiceBus.Web.Mvc.dll" />
+    <file src="..\Release\ServiceBus.Web.Mvc.XML" target="lib\ServiceBus.Web.Mvc.xml" />
+  </files>
+</package>

@@ -1,0 +1,19 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2010/07/nuspec.xsd">
+    <metadata>
+        <id>ServiceBus.Messaging.Json</id>
+        <version>$version$</version>
+        <title>ServiceBus.Messaging.Json</title>
+        <authors>$author$</authors>
+        <requireLicenseAcceptance>false</requireLicenseAcceptance>
+        <description>JSON message serialiser classes.</description>
+        <language>en-GB</language>
+        <dependencies>
+          <dependency id="Newtonsoft.Json" version="6.0.1" />
+        </dependencies>
+    </metadata>
+    <files>
+        <file src="..\Release\ServiceBus.Messaging.Json.dll" target="lib\ServiceBus.Messaging.Json.dll" />
+        <file src="..\Release\ServiceBus.Messaging.Json.XML" target="lib\ServiceBus.Messaging.Json.xml" />
+    </files>
+</package>

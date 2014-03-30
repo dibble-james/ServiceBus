@@ -1,0 +1,24 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2010/07/nuspec.xsd">
+  <metadata>
+    <id>ServiceBus.Transport.Http</id>
+    <version>$version$</version>
+    <title>ServiceBus.Transport.Http</title>
+    <authors>$author$</authors>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <description>A package to use to transport service bus messages over HTTP.</description>
+    <language>en-GB</language>
+    <dependencies>
+      <dependency id="JamesDibble.Extensions.System" version="1.0.1" />
+      <dependency id="log4net" version="2.0.3" />
+      <dependency id="Microsoft.AspNet.Mvc" version="4.0.30506.0" />
+      <dependency id="Microsoft.AspNet.Razor" version="2.0.30506.0" />
+      <dependency id="Microsoft.AspNet.WebPages" version="2.0.30506.0" />
+      <dependency id="Microsoft.Web.Infrastructure" version="1.0.0.0" />
+    </dependencies>
+  </metadata>
+  <files>
+    <file src="..\Release\ServiceBus.Transport.Http.dll" target="lib\ServiceBus.Transport.Http.dll" />
+    <file src="..\Release\ServiceBus.Transport.Http.XML" target="lib\ServiceBus.Transport.Http.xml" />
+  </files>
+</package>

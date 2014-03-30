@@ -1,0 +1,19 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2010/07/nuspec.xsd">
+    <metadata>
+        <id>ServiceBus.Queueing.Db4o</id>
+        <version>$version$</version>
+        <title>ServiceBus.Queueing.Db4o</title>
+        <authors>$author$</authors>
+        <requireLicenseAcceptance>false</requireLicenseAcceptance>
+        <description>A queue that utilizes the DB4O embedded object database.</description>
+        <language>en-GB</language>
+        <dependencies>
+          <dependency id="db4o-devel" version="8.1.184.15492" />
+        </dependencies>
+    </metadata>
+    <files>
+        <file src="..\Release\ServiceBus.Queueing.Db4o.dll" target="lib\ServiceBus.Queueing.Db4o.dll" />
+        <file src="..\Release\ServiceBus.Queueing.Db4o.XML" target="lib\ServiceBus.Queueing.Db4o.xml" />
+    </files>
+</package>

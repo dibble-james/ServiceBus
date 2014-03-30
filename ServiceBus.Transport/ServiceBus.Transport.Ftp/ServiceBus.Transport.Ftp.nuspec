@@ -1,0 +1,20 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2010/07/nuspec.xsd">
+    <metadata>
+        <id>ServiceBus.Transport.Ftp</id>
+        <version>$version$</version>
+        <title>ServiceBus.Transport.Ftp</title>
+        <authors>$author$</authors>
+        <requireLicenseAcceptance>false</requireLicenseAcceptance>
+        <description>A package to use to transport service bus messages over FTP.</description>
+        <language>en-GB</language>
+        <dependencies>
+          <dependency id="JamesDibble.Extensions.System" version="1.0.1" />
+          <dependency id="AlexFTPS" version="1.1.0.27735" />
+        </dependencies>
+    </metadata>
+    <files>
+        <file src="..\Release\ServiceBus.Transport.Ftp.dll" target="lib\ServiceBus.Transport.Ftp.dll" />
+        <file src="..\Release\ServiceBus.Transport.Ftp.XML" target="lib\ServiceBus.Transport.Ftp.xml" />
+    </files>
+</package>
