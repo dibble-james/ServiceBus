@@ -19,7 +19,7 @@
     </dependencies>
   </metadata>
   <files>
-    <file src="..\Release\ServiceBus.Transport.Http.dll" target="lib\ServiceBus.Transport.Http.dll" />
-    <file src="..\Release\ServiceBus.Transport.Http.XML" target="lib\ServiceBus.Transport.Http.xml" />
+    <file src="..\..\Release\ServiceBus.Transport.Http.dll" target="lib\ServiceBus.Transport.Http.dll" />
+    <file src="..\..\Release\ServiceBus.Transport.Http.XML" target="lib\ServiceBus.Transport.Http.xml" />
   </files>
 </package>

@@ -15,7 +15,7 @@
         </dependencies>
     </metadata>
     <files>
-        <file src="..\Release\ServiceBus.Transport.Ftp.dll" target="lib\ServiceBus.Transport.Ftp.dll" />
-        <file src="..\Release\ServiceBus.Transport.Ftp.XML" target="lib\ServiceBus.Transport.Ftp.xml" />
+        <file src="..\..\Release\ServiceBus.Transport.Ftp.dll" target="lib\ServiceBus.Transport.Ftp.dll" />
+        <file src="..\..\Release\ServiceBus.Transport.Ftp.XML" target="lib\ServiceBus.Transport.Ftp.xml" />
     </files>
 </package>

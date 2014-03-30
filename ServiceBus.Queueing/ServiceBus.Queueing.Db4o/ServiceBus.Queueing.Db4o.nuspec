@@ -14,7 +14,7 @@
         </dependencies>
     </metadata>
     <files>
-        <file src="..\Release\ServiceBus.Queueing.Db4o.dll" target="lib\ServiceBus.Queueing.Db4o.dll" />
-        <file src="..\Release\ServiceBus.Queueing.Db4o.XML" target="lib\ServiceBus.Queueing.Db4o.xml" />
+        <file src="..\..\Release\ServiceBus.Queueing.Db4o.dll" target="lib\ServiceBus.Queueing.Db4o.dll" />
+        <file src="..\..\Release\ServiceBus.Queueing.Db4o.XML" target="lib\ServiceBus.Queueing.Db4o.xml" />
     </files>
 </package>

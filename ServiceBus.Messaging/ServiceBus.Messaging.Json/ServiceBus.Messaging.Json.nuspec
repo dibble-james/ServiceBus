@@ -14,7 +14,7 @@
         </dependencies>
     </metadata>
     <files>
-        <file src="..\Release\ServiceBus.Messaging.Json.dll" target="lib\ServiceBus.Messaging.Json.dll" />
-        <file src="..\Release\ServiceBus.Messaging.Json.XML" target="lib\ServiceBus.Messaging.Json.xml" />
+        <file src="..\..\Release\ServiceBus.Messaging.Json.dll" target="lib\ServiceBus.Messaging.Json.dll" />
+        <file src="..\..\Release\ServiceBus.Messaging.Json.XML" target="lib\ServiceBus.Messaging.Json.xml" />
     </files>
 </package>
