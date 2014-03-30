@@ -1,10 +1,10 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <package xmlns="http://schemas.microsoft.com/packaging/2010/07/nuspec.xsd">
     <metadata>
-        <id>ServiceBus.Core</id>
-        <version>1.0.0</version>
+        <id>$id$</id>
+        <version>$version$</version>
         <title>ServiceBus.Core</title>
-        <authors>James Dibble</authors>
+        <authors>$author$</authors>
         <requireLicenseAcceptance>false</requireLicenseAcceptance>
         <description>Core components for a Peer to Peer service bus.</description>
         <language>en-GB</language>
@@ -13,5 +13,8 @@
             <dependency id="JamesDibble.Extensions.System" version="1.0.1" />
         </dependencies>
     </metadata>
-    <files />
+    <files>
+        <file src="..\Release\ServiceBus.Core.dll" target="lib\ServiceBus.Core.dll" />
+        <file src="..\Release\ServiceBus.Core.XML" target="lib\ServiceBus.Core.xml" />
+    </files>
 </package>
