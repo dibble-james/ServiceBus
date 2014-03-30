@@ -22,8 +22,6 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "TestHarness", "TestHarness", "{246176ED-8F5B-4F89-89D2-91572A8B804D}"
 EndProject
-Project("{F088123C-0E9E-452A-89E6-6BA2F21D5CAC}") = "ServiceBus.Models", "ServiceBus.Models\ServiceBus.Models.modelproj", "{59979CAE-2703-469E-9FBB-52B02879CDD6}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestHarness1", "TestHarness\TestHarness1\TestHarness1.csproj", "{C5E69563-9D8A-4177-815A-6987F8BE15DC}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestHarness2", "TestHarness\TestHarness2\TestHarness2.csproj", "{87E69BE6-4A6C-4FCF-8A66-65886927066B}"
