@@ -7,6 +7,8 @@ namespace ServiceBus.Transport.Ftp
 {
     using System.Threading.Tasks;
 
+    using AlexPilotti.FTPS.Client;
+
     /// <summary>
     /// The default implementation of the <see cref="IFtpClientFactory"/>.
     /// </summary>
@@ -19,7 +21,7 @@ namespace ServiceBus.Transport.Ftp
         /// <returns>An awaitable object for the Connect operation.</returns>
         public async Task<IFtpClient> ConnectAsync(FtpPeer peerToConnectTo)
         {
-            var ftpClient = new FtpMessageSender();
+            var ftpClient = new FtpMessageSender(new FTPSClient());
 
             await ftpClient.ConnectAsync(peerToConnectTo);
 

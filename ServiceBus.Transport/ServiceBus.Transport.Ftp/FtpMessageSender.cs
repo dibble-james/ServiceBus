@@ -8,13 +8,13 @@
 
     using AlexPilotti.FTPS.Client;
 
-    internal sealed class FtpMessageSender : IFtpClient
+    public sealed class FtpMessageSender : IFtpClient
     {
         private readonly FTPSClient _ftpClient;
 
-        internal FtpMessageSender()
+        public FtpMessageSender(FTPSClient client)
         {
-            this._ftpClient = new FTPSClient();
+            this._ftpClient = client;
         }
 
         public async Task ConnectAsync(FtpPeer peerToConnectTo)
