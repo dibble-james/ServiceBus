@@ -1,4 +1,9 @@
-﻿namespace ServiceBus.Queueing.Db4o
+﻿// --------------------------------------------------------------------------------------------------------------------
+// <copyright file="IEventSubscrption.cs" company="James Dibble">
+//    Copyright 2014 James Dibble
+// </copyright>
+// --------------------------------------------------------------------------------------------------------------------
+namespace ServiceBus.Queueing.Db4o
 {
     using System;
     using System.Linq;
