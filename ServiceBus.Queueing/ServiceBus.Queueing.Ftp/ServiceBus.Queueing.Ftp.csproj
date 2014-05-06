@@ -55,6 +55,7 @@
   <ItemGroup>
     <Compile Include="FtpQueueManager.cs" />
     <Compile Include="IFtpQueueClient.cs" />
+    <Compile Include="MessageExtensions.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

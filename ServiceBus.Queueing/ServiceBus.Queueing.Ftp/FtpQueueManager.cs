@@ -47,16 +47,10 @@ namespace ServiceBus.Queueing.Ftp
         public async Task EnqueueAsync<TMessage>(Envelope<TMessage> envelope) where TMessage : class, IMessage
         {
             var queuedMessage = new QueuedMessage { QueuedAt = DateTime.Now, Envelope = envelope, HasSent = false };
-
-            var messageLocation = string.Format(
-                CultureInfo.InvariantCulture,
-                "{0}/queue/{1}.msg",
-                EscapePeerAddress(envelope.Recipient),
-                queuedMessage.QueuedAt.ToFileTimeUtc());
-
+            
             var messageContent = this._messageSerialiser.Serialise(envelope);
 
-            await this._ftpClient.PutMessage(new Uri(messageLocation, UriKind.Relative), messageContent);
+            await this._ftpClient.PutMessage(new Uri(queuedMessage.QueueLocation(), UriKind.Relative), messageContent);
 
             if (this.MessageQueued != null)
             {
@@ -71,7 +65,11 @@ namespace ServiceBus.Queueing.Ftp
         /// <param name="messageContent">The raw message content.</param>
         public void Dequeue(QueuedMessage message, string messageContent)
         {
-            throw new NotImplementedException();
+            message.HasSent = true;
+
+            this._ftpClient.DeleteMessage(new Uri(message.QueueLocation(), UriKind.Relative));
+            
+            this._ftpClient.PutMessage(new Uri(message.SentLocation(), UriKind.Relative), messageContent);
         }
 
         /// <summary>
@@ -104,11 +102,6 @@ namespace ServiceBus.Queueing.Ftp
         /// </summary>
         public void Dispose()
         {
-        }
-
-        private static string EscapePeerAddress(IPeer peer)
-        {
-            return peer.PeerAddress.AbsoluteUri.Replace('/', '~');
         }
     }
 }
