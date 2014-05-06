@@ -1,0 +1,20 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2010/07/nuspec.xsd">
+    <metadata>
+        <id>ServiceBus.Queueing.Ftp</id>
+        <version>$version$</version>
+        <title>ServiceBus.Queueing.Ftp</title>
+        <authors>$author$</authors>
+        <requireLicenseAcceptance>false</requireLicenseAcceptance>
+        <description>A queue that utilizes FTP folders.</description>
+        <language>en-GB</language>
+        <dependencies>
+          <dependency id="ServiceBus.Core" version="1.0.12" />
+          <dependency id="AlexFTPS" version="1.1.0.27735" />
+        </dependencies>
+    </metadata>
+    <files>
+        <file src="..\..\Release\ServiceBus.Queueing.Ftp.dll" target="lib\ServiceBus.Queueing.Ftp.dll" />
+        <file src="..\..\Release\ServiceBus.Queueing.Ftp.XML" target="lib\ServiceBus.Queueing.Ftp.xml" />
+    </files>
+</package>

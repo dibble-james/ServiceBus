@@ -56,18 +56,17 @@ namespace ServiceBus.Transport.Ftp
         /// <returns>An awaitable object for the Send operation.</returns>
         public async Task SendMessageAsync(string serialisedMessage)
         {
-            var outputStream = this._ftpClient.PutFile(string.Concat("/", DateTime.Now.ToFileTimeUtc(), ".msg"));
+            using (var outputStream = this._ftpClient.PutFile(string.Concat("/", DateTime.Now.ToFileTimeUtc(), ".msg")))
+            {
+                using (var stream = new MemoryStream(Encoding.UTF8.GetBytes(serialisedMessage)))
+                {
+                    await stream.CopyToAsync(outputStream);
 
-            var stream = new MemoryStream(Encoding.UTF8.GetBytes(serialisedMessage));
+                    await stream.FlushAsync();
 
-            await stream.CopyToAsync(outputStream);
-
-            await stream.FlushAsync();
-
-            await outputStream.FlushAsync();
-
-            outputStream.Dispose();
-            stream.Dispose();
+                    await outputStream.FlushAsync();
+                }
+            }
         }
 
         /// <summary>
