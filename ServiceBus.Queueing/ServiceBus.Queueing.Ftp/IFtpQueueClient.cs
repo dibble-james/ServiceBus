@@ -3,6 +3,9 @@
 //    Copyright 2014 James Dibble
 // </copyright>
 // --------------------------------------------------------------------------------------------------------------------
+
+using System.Collections.Generic;
+
 namespace ServiceBus.Queueing.Ftp
 {
     using System;
@@ -36,5 +39,19 @@ namespace ServiceBus.Queueing.Ftp
         /// <param name="messageLocation">The relative location where the message should be placed.</param>
         /// <returns>An awaitable object for the Put operation.</returns>
         Task DeleteMessage(Uri messageLocation);
+
+        /// <summary>
+        /// Get the names of the files in a given FTP server location.
+        /// </summary>
+        /// <param name="messageQueue">The location of the queue to search.</param>
+        /// <returns>An awaitable object for the get file listings operation.</returns>
+        Task<IEnumerable<DateTime>> GetFileListings(Uri messageQueue);
+
+        /// <summary>
+        /// Retrieve a message at the given <paramref name="messageLocation"/>.
+        /// </summary>
+        /// <param name="messageLocation">The message to retrieve.</param>
+        /// <returns>An awaitable object for the get message operation.</returns>
+        Task<string> GetMessage(Uri messageLocation);
     }
 }

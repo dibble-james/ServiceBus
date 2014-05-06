@@ -3,10 +3,11 @@
 //    Copyright 2014 James Dibble
 // </copyright>
 // --------------------------------------------------------------------------------------------------------------------
+
+using System.Linq;
+
 namespace ServiceBus.Queueing.Ftp
 {
-    using System.Globalization;
-
     using ServiceBus.Messaging;
     using System;
     using System.Threading.Tasks;
@@ -50,7 +51,7 @@ namespace ServiceBus.Queueing.Ftp
             
             var messageContent = this._messageSerialiser.Serialise(envelope);
 
-            await this._ftpClient.PutMessage(new Uri(queuedMessage.QueueLocation(), UriKind.Relative), messageContent);
+            await this._ftpClient.PutMessage(new Uri(queuedMessage.MessageLocation(), UriKind.Relative), messageContent);
 
             if (this.MessageQueued != null)
             {
@@ -67,7 +68,7 @@ namespace ServiceBus.Queueing.Ftp
         {
             message.HasSent = true;
 
-            this._ftpClient.DeleteMessage(new Uri(message.QueueLocation(), UriKind.Relative));
+            this._ftpClient.DeleteMessage(new Uri(message.MessageLocation(), UriKind.Relative));
             
             this._ftpClient.PutMessage(new Uri(message.SentLocation(), UriKind.Relative), messageContent);
         }
@@ -81,7 +82,7 @@ namespace ServiceBus.Queueing.Ftp
         /// </returns>
         public QueuedMessage PeersNextMessageOrDefault(IPeer peer)
         {
-            throw new NotImplementedException();
+            return this.PeersNextMessageOrDefault(peer, DateTime.Now);
         }
 
         /// <summary>
@@ -94,7 +95,24 @@ namespace ServiceBus.Queueing.Ftp
         /// </returns>
         public QueuedMessage PeersNextMessageOrDefault(IPeer peer, DateTime messageQueuedBefore)
         {
-            throw new NotImplementedException();
+            var messages = this._ftpClient.GetFileListings(new Uri(peer.QueueLocation(), UriKind.Relative)).Result.ToList();
+
+            if (!messages.Any(queuedDate => queuedDate > messageQueuedBefore))
+            {
+                return null;
+            }
+
+            var messageQueuedAt = messages.OrderBy(m => m).First(queuedDate => queuedDate > messageQueuedBefore);
+
+            var rawEnvelope =
+                this._ftpClient.GetMessage(
+                    new Uri(MessageExtensions.MessageLocation(peer, messageQueuedAt))).Result;
+
+            var envelope = this._messageSerialiser.Deserialise(rawEnvelope);
+
+            var queuedMessage = new QueuedMessage { QueuedAt = messageQueuedAt, Envelope = envelope, HasSent = false };
+
+            return queuedMessage;
         }
 
         /// <summary>
