@@ -53,6 +53,7 @@
     <Reference Include="System.Core" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="FtpQueueClient.cs" />
     <Compile Include="FtpQueueManager.cs" />
     <Compile Include="IFtpQueueClient.cs" />
     <Compile Include="MessageExtensions.cs" />
