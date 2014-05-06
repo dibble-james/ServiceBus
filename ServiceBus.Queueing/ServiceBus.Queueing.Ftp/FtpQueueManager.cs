@@ -51,6 +51,8 @@ namespace ServiceBus.Queueing.Ftp
             
             var messageContent = this._messageSerialiser.Serialise(envelope);
 
+            await this._ftpClient.CreatePeerDirectoryIfNotExist(envelope.Recipient);
+
             await this._ftpClient.PutMessage(new Uri(queuedMessage.MessageLocation(), UriKind.Relative), messageContent);
 
             if (this.MessageQueued != null)
@@ -67,6 +69,8 @@ namespace ServiceBus.Queueing.Ftp
         public void Dequeue(QueuedMessage message, string messageContent)
         {
             message.HasSent = true;
+
+            this._ftpClient.CreatePeerDirectoryIfNotExist(message.Envelope.Recipient);
 
             this._ftpClient.DeleteMessage(new Uri(message.MessageLocation(), UriKind.Relative));
             

@@ -60,7 +60,7 @@ namespace ServiceBus.Queueing.Ftp
         /// <returns>An awaitable object for the Put operation.</returns>
         public async Task PutMessage(Uri messageLocation, string serialisedMessage)
         {
-            using (var outputStream = this._ftpClient.PutFile(messageLocation.GetLeftPart(UriPartial.Path)))
+            using (var outputStream = this._ftpClient.PutFile(messageLocation.ToString()))
             {
                 using (var stream = new MemoryStream(Encoding.UTF8.GetBytes(serialisedMessage)))
                 {
@@ -80,7 +80,7 @@ namespace ServiceBus.Queueing.Ftp
         /// <returns>An awaitable object for the Put operation.</returns>
         public async Task DeleteMessage(Uri messageLocation)
         {
-            await Task.Factory.StartNew(() => this._ftpClient.DeleteFile(messageLocation.GetLeftPart(UriPartial.Path)));
+            await Task.Factory.StartNew(() => this._ftpClient.DeleteFile(messageLocation.ToString()));
         }
 
         /// <summary>
@@ -90,7 +90,7 @@ namespace ServiceBus.Queueing.Ftp
         /// <returns>An awaitable object for the get file listings operation.</returns>
         public async Task<IEnumerable<DateTime>> GetFileListings(Uri messageQueue)
         {
-            var fileNames = await Task.Factory.StartNew(() => this._ftpClient.GetDirectoryList(messageQueue.GetLeftPart(UriPartial.Path)));
+            var fileNames = await Task.Factory.StartNew(() => this._ftpClient.GetDirectoryList(messageQueue.ToString()));
 
             var fileNamesAsDate = fileNames.Select(name => DateTime.FromFileTimeUtc(long.Parse(name.Name)));
 
@@ -104,7 +104,7 @@ namespace ServiceBus.Queueing.Ftp
         /// <returns>An awaitable object for the get message operation.</returns>
         public Task<string> GetMessage(Uri messageLocation)
         {
-            using (var inputStream = this._ftpClient.GetFile(messageLocation.GetLeftPart(UriPartial.Path)))
+            using (var inputStream = this._ftpClient.GetFile(messageLocation.ToString()))
             {
                 inputStream.Position = 0;
 
@@ -113,6 +113,23 @@ namespace ServiceBus.Queueing.Ftp
                     return reader.ReadToEndAsync();
                 }
             }
+        }
+
+        public async Task CreatePeerDirectoryIfNotExist(IPeer peer)
+        {
+            if (this._ftpClient.GetShortDirectoryList().Any(dirName => dirName == peer.EscapePeerAddress()))
+            {
+                return;
+            }
+
+            this._ftpClient.MakeDir(peer.EscapePeerAddress());
+
+            var createQueueDirectoryTask = Task.Factory.StartNew(() => this._ftpClient.MakeDir(peer.QueueLocation()));
+
+            var createSentDirectoryTask = Task.Factory.StartNew(() => this._ftpClient.MakeDir(peer.SentLocation()));
+
+            await createQueueDirectoryTask;
+            await createSentDirectoryTask;
         }
     }
 }

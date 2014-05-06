@@ -34,7 +34,7 @@ namespace ServiceBus.Queueing.Ftp
         {
             var messageLocation = string.Format(
                 CultureInfo.InvariantCulture,
-                "{0}/queue/{1}",
+                "/{0}/queue/{1}",
                 peer.EscapePeerAddress(),
                 messageQueuedTime.ToFileTimeUtc());
 
@@ -50,7 +50,7 @@ namespace ServiceBus.Queueing.Ftp
         {
             var messageLocation = string.Format(
                 CultureInfo.InvariantCulture,
-                "{0}/queue/",
+                "/{0}/queue/",
                 peer.EscapePeerAddress());
 
             return messageLocation;
@@ -65,9 +65,24 @@ namespace ServiceBus.Queueing.Ftp
         {
             var messageLocation = string.Format(
                 CultureInfo.InvariantCulture,
-                "{0}/sent/{1}",
+                "/{0}/sent/{1}",
                 message.Envelope.Recipient.EscapePeerAddress(),
                 message.QueuedAt.ToFileTimeUtc());
+
+            return messageLocation;
+        }
+
+        /// <summary>
+        /// Create a path to sent queue for the given <paramref name="peer"/>.
+        /// </summary>
+        /// <param name="peer">The instance of <see cref="IPeer"/>.</param>
+        /// <returns>A path to sent queue for the given peer.</returns>
+        public static string SentLocation(this IPeer peer)
+        {
+            var messageLocation = string.Format(
+                CultureInfo.InvariantCulture,
+                "/{0}/sent/",
+                peer.EscapePeerAddress());
 
             return messageLocation;
         }
@@ -79,7 +94,7 @@ namespace ServiceBus.Queueing.Ftp
         /// <returns>A file name friendly representation of the unique peer identifier; it's URI.</returns>
         public static string EscapePeerAddress(this IPeer peer)
         {
-            return peer.PeerAddress.AbsoluteUri.Replace('/', '_');
+            return peer.PeerAddress.AbsoluteUri.Replace('/', '_').Replace(':', '_');
         }
     }
 }

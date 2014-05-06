@@ -53,5 +53,12 @@ namespace ServiceBus.Queueing.Ftp
         /// <param name="messageLocation">The message to retrieve.</param>
         /// <returns>An awaitable object for the get message operation.</returns>
         Task<string> GetMessage(Uri messageLocation);
+
+        /// <summary>
+        /// Build the directories for a <see cref="IPeer"/> is they do not exist.
+        /// </summary>
+        /// <param name="peer">The <see cref="IPeer"/> to check for directories.</param>
+        /// <returns>An awaitable object for the create peer directory if not exist operation.</returns>
+        Task CreatePeerDirectoryIfNotExist(IPeer peer);
     }
 }
