@@ -20,7 +20,6 @@ namespace TestHarness2
     using ServiceBus.Configuration;
     using ServiceBus.Messaging;
     using ServiceBus.Messaging.Json;
-    using ServiceBus.Queueing.Db4o;
     using ServiceBus.Transport.Http.Configuration;
     using ServiceBus.Web.Mvc.Configuration;
 
@@ -30,8 +29,8 @@ namespace TestHarness2
     using TestHarness2.Messages;
     using TestHarness2.MessageHandlers;
     using TestHarness2.EventHandlers;
-    using Db4objects.Db4o;
     using ServiceBus.Queueing;
+    using ServiceBus.Queueing.Ftp;
 
     public static class Bootstrapper
     {
@@ -76,32 +75,40 @@ namespace TestHarness2
             var logger = LogManager.GetLogger(typeof(IServiceBus));
 
             container.RegisterInstance<ILog>(logger, new ContainerControlledLifetimeManager());
-
-            container.RegisterInstance<IObjectContainer>(Db4oEmbedded.OpenFile(HttpContext.Current.Server.MapPath("~/App_Data/queue.db4o")), new ContainerControlledLifetimeManager());
-
-            container.RegisterType<IQueueManager, Db4oQueueManager>(new ContainerControlledLifetimeManager());
+                        
+            container.RegisterType<IQueueManager, FtpQueueManager>(new ContainerControlledLifetimeManager());
 
             container.RegisterType<SharedMessageHandler>();
                         
             var messageDictionary = new MessageTypeDictionary
                                     {
-                                        { MessageExtensions.MessageTypeSignature<SharedMessage>(), typeof(SharedMessage) },
-                                        { MessageExtensions.MessageTypeSignature<NonSharedMessage>(), typeof(NonSharedMessage) },
-                                        { MessageExtensions.MessageTypeSignature<SharedEvent>(), typeof(SharedEvent) }
+                                        { ServiceBus.Messaging.MessageExtensions.MessageTypeSignature<SharedMessage>(), typeof(SharedMessage) },
+                                        { ServiceBus.Messaging.MessageExtensions.MessageTypeSignature<NonSharedMessage>(), typeof(NonSharedMessage) },
+                                        { ServiceBus.Messaging.MessageExtensions.MessageTypeSignature<SharedEvent>(), typeof(SharedEvent) }
                                     };
+
+            container.RegisterInstance<IMessageSerialiser>(new JsonMessageSerialiser(messageDictionary), new ContainerControlledLifetimeManager());
+
+            var ftpClient = new FtpQueueClient();
+            ftpClient.ConnectAsync(new Uri("ftp://ftp.jdibble.co.uk/site1/Personal/service-bus-ftp2/queue"), new NetworkCredential("jdibble-001", "jli798ik")).Wait();
+
+            container.RegisterInstance<IFtpQueueClient>(ftpClient, new ContainerControlledLifetimeManager());
 
             var serviceBus =
                 ServiceBusBuilder.Configure()
                     .WithLogger(container.Resolve<ILog>())
-                    .WithHostAddress(new Uri("http://servicebus2.jdibble.co.uk"))
-                    .WithHttpTransport(new JsonMessageSerialiser(messageDictionary))
+                    .WithHostAddress(new Uri("http://servicebus-ftp2.jdibble.co.uk"))
+                    .WithHttpTransport(container.Resolve<IMessageSerialiser>())
                     .AsMvcServiceBus(RouteTable.Routes, container.Resolve<IQueueManager>())
                     .Build()
                         .WithMessageHandler(container.Resolve<SharedMessageHandler>())
                         .Subscribe(container.Resolve<SharedEventHandler>())
-                        .WithPeerAsync(new Peer(new Uri("http://servicebus.jdibble.co.uk")));
+                        .WithPeerAsync(new Peer(new Uri("http://servicebus-ftp.jdibble.co.uk"))).Result;
 
-            container.RegisterInstance(serviceBus.Result, new ContainerControlledLifetimeManager());
+            serviceBus.WithPeerAsync(new Peer(new Uri("http://servicebus.jdibble.co.uk")));
+            serviceBus.WithPeerAsync(new Peer(new Uri("http://servicebus2.jdibble.co.uk")));
+
+            container.RegisterInstance(serviceBus, new ContainerControlledLifetimeManager());
 
             container.RegisterType<ServiceBusHub>(new ContainerControlledLifetimeManager());
         }
